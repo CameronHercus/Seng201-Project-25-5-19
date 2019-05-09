@@ -7,6 +7,7 @@ public class CrewMembersMainClass {
 	private String skill;
 	private String memberName;
 	private boolean spacePlagueStatus = false;
+	private int crewActions = 2;
 	
 	
 	// not sure if this is a good idea
@@ -33,7 +34,12 @@ public class CrewMembersMainClass {
 		return className;
 	}
 	
-	
+	public void setCrewActions(int newamount) {
+		crewActions = newamount;
+	}
+	public int getCrewActions() {
+		return crewActions;
+	}
 	
 	
 	
