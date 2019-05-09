@@ -20,27 +20,58 @@ public class GameInput {
 		// initializes finalCrew
 		TheShipClass finalCrew = new TheShipClass();
 	    // prompts user for how many days they would like to play must be within 3-10
-	    boolean found = false;
+		Scanner input = new Scanner(System.in);
+	    
+	    boolean found;
+	    /*
+	     * I N P U T     F O R    D A Y S
+	     * I N P U T     F O R    D A Y S
+	     */
+	    found = false;
 	    while (!found) {
-		    System.out.println("*You can play the game for anywhere between 3-10 days!*" + "\n" + "Please enter how many days would you like to play below");
-		    int intputShipDays = scanner.nextInt();
-	    	switch (intputShipDays) {
-	    	case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
-	    		finalCrew.setNumberOfDays(intputShipDays);
-	    		found = true;
-	    		break;
-	    	default:
-	    		System.out.println("Please enter a valid number of days" + "\n");
-	    		break;
-	    	}
+	    	System.out.println("*You can play the game for anywhere between 3-10 days!*" + "\n" + "Please enter how many days would you like to play below");
+	        try {
+	            int a = input.nextInt();
+	            if (3 <= a && a <= 10) {
+	            	finalCrew.setNumberOfDays(a);
+	            	found = true;
+	            } else {
+	            	System.out.println("Please enter a valid number of days" + "\n");
+	            }
+	        }
+	        catch (java.util.InputMismatchException e) {
+	            input.nextLine();
+	            System.out.println("Input must be a number" + "\n");
+	        }
 	    }
+	    /*
+	     * N U M B E R     O F    P I E C E S   C A L C U L A T I O N
+	     * N U M B E R     O F    P I E C E S   C A L C U L A T I O N
+	     */
 	    // rounds down the number to give the number of pieces to find
 	    int numberOfPieces = (int) (Math.floor(finalCrew.getNumberOfDays() * (float) 2/3));
-	    finalCrew.setNumberOfPieces(numberOfPieces);
-	    //Names the ship maybe it should have error catching not sure
-	    System.out.println("\n" + "Please enter what you would like your Spaceship to be called!");
-	    String inputShipName = scanner.next();
-	    finalCrew.setShipName(inputShipName);
+	    finalCrew.setNumberOfPieces(numberOfPieces);  
+	    /*
+	     * I N P U T   N A M E   O F    S H I P
+	     * I N P U T   N A M E   O F    S H I P
+	     */
+	    found = false;
+	    while (!found) {
+	    	 System.out.println("\n" + "Please enter what you would like your Spaceship to be called!");
+	        try {
+	        	 String inputShipName = scanner.next();
+	     	    finalCrew.setShipName(inputShipName);
+	     	    found = true;
+	        }
+	        catch (java.util.InputMismatchException e) {
+	            input.nextLine();
+	            System.out.println("Input name for ship name was rejected try something different!" + "\n");
+	        }
+	    }
+	    /*
+	     * C R E W    S I Z E    S E L E C T I O N
+	     * C R E W    S I Z E    S E L E C T I O N
+	     */
 	    //prints the toString of the crew classes to chose from
 	    int counter = 0;
 	    System.out.println("\n" + "These are the types of crew members you can add:");
@@ -64,7 +95,12 @@ public class GameInput {
 	    		break;
 	    	}
 	    }
+	    /*
+	     * C L A S S     S E L E C T I O N
+	     * C L A S S     S E L E C T I O N
+	     */
 	    // prompts the user to enter the classes the while loop ensures that it keeps going until the amount of members they asked for it filled
+	    // THIS AINT ELIF YET
 	    System.out.println("\n" + "*You may enter the same Class more than once*");
 	    counter = 0;
 	    while (counter < finalCrew.getstartingMemberCount()) {
@@ -98,68 +134,78 @@ public class GameInput {
 		// this will launch the main game
 		intializeMainGame(finalCrew, scanner);
 	}
-	
-	
-	
-	
-	
 	public void intializeMainGame(TheShipClass finalCrew, Scanner scanner) {
 		ArrayList<MedicalSupplies> buyableMedicineList = new ArrayList<MedicalSupplies>();
-		
 		Antidote antidote = new Antidote();
 		MedKit medKit = new MedKit();
 		FirstAidKit firstAidKit = new FirstAidKit();
 		buyableMedicineList.add(antidote);
 		buyableMedicineList.add(medKit);
 		buyableMedicineList.add(firstAidKit);
-		
-		
-		
-		
-		System.out.println("\n" + "Enter the number from the options list to proceed:" + "\n" + 
-		"1: View the status of your crew Members" + "\n" + 
-		"2: Proceed with activities" + "\n" +
-		"3: Visit nearest outpost");
-		int inputProceed = scanner.nextInt();
-		switch (inputProceed) {
-		case 1:
-			intializeView(finalCrew, scanner);
-			break;
-		case 2:
-			initializeActivites();
-			break;
-		case 3:
-			initializeNearestOutpost(finalCrew, scanner, buyableMedicineList);
-			break;
-		default:
-			System.out.println("Please select a valid option number");
-			break;
-			// not sure if break matters here
-			
-		}
-		intializeMainGame(finalCrew, scanner);
-		
-		
+		ArrayList<FoodItems> buyableFoodList = new ArrayList<FoodItems>();
+		Bread bread = new Bread();
+		Soup soup = new Soup();
+		CornedBeef cornedbeef = new CornedBeef();
+		Nuts nuts = new Nuts();
+		Tea tea = new Tea();
+		Apple apple = new Apple();
+		buyableFoodList.add(bread);
+		buyableFoodList.add(soup);
+		buyableFoodList.add(cornedbeef);
+		buyableFoodList.add(apple);
+		buyableFoodList.add(tea);
+		buyableFoodList.add(nuts);
+	    boolean found = false;
+	    while (!found) {
+			System.out.println("\n" + "You are at your Ship enter a number from the options list to proceed:" + "\n" + 
+					"1: View the status of your crew Members" + "\n" + 
+					"2: Move on to the next day" + "\n" +
+					"3: Visit nearest outpost" + "\n" +
+					"4: View the status of your ship" + "\n" +
+					"The following activities will require actions to perform:" + "\n" +
+					"5: Have a creww member Eat food or Use medical Supplies from the ship's inventory" + "\n" +
+					"6: Have a Crew Member sleep" + "\n" +
+					"7: Have a Crew Member repair the ship" + "\n" +
+					"8: Have a Crew Member search the planet for spaceship parts" + "\n" +
+					"9: Have two Crew Members pilot the ship to a new Planet" + "\n" +
+					"Your crew members have the following remaing amount of actions for today:" +  "\n" +
+					finalCrew.printAllActions());
+	        try {
+	        	int optionsAtShip = scanner.nextInt();
+	     	    if (optionsAtShip == 1) {
+	     	    	found = true;
+	     	    	intializeCrewView(finalCrew, scanner);
+	     	    } else if (optionsAtShip == 2) {	 
+	     	    	found = true;
+	     	    	finalCrew.setNumberOfDays(finalCrew.getNumberOfDays()-1);
+	     	    	// ya not complete number of days should be in the enviornment its just temp
+	     	    } else if (optionsAtShip == 3) {
+	     	    	found = true;
+	     	    	initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	     	    } else if (optionsAtShip == 4) {
+	     	    	found = true;
+	     	    	initializeShipView(finalCrew, scanner);
+	     	    } else {
+	     	    	System.out.println("Please enter a valid number from the list of options" + "\n");
+	     	    }
+	        }
+	        catch (java.util.InputMismatchException e) {
+	            scanner.nextLine();
+	            System.out.println("Input must be a number" + "\n");
+	        }
+	    }	
 	}
-	
-	
-	
-	public void intializeView(TheShipClass finalCrew, Scanner scanner) {
+	public void intializeCrewView(TheShipClass finalCrew, Scanner scanner) {
 		for (CrewMembersMainClass i: finalCrew.getCrewList()) {
 			System.out.println(i.toStatus());
 		}
-		System.out.println(finalCrew.getShipName() + " Status: ");
-		//not complete
 		intializeMainGame(finalCrew, scanner);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+	public void initializeShipView(TheShipClass finalCrew, Scanner scanner) {
+		System.out.println(finalCrew.getShipName() + " Status: ");
+		// not finished need to add a percentage to ship health
+		intializeMainGame(finalCrew, scanner);
+	}
 	public void initializeActivites() {
 		System.out.println("Not implemented yet");
 	}
@@ -169,44 +215,6 @@ public class GameInput {
 	
 	
 	
-	public void initializeNearestOutpost(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList) {
-		System.out.println("\n" + "You are at the nearest outpost select what to do next from the options below:" + "\n" +
-	"1: View objects, such as food and medical supplies that are for sale" + "\n" + 
-	"2: View your current inventory and amount of money" + "\n" + 
-	"3: See the prices of each object" + "\n" + 
-	"4: Inspect each object" + "\n" + 
-	"5: Purchase medical supplies, objects and food" + "\n" +
-	"6: Return to Ship");
-		
-		// MAYBE ADD OPTION TO GO BACK?
-		
-		int inputOutpost = scanner.nextInt();
-		switch (inputOutpost) {
-		case 1:
-			intializeViewItemsForSale(finalCrew, scanner, buyableMedicineList);
-			break;
-		case 2:
-			intializeViewOfInventory(finalCrew, scanner, buyableMedicineList);
-			break;
-		case 3:
-			intializezViewItemPrices(finalCrew, scanner, buyableMedicineList);
-			break;
-		case 4:
-			intializezItemInspect(finalCrew, scanner, buyableMedicineList);
-			break;
-		case 5:
-			intializeShop(finalCrew, scanner, buyableMedicineList);
-			break;
-		case 6:
-			intializeMainGame(finalCrew, scanner);
-			break;
-			// dont think this is good maybe doest get rid of the switch here
-			
-		default:
-			initializeNearestOutpost(finalCrew, scanner, buyableMedicineList);
-			break;
-		}
-	}
 	
 	
 	
@@ -215,15 +223,58 @@ public class GameInput {
 	
 	
 	
-	public void intializeViewItemsForSale(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList) {
+	public void initializeNearestOutpost(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList, ArrayList<FoodItems> buyableFoodList) {
+	    boolean found = false;
+	    while (!found) {
+			System.out.println("\n" + "You are at the nearest outpost select what to do next from the options below:" + "\n" +
+					"1: View objects, such as food and medical supplies that are for sale" + "\n" + 
+					"2: View your current inventory and amount of money" + "\n" + 
+					"3: See the prices of each object" + "\n" + 
+					"4: Inspect each object" + "\n" + 
+					"5: Purchase medical supplies, objects and food" + "\n" +
+					"6: Return to Ship");
+	        try {
+	    		int inputOutpost = scanner.nextInt();
+	     	    if (inputOutpost == 1) {
+	     	    	found = true;
+	     	    	intializeViewItemsForSale(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	     	    } else if (inputOutpost == 2) {	 
+	     	    	found = true;
+	     	    	intializeViewOfInventory(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	     	    } else if (inputOutpost == 3) {
+	     	    	found = true;
+	     	    	intializezViewItemPrices(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	     	    } else if (inputOutpost == 4) {
+	     	    	found = true;
+	     	    	intializezItemInspect(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	     	    } else if (inputOutpost == 5) {
+	     	    	found = true;
+	     	    	intializeShop(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	     	    } else if (inputOutpost == 6) {
+	     	    	found = true;
+	     	    	intializeMainGame(finalCrew, scanner);
+	     	    } else {
+	     	    	System.out.println("Please enter a valid number from the list of options" + "\n");
+	     	    }
+	        }
+	        catch (java.util.InputMismatchException e) {
+	            scanner.nextLine();
+	            System.out.println("Input must be a number" + "\n");
+	        }
+	    }
+	}	
+	public void intializeViewItemsForSale(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList, ArrayList<FoodItems> buyableFoodList) {
 		System.out.println("The items for sale are:");
 		for (MedicalSupplies i: buyableMedicineList) {
 			System.out.println(i);
 		}
-		initializeNearestOutpost(finalCrew, scanner, buyableMedicineList);
+		for (FoodItems i: buyableFoodList) {
+			System.out.println(i);
+			
+		}
+		initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
 	}
-	
-	public void intializeViewOfInventory(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList) {
+	public void intializeViewOfInventory(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList, ArrayList<FoodItems> buyableFoodList) {
 		if (finalCrew.getMedicalList().size() == 0) { //&&foodlist)
 			System.out.println("Your inventory is currently empty visit a Shop at an Outpost to purchase Medicine and Food!");
 		}
@@ -231,74 +282,89 @@ public class GameInput {
 			System.out.println(i);
 		}
 		System.out.println("Amount of Money: " + "$" + finalCrew.getAmountMoney());
-		initializeNearestOutpost(finalCrew, scanner, buyableMedicineList);
+		initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
 	}
-	
-	public void intializezViewItemPrices(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList) {
+	public void intializezViewItemPrices(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList, ArrayList<FoodItems> buyableFoodList) {
 		System.out.println("The prices of the items for sale are:");
 		for (MedicalSupplies i: buyableMedicineList) {
 			System.out.println(i.getMedicineName() + " Costs:  $" + i.getMedicineCost());
 		}
-		initializeNearestOutpost(finalCrew, scanner, buyableMedicineList);
+		for (FoodItems i: buyableFoodList) {
+			System.out.println(i.getFoodName() + " Costs:  $" + i.getfoodCost());
+		}
+		initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
 	}
-	public void intializezItemInspect(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList) {
+	public void intializezItemInspect(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList, ArrayList<FoodItems> buyableFoodList) {
 		System.out.println("Descriptions of the items for sale:");
 		for (MedicalSupplies i: buyableMedicineList) {
 			System.out.println(i.getDescription());
 		}
-		initializeNearestOutpost(finalCrew, scanner, buyableMedicineList);
-	}
-	
-	public void intializeShop(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList) {
-		System.out.println("\n" + "You are at the shop select what to do next from the options below:" + "\n" +
-		"1: Antidote: cures space plague costs: $15" + "\n" + "2: MedKit: restores 50 health, costs $20" + "\n" + 
-		"3: FirstAidKit: restores 25 Health, costs $10" + "\n" + "4: Return to outpost?");
-		int inputShop = scanner.nextInt();
-		switch (inputShop) {
-		
-		case 1:
-			System.out.println("What quantity of Antidote would you like?");
-			int antidoteQuan = scanner.nextInt();
-			if (finalCrew.doesPriceExceed(buyableMedicineList.get(0).getMedicineCost(), antidoteQuan)) {
-				finalCrew.addMedicalItem(buyableMedicineList.get(0), buyableMedicineList.get(0).getMedicineCost(), antidoteQuan);
-			}
-			else {
-				System.out.println("Your funds are too low for this purchase");
-			}
-			break;
-		case 2:
-			System.out.println("What quantity of MedKits would you like?");
-			int medkitQuan = scanner.nextInt();
-			if (finalCrew.doesPriceExceed(buyableMedicineList.get(1).getMedicineCost(), medkitQuan)) {
-				finalCrew.addMedicalItem(buyableMedicineList.get(1), buyableMedicineList.get(1).getMedicineCost(), medkitQuan);
-			}
-			else {
-				System.out.println("Your funds are too low for this purchase");
-			}
-			break;
-		case 3:
-			System.out.println("What quantity of First-Aid Kits would you like?");
-			int firstaidkitQuan = scanner.nextInt();
-			if (finalCrew.doesPriceExceed(buyableMedicineList.get(2).getMedicineCost(), firstaidkitQuan)) {
-				finalCrew.addMedicalItem(buyableMedicineList.get(2), buyableMedicineList.get(2).getMedicineCost(), firstaidkitQuan);
-			}
-			else {
-				System.out.println("Your funds are too low for this purchase");
-			}
-			break;
-		case 4: 
-			initializeNearestOutpost(finalCrew, scanner, buyableMedicineList);
-			break;
-		default: 
-			System.out.println("Your funds are too low for this purchase");
-			break;
-			
-			
+		for (FoodItems i: buyableFoodList) {
+			System.out.println(i.getDescription());
 		}
-		intializeShop(finalCrew, scanner, buyableMedicineList);
-		// add like this
-		
-		
+		initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	}
+	public void intializeShop(TheShipClass finalCrew, Scanner scanner, ArrayList<MedicalSupplies> buyableMedicineList, ArrayList<FoodItems> buyableFoodList) {
+	    boolean found = false;
+	    while (!found) {
+			System.out.println("\n" + "You are at the shop select what to do next from the options below:" + "\n" +
+					"1: Antidote: cures space plague costs: $15" + "\n" + 
+					"2: MedKit: restores 50 health, costs $20" + "\n" + 
+					"3: FirstAidKit: restores 25 Health, costs $10" + "\n" + 
+					"4: Return to outpost?");
+	        try {
+	    		int inputShop = scanner.nextInt();
+	     	    if (inputShop == 1) {
+	    			System.out.println("What quantity of Antidote would you like?");
+	    			int antidoteQuan = scanner.nextInt();
+	    			if (finalCrew.doesPriceExceed(buyableMedicineList.get(0).getMedicineCost(), antidoteQuan)) {
+	    				finalCrew.addMedicalItem(buyableMedicineList.get(0), buyableMedicineList.get(0).getMedicineCost(), antidoteQuan);
+		     	    	found = true;
+		     	    	initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	    			}
+	    			else {
+	    				found = true;
+	    				System.out.println("Your funds are too low for this purchase");
+	    				initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	    			}
+	     	    } else if (inputShop == 2) {	 
+	    			System.out.println("What quantity of MedKits would you like?");
+	    			int medkitQuan = scanner.nextInt();
+	    			if (finalCrew.doesPriceExceed(buyableMedicineList.get(1).getMedicineCost(), medkitQuan)) {
+	    				finalCrew.addMedicalItem(buyableMedicineList.get(1), buyableMedicineList.get(1).getMedicineCost(), medkitQuan);
+	    				found = true;
+	    				initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	    			}
+	    			else {
+	    				found = true;
+	    				System.out.println("Your funds are too low for this purchase");
+	    				initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	    			}
+	     	    } else if (inputShop == 3) {
+	    			System.out.println("What quantity of First-Aid Kits would you like?");
+	    			int firstaidkitQuan = scanner.nextInt();
+	    			if (finalCrew.doesPriceExceed(buyableMedicineList.get(2).getMedicineCost(), firstaidkitQuan)) {
+	    				finalCrew.addMedicalItem(buyableMedicineList.get(2), buyableMedicineList.get(2).getMedicineCost(), firstaidkitQuan);
+	    				found = true;
+	    				initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	    			}
+	    			else {
+	    				found = true;
+	    				System.out.println("Your funds are too low for this purchase");
+	    				initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	    			}
+	     	    } else if (inputShop == 4) {
+	     	    	found = true;
+	    			initializeNearestOutpost(finalCrew, scanner, buyableMedicineList, buyableFoodList);
+	     	    } else {
+	     	    	System.out.println("Please enter a valid number from the list of options" + "\n");
+	     	    }
+	        }
+	        catch (java.util.InputMismatchException e) {
+	            scanner.nextLine();
+	            System.out.println("Input must be a number" + "\n");
+	        }
+	    }		
 	}
 	
 	
