@@ -4,39 +4,28 @@ import java.util.Scanner;
 public class fortesting {
 	private int remainingDays;
 	private int numberOfPiecesRemaining;
+	private int startingMemberCount;
+	private boolean found;
 	Scanner input = new Scanner(System.in);
 	TheShipClass finalCrew = new TheShipClass();
-	private boolean found;
 	ArrayList<CrewMembersMainClass> classList = new ArrayList<CrewMembersMainClass>();
 	ArrayList<MedicalSupplies> buyableMedicineList = new ArrayList<MedicalSupplies>();
 	ArrayList<FoodItems> buyableFoodList = new ArrayList<FoodItems>();
-	Haggler haggler = new Haggler();
-	Medic medic = new Medic();
-	Thief thief = new Thief();
-	Antidote antidote = new Antidote();
-	MedKit medKit = new MedKit();
-	FirstAidKit firstAidKit = new FirstAidKit();
-	Bread bread = new Bread();
-	Soup soup = new Soup();
-	CornedBeef cornedbeef = new CornedBeef();
-	Nuts nuts = new Nuts();
-	Tea tea = new Tea();
-	Apple apple = new Apple();
 	// scanner, a crew list, number of days
 	// theshipclass should have a medical lsit, money, and food items,
     public fortesting() {
-		classList.add(medic);
-		classList.add(haggler);
-		classList.add(thief);
-		buyableMedicineList.add(antidote);
-		buyableMedicineList.add(medKit);
-		buyableMedicineList.add(firstAidKit);
-		buyableFoodList.add(tea);
-		buyableFoodList.add(nuts);
-		buyableFoodList.add(apple);
-		buyableFoodList.add(bread);
-		buyableFoodList.add(soup);
-		buyableFoodList.add(cornedbeef);
+		classList.add(new Medic());
+		classList.add(new Haggler());
+		classList.add(new Thief());
+		buyableMedicineList.add(new Antidote());
+		buyableMedicineList.add(new MedKit());
+		buyableMedicineList.add(new FirstAidKit());
+		buyableFoodList.add(new Tea());
+		buyableFoodList.add(new Nuts());
+		buyableFoodList.add(new Apple());
+		buyableFoodList.add(new Bread());
+		buyableFoodList.add(new Soup());
+		buyableFoodList.add(new CornedBeef());
     	initSetup();
     }
 	public void initSetup() {
@@ -75,8 +64,7 @@ public class fortesting {
 	    while (!found) {
 	    	 System.out.println("\n" + "Please enter what you would like your Spaceship to be called!");
 	        try {
-	        	 String inputShipName = input.next();
-	     	    finalCrew.setShipName(inputShipName);
+	     	    finalCrew.setShipName(input.next());
 	     	    found = true;
 	        }
 	        catch (java.util.InputMismatchException e) {
@@ -103,7 +91,7 @@ public class fortesting {
 		    int inputCrewMemberCount = input.nextInt();
 	    	switch (inputCrewMemberCount) {
 	    	case 2: case 3: case 4:
-	    		finalCrew.setStartingMemberCount(inputCrewMemberCount);
+	    		startingMemberCount = inputCrewMemberCount;
 	    		found = true;
 	    		break;
 	    	default:
@@ -119,10 +107,9 @@ public class fortesting {
 	    // THIS AINT ELIF YET
 	    System.out.println("\n" + "*You may enter the same Class more than once*");
 	    counter = 0;
-	    while (counter < finalCrew.getstartingMemberCount()) {
+	    while (counter < startingMemberCount) {
 		    System.out.println("You are now adding Class number " + (counter + 1) +": Enter the NUMBER associated with the class you would like to add");
-		    int classInputName = input.nextInt();
-		   switch (classInputName) {
+		   switch (input.nextInt()) {
 		   case 1:  
 			   counter+=1;
 			   System.out.println("\n" + "*You have chosen the Medic class*" + "\n" + "What would you like to name this Crew Member?");
