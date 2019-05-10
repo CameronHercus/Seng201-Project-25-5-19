@@ -2,8 +2,6 @@
 import java.util.ArrayList;
 
 public class TheShipClass {
-    
-	private int counter = 0;
 	private String shipName;
 	private int amountMoney = 100;
 	private int startingMemberCount;
@@ -34,6 +32,9 @@ public class TheShipClass {
 			//think this will only work by removing eg medic and not the name of the crew member maybe use collections or make it accept two arguments with name and class type
 		}
 		return false;
+	}
+	public void addMedicine(MedicalSupplies medicine) {
+		medicalList.add(medicine);
 	}
 	public void addMedicalItem(MedicalSupplies medicine, int price, int quantity) {
 		amountMoney -= price * quantity;
@@ -99,9 +100,10 @@ public class TheShipClass {
 		return shipName;
 	}
 	public int getCrewCount() {
-		for (CrewMembersMainClass i: crewList) {
+		int counter = 0;
+		for (int i = 0; i < crewList.size(); i++) {
 			counter += 1;
-		}
+		} // THIS NEEDS TO BE TESTED
 		return counter;
 	}
 	public void printAllCrewMembers() {
