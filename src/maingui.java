@@ -14,22 +14,25 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
 import java.awt.Color;
+import java.awt.SystemColor;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class maingui extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField shipnametextField;
-	private JTextField bigboxtextfield;
-	private JTextField textField;
-	private JTextField textField_6;
-	private JTextField textField_7;
-	private JTextField textField_8;
-	private JTextField textField_9;
-	private JTextField textField_3;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_4;
-	private JTextField textField_5;
+	private JTextField shipNameInput;
+	private JTextField descriptionDisplay;
+	private JTextField crewClassDisplay1;
+	private JTextField crewInput1;
+	private JTextField crewInput2;
+	private JTextField crewInput3;
+	private JTextField crewInput4;
+	private JTextField crewClassDisplay4;
+	private JTextField crewClassDisplay2;
+	private JTextField crewClassDisplay5;
+	private JTextField crewClassDisplay3;
+	private JTextField crewClassDisplay6;
 
 	/**
 	 * Launch the application.
@@ -38,6 +41,7 @@ public class maingui extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					
 					maingui frame = new maingui();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -51,6 +55,10 @@ public class maingui extends JFrame {
 	 * Create the frame.
 	 */
 	public maingui() {
+		GameEnvironment gameenvironment = new GameEnvironment();
+		
+		
+		setTitle("Setup");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1024, 768);
 		contentPane = new JPanel();
@@ -58,115 +66,165 @@ public class maingui extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JSlider days_slider = new JSlider();
-		days_slider.setPaintLabels(true);
-		days_slider.setMajorTickSpacing(1);
-		days_slider.setMaximum(10);
-		days_slider.setMinimum(3);
-		days_slider.setSnapToTicks(true);
-		days_slider.setPaintTicks(true);
-		days_slider.setBounds(386, 116, 413, 57);
-		contentPane.add(days_slider);
+		JLabel numDaysLBL = new JLabel("How many days would you like to play?");
+		numDaysLBL.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		numDaysLBL.setBounds(33, 132, 324, 23);
+		contentPane.add(numDaysLBL);
 		
-		JLabel lblHowManyDays = new JLabel("How many days would you like to play?");
-		lblHowManyDays.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblHowManyDays.setBounds(33, 132, 324, 23);
-		contentPane.add(lblHowManyDays);
+		JSlider daysInputSlider = new JSlider();
+		daysInputSlider.setPaintLabels(true);
+		daysInputSlider.setMajorTickSpacing(1);
+		daysInputSlider.setMaximum(10);
+		daysInputSlider.setMinimum(3);
+		daysInputSlider.setSnapToTicks(true);
+		daysInputSlider.setPaintTicks(true);
+		daysInputSlider.setBounds(386, 116, 413, 57);
+		contentPane.add(daysInputSlider);
 		
-		JLabel lblShipName = new JLabel("Enter the name of your Starship:\r\n");
-		lblShipName.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblShipName.setBounds(33, 45, 281, 23);
-		contentPane.add(lblShipName);
+		JLabel nameShipLBL = new JLabel("Enter the name of your Starship:\r\n");
+		nameShipLBL.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		nameShipLBL.setBounds(33, 45, 281, 23);
+		contentPane.add(nameShipLBL);
 		
-		shipnametextField = new JTextField();
-		shipnametextField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		shipnametextField.setBounds(386, 39, 413, 37);
-		contentPane.add(shipnametextField);
-		shipnametextField.setColumns(10);
+		shipNameInput = new JTextField();
+		shipNameInput.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		shipNameInput.setBounds(386, 39, 413, 37);
+		contentPane.add(shipNameInput);
+		shipNameInput.setColumns(10);
 		
-		JSlider crew_slider = new JSlider();
-		crew_slider.setMajorTickSpacing(1);
-		crew_slider.setMinimum(2);
-		crew_slider.setMaximum(4);
-		crew_slider.setSnapToTicks(true);
-		crew_slider.setPaintTicks(true);
-		crew_slider.setPaintLabels(true);
-		crew_slider.setBounds(33, 631, 278, 64);
-		contentPane.add(crew_slider);
+		JSlider numberCrewInputSlider = new JSlider();
+		numberCrewInputSlider.setMajorTickSpacing(1);
+		numberCrewInputSlider.setMinimum(2);
+		numberCrewInputSlider.setMaximum(4);
+		numberCrewInputSlider.setSnapToTicks(true);
+		numberCrewInputSlider.setPaintTicks(true);
+		numberCrewInputSlider.setPaintLabels(true);
+		numberCrewInputSlider.setBounds(33, 631, 278, 64);
+		contentPane.add(numberCrewInputSlider);
 		
-		bigboxtextfield = new JTextField();
-		bigboxtextfield.setEditable(false);
-		bigboxtextfield.setBounds(656, 255, 324, 277);
-		contentPane.add(bigboxtextfield);
-		bigboxtextfield.setColumns(10);
+		crewClassDisplay1 = new JTextField();
+		crewClassDisplay1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				descriptionDisplay.setText(gameenvironment.getClassList().get(0).toString() + 
+						gameenvironment.getClassList().get(0).getSkill());
+			}
+		});
+		crewClassDisplay1.setText(gameenvironment.getClassList().get(0).toString());
+		crewClassDisplay1.setBackground(SystemColor.activeCaption);
+		crewClassDisplay1.setEditable(false);
+		crewClassDisplay1.setBounds(50, 255, 140, 131);
+		contentPane.add(crewClassDisplay1);
+		crewClassDisplay1.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setBounds(50, 255, 140, 131);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		crewClassDisplay2 = new JTextField();
+		crewClassDisplay2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				descriptionDisplay.setText(gameenvironment.getClassList().get(1).toString() + 
+						gameenvironment.getClassList().get(1).getSkill());
+			}
+		});
+		crewClassDisplay2.setText(gameenvironment.getClassList().get(1).toString());
+		crewClassDisplay2.setBackground(SystemColor.activeCaption);
+		crewClassDisplay2.setEditable(false);
+		crewClassDisplay2.setColumns(10);
+		crewClassDisplay2.setBounds(253, 255, 140, 131);
+		contentPane.add(crewClassDisplay2);
+		
+		crewClassDisplay3 = new JTextField();
+		crewClassDisplay3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				descriptionDisplay.setText(gameenvironment.getClassList().get(2).toString() + 
+						gameenvironment.getClassList().get(2).getSkill());
+			}
+		});
+		crewClassDisplay3.setText(gameenvironment.getClassList().get(2).toString());
+		crewClassDisplay3.setBackground(SystemColor.activeCaption);
+		crewClassDisplay3.setEditable(false);
+		crewClassDisplay3.setColumns(10);
+		crewClassDisplay3.setBounds(464, 255, 140, 131);
+		contentPane.add(crewClassDisplay3);
+		
+		crewClassDisplay4 = new JTextField();
+		crewClassDisplay4.setBackground(SystemColor.activeCaption);
+		crewClassDisplay4.setEditable(false);
+		crewClassDisplay4.setColumns(10);
+		crewClassDisplay4.setBounds(50, 401, 140, 131);
+		contentPane.add(crewClassDisplay4);
+		
+		crewClassDisplay5 = new JTextField();
+		crewClassDisplay5.setBackground(SystemColor.activeCaption);
+		crewClassDisplay5.setEditable(false);
+		crewClassDisplay5.setColumns(10);
+		crewClassDisplay5.setBounds(253, 401, 140, 131);
+		contentPane.add(crewClassDisplay5);
+		
+		crewClassDisplay6 = new JTextField();
+		crewClassDisplay6.setBackground(SystemColor.activeCaption);
+		crewClassDisplay6.setEditable(false);
+		crewClassDisplay6.setColumns(10);
+		crewClassDisplay6.setBounds(464, 401, 140, 131);
+		contentPane.add(crewClassDisplay6);
+		
+		descriptionDisplay = new JTextField();
+		descriptionDisplay.setText("Hover over class");
+		descriptionDisplay.setBackground(SystemColor.activeCaptionBorder);
+		descriptionDisplay.setEditable(false);
+		descriptionDisplay.setBounds(656, 255, 324, 277);
+		contentPane.add(descriptionDisplay);
+		descriptionDisplay.setColumns(10);
 		
 		JLabel lblNumberOfCrew = new JLabel("Number of crew members playing:");
 		lblNumberOfCrew.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNumberOfCrew.setBounds(33, 606, 228, 23);
 		contentPane.add(lblNumberOfCrew);
 		
-		textField_6 = new JTextField();
-		textField_6.setBackground(Color.LIGHT_GRAY);
-		textField_6.setEditable(false);
-		textField_6.setColumns(10);
-		textField_6.setBounds(400, 599, 102, 96);
-		contentPane.add(textField_6);
+		crewInput1 = new JTextField();
+		crewInput1.setBackground(Color.LIGHT_GRAY);
+		crewInput1.setEditable(false);
+		crewInput1.setColumns(10);
+		crewInput1.setBounds(321, 599, 102, 96);
+		contentPane.add(crewInput1);
 		
-		textField_7 = new JTextField();
-		textField_7.setBackground(Color.LIGHT_GRAY);
-		textField_7.setEditable(false);
-		textField_7.setColumns(10);
-		textField_7.setBounds(565, 599, 102, 96);
-		contentPane.add(textField_7);
+		crewInput2 = new JTextField();
+		crewInput2.setBackground(Color.LIGHT_GRAY);
+		crewInput2.setEditable(false);
+		crewInput2.setColumns(10);
+		crewInput2.setBounds(444, 599, 102, 96);
+		contentPane.add(crewInput2);
 		
-		textField_8 = new JTextField();
-		textField_8.setBackground(Color.LIGHT_GRAY);
-		textField_8.setEditable(false);
-		textField_8.setColumns(10);
-		textField_8.setBounds(718, 599, 102, 96);
-		contentPane.add(textField_8);
+		crewInput3 = new JTextField();
+		crewInput3.setBackground(Color.LIGHT_GRAY);
+		crewInput3.setEditable(false);
+		crewInput3.setColumns(10);
+		crewInput3.setBounds(566, 599, 102, 96);
+		contentPane.add(crewInput3);
 		
-		textField_9 = new JTextField();
-		textField_9.setBackground(Color.LIGHT_GRAY);
-		textField_9.setEditable(false);
-		textField_9.setColumns(10);
-		textField_9.setBounds(878, 599, 102, 96);
-		contentPane.add(textField_9);
+		crewInput4 = new JTextField();
+		crewInput4.setBackground(Color.LIGHT_GRAY);
+		crewInput4.setEditable(false);
+		crewInput4.setColumns(10);
+		crewInput4.setBounds(688, 599, 102, 96);
+		contentPane.add(crewInput4);
 		
-		textField_3 = new JTextField();
-		textField_3.setEditable(false);
-		textField_3.setColumns(10);
-		textField_3.setBounds(50, 401, 140, 131);
-		contentPane.add(textField_3);
+		JButton btnNewButton = new JButton("Accept");
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println(gameenvironment.inputDays(daysInputSlider.getValue()));
+				System.out.println(gameenvironment.getRemainingDays());
+				System.out.println(gameenvironment.inputShipName(shipNameInput.getText()));
+				System.out.println(gameenvironment.shipAndCrew.getShipName());
+			}
+		});
+		btnNewButton.setBounds(874, 649, 89, 23);
+		contentPane.add(btnNewButton);
 		
-		textField_1 = new JTextField();
-		textField_1.setEditable(false);
-		textField_1.setColumns(10);
-		textField_1.setBounds(253, 255, 140, 131);
-		contentPane.add(textField_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setEditable(false);
-		textField_2.setColumns(10);
-		textField_2.setBounds(253, 401, 140, 131);
-		contentPane.add(textField_2);
-		
-		textField_4 = new JTextField();
-		textField_4.setEditable(false);
-		textField_4.setColumns(10);
-		textField_4.setBounds(464, 255, 140, 131);
-		contentPane.add(textField_4);
-		
-		textField_5 = new JTextField();
-		textField_5.setEditable(false);
-		textField_5.setColumns(10);
-		textField_5.setBounds(464, 401, 140, 131);
-		contentPane.add(textField_5);
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(maingui.class.getResource("/images/Webp.net-resizeimage_9.jpg")));
+		lblNewLabel.setBounds(0, 0, 1008, 729);
+		contentPane.add(lblNewLabel);
 	}
 }
