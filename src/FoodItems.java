@@ -1,7 +1,6 @@
 
 public class FoodItems {
     private String foodName;
-	private int foodQuantity;
 	private int foodCost;
 	private int hungerReduction;
 	// soup, bread, apple, nut, corn beef, tea
@@ -13,19 +12,11 @@ public class FoodItems {
 	public String getFoodName() {
 		return foodName;
 	}
-	public int getFoodQuantity() {
-		return foodQuantity;
-	}
 	public int getfoodCost() {
 		return foodCost;
 	}
-	public boolean getFoodAvailability() {
-		if (foodQuantity > 0) {
-			// maybe should be not equal to 1 not sure
-			return true;
-		}
-		return false;
-		// needs to be tested but should work
+	public int getHungerRedcution() {
+		return hungerReduction;
 	}
 	public String toString() {
 		return foodName;
