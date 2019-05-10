@@ -30,11 +30,11 @@ public class GameEnvironment {
             return false;
         }
 	}
-	public boolean inputDays(int input) {
+	public boolean inputDays(int inputSlider) {
         try {
-        	switch (input) {
+        	switch (inputSlider) {
         	case 3: case 4: case 5: case 6: case 7: case 8: case 9: case 10:
-        		remainingDays = input;
+        		remainingDays = inputSlider;
         		return true;
         		// no break here not sure if thats right
         	default:
