@@ -1,4 +1,6 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Scanner;
 
 public class GameEnvironment {
@@ -10,19 +12,40 @@ public class GameEnvironment {
 	TheShipClass shipAndCrew = new TheShipClass();
 	ShopItems shopItems = new ShopItems();
 	ArrayList<CrewMembersMainClass> classList = new ArrayList<CrewMembersMainClass>();
+	ArrayDeque<CrewMembersMainClass> deque = new ArrayDeque<CrewMembersMainClass>();
 	// scanner, a crew list, number of days
-	// theshipclass should have a medical lsit, money, and food items,
+	// theshipclass should have a medical list, money, and food items,
+	public static void main(String[] args) {
+		GameEnvironment gameLogic = new GameEnvironment();
+		gameLogic.launchSetupScreen();
+	}
 	public GameEnvironment() {
 		classList.add(new Medic());
 		classList.add(new Haggler());
 		classList.add(new Thief());
 	}
+	public void launchShipOptionsScreen() {
+		ShipOptionsScreen shipOptionsScreen = new ShipOptionsScreen(this);
+	}
+	public void closeShipOptionsScreen(ShipOptionsScreen shipOptionsScreen) {
+		shipOptionsScreen.closeWindow();
+	}
+	public void launchSetupScreen() {
+		SetupScreen setupWindow = new SetupScreen(this);
+	}
+	public void closeSetupScreen(SetupScreen setupWindow) {
+		setupWindow.closeWindow();
+		launchShipOptionsScreen();
+	}
+	public ArrayDeque<CrewMembersMainClass> getDeque() {
+		return deque;
+	}
 	public int getRemainingDays() {
 		return remainingDays;
 	}
-	public boolean inputShipName(String input) {
+	public boolean inputShipName(String inputTxtBox) {
         try {
-        	shipAndCrew.setShipName(input);
+        	shipAndCrew.setShipName(inputTxtBox);
         	return true;
         }
         catch (java.util.InputMismatchException e) {
@@ -52,5 +75,13 @@ public class GameEnvironment {
 	public ArrayList<CrewMembersMainClass> getClassList() {
 		return classList;
 	}
+	public TheShipClass getShipAndCrew() {
+
+		return shipAndCrew;
+	}
+	public void setRemainingDays(int i) {
+		remainingDays = i; 
+	}
+
 
 }

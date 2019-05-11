@@ -3,12 +3,19 @@ import java.util.ArrayList;
 
 public class TheShipClass {
 	private String shipName;
+	private int shipHealth = 100;
 	private int amountMoney = 100;
 	private int startingMemberCount;
 	ArrayList<CrewMembersMainClass> crewList = new ArrayList<CrewMembersMainClass>();
 	ArrayList<MedicalSupplies> medicalList = new ArrayList<MedicalSupplies>();
 	ArrayList<FoodItems> foodList = new ArrayList<FoodItems>();
 	public TheShipClass() {
+	}
+	public void setShipHealth(int i) {
+		shipHealth = i;
+	}
+	public int getShipHealth() {
+		return shipHealth;
 	}
 	public void printMedicalSupplies() {
 		for (MedicalSupplies i: medicalList) {
