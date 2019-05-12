@@ -18,6 +18,7 @@ import javax.swing.SwingConstants;
 
 public class SetupScreen {
 	private GameEnvironment gameLogic;
+	ArrayDeque<String> stringDeque = new ArrayDeque<String>();
 	/*
 	 * 	try {
 			crewInput1.setText(gameLogic.getShipAndCrew().getCrewList().get(0).toString());
@@ -28,6 +29,10 @@ public class SetupScreen {
 	private JFrame window;
 	private JTextField shipNameInput;
 	private JButton selectedMember1;
+	private JTextField selectedNameInput1;
+	private JTextField selectedNameInput2;
+	private JTextField selectedNameInput3;
+	private JTextField selectedNameInput4;
 	public static void main(String[] args) {
 	}
 	/**
@@ -88,19 +93,19 @@ public class SetupScreen {
 		shipNameInput.setColumns(10);
 		
 		JButton selectedMember1 = new JButton("");
-		selectedMember1.setBounds(46, 477, 125, 65);
+		selectedMember1.setBounds(46, 436, 125, 65);
 		window.getContentPane().add(selectedMember1);
 		
 		JButton selectedMember2 = new JButton("");
-		selectedMember2.setBounds(197, 477, 125, 65);
+		selectedMember2.setBounds(197, 436, 125, 65);
 		window.getContentPane().add(selectedMember2);
 		
 		JButton selectedMember3 = new JButton("");
-		selectedMember3.setBounds(351, 477, 125, 65);
+		selectedMember3.setBounds(356, 436, 125, 65);
 		window.getContentPane().add(selectedMember3);
 		
 		JButton selectedMember4 = new JButton("");
-		selectedMember4.setBounds(500, 477, 125, 65);
+		selectedMember4.setBounds(501, 436, 125, 65);
 		window.getContentPane().add(selectedMember4);
 		
 		JLabel memberStats = new JLabel("Member Stats");
@@ -197,7 +202,7 @@ public class SetupScreen {
 		
 		JLabel lblSelected = new JLabel("Selected:");
 		lblSelected.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblSelected.setBounds(46, 442, 109, 29);
+		lblSelected.setBounds(46, 411, 109, 29);
 		window.getContentPane().add(lblSelected);
 		
 		JButton btnDeque = new JButton("Deque");
@@ -222,27 +227,46 @@ public class SetupScreen {
 				}
 			}
 		});
-		btnDeque.setBounds(519, 443, 89, 23);
+		btnDeque.setBounds(683, 450, 89, 23);
 		window.getContentPane().add(btnDeque);
+		
+		selectedNameInput1 = new JTextField();
+		selectedNameInput1.setBounds(46, 512, 125, 20);
+		window.getContentPane().add(selectedNameInput1);
+		selectedNameInput1.setColumns(10);
+		
+		selectedNameInput2 = new JTextField();
+		selectedNameInput2.setColumns(10);
+		selectedNameInput2.setBounds(197, 512, 125, 20);
+		window.getContentPane().add(selectedNameInput2);
+		
+		selectedNameInput3 = new JTextField();
+		selectedNameInput3.setColumns(10);
+		selectedNameInput3.setBounds(356, 512, 125, 20);
+		window.getContentPane().add(selectedNameInput3);
+		
+		selectedNameInput4 = new JTextField();
+		selectedNameInput4.setColumns(10);
+		selectedNameInput4.setBounds(501, 512, 125, 20);
+		window.getContentPane().add(selectedNameInput4);
 		
 		JButton btnNewButton = new JButton("Accept");
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameLogic.getDeque().size() >= 2) {
-					for (CrewMembersMainClass i: gameLogic.getDeque()) {
-						gameLogic.getShipAndCrew().addCrewMember(i);
-					}
+										
+				System.out.println(gameLogic.getShipAndCrew().getCrewList().get(0).getMemberName());
+				System.out.println(gameLogic.getShipAndCrew().getCrewList().get(1).getMemberName());
+				System.out.println(gameLogic.getShipAndCrew().getCrewList().get(2).getMemberName());
+				System.out.println(gameLogic.getShipAndCrew().getCrewList().get(3).getMemberName());
+				gameLogic.getShipAndCrew().setShipName(shipNameInput.getText());
+				gameLogic.setRemainingDays(daysInputSlider.getValue());
+				terminate();
 					
-					System.out.println(gameLogic.getShipAndCrew().getCrewList());
-					gameLogic.getShipAndCrew().setShipName(shipNameInput.getText());
-					gameLogic.setRemainingDays(daysInputSlider.getValue());
-					terminate();
-				}
 			}
 		});
 		btnNewButton.setFont(new Font("Arial", Font.BOLD, 16));
-		btnNewButton.setBounds(663, 482, 91, 50);
+		btnNewButton.setBounds(683, 500, 91, 50);
 		window.getContentPane().add(btnNewButton);
 		
 	}

@@ -8,6 +8,9 @@ public class CrewMembersMainClass {
 	private String memberName;
 	private boolean spacePlagueStatus = false;
 	private int crewActions = 2;
+	public CrewMembersMainClass(String tempName) {
+		className = tempName;
+	}
 	public CrewMembersMainClass(String tempName, int tempHealthLevel, int tempHungerLevel, int tempTirednessLevel,
 			String tempSkill, String tempMemberName) {
 		memberName = tempMemberName;

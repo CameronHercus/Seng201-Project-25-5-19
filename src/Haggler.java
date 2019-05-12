@@ -1,7 +1,7 @@
 
 public class Haggler extends CrewMembersMainClass{
     public Haggler() {
-		super("Haggler", 100, 50, 50, " Buying items is cheaper", "DEFAULT");
+		super("Haggler");
 	}
 	public Haggler(String tempName) {
 		super("Haggler", 100, 50, 50, " Buying items is cheaper", tempName);

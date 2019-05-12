@@ -13,6 +13,9 @@ public class ShipOptionsScreen {
 
 	public static void main(String[] args) {
 	}
+	/**
+	 * @wbp.parser.entryPoint
+	 */
 	public ShipOptionsScreen(GameEnvironment tempGameLogic) {
 		gameLogic = tempGameLogic;
 		initialize();
@@ -64,5 +67,31 @@ public class ShipOptionsScreen {
 		JLabel lblDaysRemaining = new JLabel("Days remaining: " + gameLogic.getRemainingDays());
 		lblDaysRemaining.setBounds(10, 11, 257, 24);
 		window.getContentPane().add(lblDaysRemaining);
+		
+		JLabel crewMember1status = new JLabel("");
+		crewMember1status.setBounds(21, 202, 125, 80);
+		window.getContentPane().add(crewMember1status);
+		crewMember1status.setText(gameLogic.getShipAndCrew().getCrewList().get(0).toStatus());
+		
+		JLabel crewMember2status = new JLabel("");
+		crewMember2status.setBounds(156, 202, 125, 80);
+		window.getContentPane().add(crewMember2status);
+		crewMember2status.setText(gameLogic.getShipAndCrew().getCrewList().get(1).toStatus());
+		
+		JLabel crewMember3status = new JLabel("");
+		crewMember3status.setBounds(291, 202, 125, 80);
+		window.getContentPane().add(crewMember3status);
+		try {
+			crewMember3status.setText(gameLogic.getShipAndCrew().getCrewList().get(2).toStatus());
+		} catch (java.lang.IndexOutOfBoundsException e) {
+		}
+		
+		JLabel crewMember4status = new JLabel("");
+		crewMember4status.setBounds(426, 202, 125, 80);
+		window.getContentPane().add(crewMember4status);
+		try {
+			crewMember4status.setText(gameLogic.getShipAndCrew().getCrewList().get(3).toStatus());
+		} catch (java.lang.IndexOutOfBoundsException e) {
+		}
 	}
 }
