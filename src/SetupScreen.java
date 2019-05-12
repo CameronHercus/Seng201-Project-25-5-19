@@ -113,23 +113,18 @@ public class SetupScreen {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameLogic.getDeque().size() <= 3) {
-					gameLogic.getDeque().add(gameLogic.getClassList().get(0));
+					gameLogic.getDeque().add(gameLogic.getClassList().get(0	));
 					// ^^ adds to end of the deque
-					for (int i = 0; i < gameLogic.getDeque().size(); i++) {
-						if (i+1 == gameLogic.getDeque().size()) {
-							switch(i+1) {
-							case 1: selectedMember1.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							case 2: selectedMember2.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							case 3: selectedMember3.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							case 4: selectedMember4.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							default:
-								break;
-							}
-						}
+					switch(gameLogic.getDeque().size()) {
+					case 1: selectedMember1.setText(gameLogic.getDeque().getLast().toString());
+						break;
+					case 2: selectedMember2.setText(gameLogic.getDeque().getLast().toString());
+						break;
+					case 3: selectedMember3.setText(gameLogic.getDeque().getLast().toString());
+						break;
+					case 4: selectedMember4.setText(gameLogic.getDeque().getLast().toString());
+						break;
+						
 					}
 				}
 			}
@@ -145,22 +140,18 @@ public class SetupScreen {
 			public void mouseClicked(MouseEvent e) {
 				if (gameLogic.getDeque().size() <= 3) {
 					gameLogic.getDeque().add(gameLogic.getClassList().get(2));
+					//index two si the thief
 					// ^^ adds to end of the deque
-					for (int i = 0; i < gameLogic.getDeque().size(); i++) {
-						if (i+1 == gameLogic.getDeque().size()) {
-							switch(i+1) {
-							case 1: selectedMember1.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							case 2: selectedMember2.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							case 3: selectedMember3.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							case 4: selectedMember4.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							default:
-								break;
-							}
-						}
+					switch(gameLogic.getDeque().size()) {
+					case 1: selectedMember1.setText(gameLogic.getDeque().getLast().toString());
+						break;
+					case 2: selectedMember2.setText(gameLogic.getDeque().getLast().toString());
+						break;
+					case 3: selectedMember3.setText(gameLogic.getDeque().getLast().toString());
+						break;
+					case 4: selectedMember4.setText(gameLogic.getDeque().getLast().toString());
+						break;
+						
 					}
 				}
 			}
@@ -175,21 +166,16 @@ public class SetupScreen {
 				if (gameLogic.getDeque().size() <= 3) {
 					gameLogic.getDeque().add(gameLogic.getClassList().get(1));
 					// ^^ adds to end of the deque
-					for (int i = 0; i < gameLogic.getDeque().size(); i++) {
-						if (i+1 == gameLogic.getDeque().size()) {
-							switch(i+1) {
-							case 1: selectedMember1.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							case 2: selectedMember2.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							case 3: selectedMember3.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							case 4: selectedMember4.setText(gameLogic.getDeque().getLast().toString());
-							break;
-							default:
-								break;
-							}
-						}
+					switch(gameLogic.getDeque().size()) {
+					case 1: selectedMember1.setText(gameLogic.getDeque().getLast().toString());
+						break;
+					case 2: selectedMember2.setText(gameLogic.getDeque().getLast().toString());
+						break;
+					case 3: selectedMember3.setText(gameLogic.getDeque().getLast().toString());
+						break;
+					case 4: selectedMember4.setText(gameLogic.getDeque().getLast().toString());
+						break;
+						
 					}
 				}
 			}
@@ -218,25 +204,20 @@ public class SetupScreen {
 		btnDeque.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameLogic.getDeque().size() > 0) {
+				if (gameLogic.getDeque().size() > 0 && gameLogic.getDeque().size() <= 4) {
+					switch(gameLogic.getDeque().size()) {
+					case 1: selectedMember1.setText("");
 					gameLogic.getDeque().removeLast();
-					for (int i = 0; i < gameLogic.getDeque().size()+1; i++) {
-						if (gameLogic.getDeque().size() == 0) {
-							selectedMember1.setText("");
-						}if (i == gameLogic.getDeque().size()) {
-							switch(i) {
-							case 1: selectedMember2.setText("");
-							break;
-							case 2: selectedMember3.setText("");
-							break;
-							case 3: selectedMember4.setText("");
-							break;
-							case 4: selectedMember4.setText("");
-							break;
-							default:
-								break;
-							}
-						}
+					break;
+					case 2: selectedMember2.setText("");
+					gameLogic.getDeque().removeLast();
+					break;
+					case 3: selectedMember3.setText("");
+					gameLogic.getDeque().removeLast();
+					break;
+					case 4: selectedMember4.setText("");
+					gameLogic.getDeque().removeLast();
+					break;
 					}
 				}
 			}
@@ -249,6 +230,11 @@ public class SetupScreen {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (gameLogic.getDeque().size() >= 2) {
+					for (CrewMembersMainClass i: gameLogic.getDeque()) {
+						gameLogic.getShipAndCrew().addCrewMember(i);
+					}
+					
+					System.out.println(gameLogic.getShipAndCrew().getCrewList());
 					gameLogic.getShipAndCrew().setShipName(shipNameInput.getText());
 					gameLogic.setRemainingDays(daysInputSlider.getValue());
 					terminate();
