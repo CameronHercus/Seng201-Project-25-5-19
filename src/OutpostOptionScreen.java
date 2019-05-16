@@ -292,7 +292,8 @@ public class OutpostOptionScreen {
 		boxFoodQuantity.setBounds(543, 326, 45, 22);
 		window.getContentPane().add(boxFoodQuantity);
 	}
-	public void refreshGui(String medOrFood) {
+	public void refreshGui() {
+		window.revalidate();
 
 		
 	}
