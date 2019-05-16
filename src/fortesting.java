@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
-
+	
 public class fortesting {
 	private int remainingDays;
 	private int numberOfPiecesRemaining;
@@ -150,7 +150,7 @@ public class fortesting {
 						"3: Visit nearest outpost" + "\n" +
 						"4: View the status of your ship" + "\n" +
 						"The following activities will require actions to perform:" + "\n" +
-						"5: Have a creww member Eat food or Use medical Supplies from the ship's inventory" + "\n" +
+						"5: Have a Crew Member Eat food or Use medical Supplies from the ship's inventory" + "\n" +
 						"6: Have a Crew Member sleep" + "\n" +
 						"7: Have a Crew Member repair the ship" + "\n" +
 						"8: Have a Crew Member search the planet for spaceship parts" + "\n" +

@@ -5,7 +5,6 @@ public class TheShipClass {
 	private String shipName;
 	private int shipHealth = 100;
 	private int amountMoney = 100;
-	private int startingMemberCount;
 	ArrayList<CrewMembersMainClass> crewList = new ArrayList<CrewMembersMainClass>();
 	ArrayList<MedicalSupplies> medicalList = new ArrayList<MedicalSupplies>();
 	ArrayList<FoodItems> foodList = new ArrayList<FoodItems>();
@@ -17,20 +16,8 @@ public class TheShipClass {
 	public int getShipHealth() {
 		return shipHealth;
 	}
-	public void printMedicalSupplies() {
-		for (MedicalSupplies i: medicalList) {
-			System.out.println(i);
-			// NOT ACTUALLY BEING USED BUT PROB USEFUL FOR GUI
-		}
-	}
 	public int getAmountMoney() {
 		return amountMoney;
-	}
-	public void setStartingMemberCount(int tempStartingMemberCount) {
-		startingMemberCount = tempStartingMemberCount;
-	}
-	public int getstartingMemberCount() {
-		return startingMemberCount;
 	}
 	public boolean removeCrewmember(CrewMembersMainClass member) {
 		if (crewList.contains(member)) {
@@ -73,25 +60,11 @@ public class TheShipClass {
 		return false;
 		//not sure hasnt been tested
 	}
-	public boolean containsMedicine(MedicalSupplies medicine) {
-		if (medicalList.contains(medicine)) {
-			return true;
-		}
-		return false;
-	}
-	public String printAllActions() {
-		String str1 = "";
-		for (CrewMembersMainClass i: crewList) {
-			str1 += i.getMemberName() + " has " + i.getCrewActions() + " actions remaining for today" + "\n";
-		}
-		return str1;
-	}
 	public void addCrewMember(CrewMembersMainClass member) {
-		//should set member name in the setup class! should be boolean too
+
 		crewList.add(member);
 	}
 	public ArrayList<MedicalSupplies> getMedicalList() {
-		// not sure if quantity that passed in should be 0 to start with
 		return medicalList;
 	}
 	public ArrayList<FoodItems> getFoodList() {
@@ -106,17 +79,10 @@ public class TheShipClass {
 	public String getShipName() {
 		return shipName;
 	}
-	public int getCrewCount() {
-		int counter = 0;
-		for (int i = 0; i < crewList.size(); i++) {
-			counter += 1;
-		} // THIS NEEDS TO BE TESTED
-		return counter;
+	public void setAmountMoney(int i) {
+		amountMoney = i;
 	}
-	public void printAllCrewMembers() {
-		for (CrewMembersMainClass i: crewList) {
-			System.out.println(i.getMemberName());
-		}
-	}
+
+
 
 }

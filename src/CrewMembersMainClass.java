@@ -37,7 +37,6 @@ public class CrewMembersMainClass {
 	}
 	public void setSpacePlagueStatus(boolean tempStatus) {
 		spacePlagueStatus = tempStatus;
-		// not sure if this should be implemented under the crew member class or ship class
 	}
 	public boolean getSpacePlagueStatus() {
 		return spacePlagueStatus;
@@ -56,6 +55,9 @@ public class CrewMembersMainClass {
 	}
 	public int getTirednessLevel() {
 		return tirednessLevel;
+	}
+	public void setTiredNessLevel(int tempTirednessLevel) {
+		tirednessLevel = tempTirednessLevel;
 	}
 	public String getSkill() {
 		return skill;

@@ -1,41 +1,24 @@
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
+import java.util.ListIterator;
 
 public class pleasework {
+	static GameEnvironment gameLogic = new GameEnvironment();
 
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					pleasework window = new pleasework();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+		TheShipClass shipAndCrew = new TheShipClass();
+		gameLogic.getShipAndCrew().addCrewMember(new Haggler("harry"));
+		gameLogic.getShipAndCrew().addCrewMember(new Thief("Bob"));
+		gameLogic.getShipAndCrew().getCrewList().get(0).setHealthLevel(0);
+		gameLogic.getShipAndCrew().getCrewList().get(1).setHealthLevel(0);
+		System.out.println(gameLogic.getShipAndCrew().getCrewList());
+		ListIterator<CrewMembersMainClass> listIterator = gameLogic.getShipAndCrew().getCrewList().listIterator();
+		while (listIterator.hasNext()) {
+			CrewMembersMainClass member = listIterator.next();
+			if (member.getHealthLevel() == 0) {
+				listIterator.remove();
 			}
-		});
+		}
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public pleasework() {
-		initialize();
-	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	}
 
 }

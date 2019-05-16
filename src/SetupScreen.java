@@ -1,34 +1,21 @@
-import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.JProgressBar;
 
 public class SetupScreen {
 	private GameEnvironment gameLogic;
 	ArrayDeque<String> stringDeque = new ArrayDeque<String>();
-	/*
-	 * 	try {
-			crewInput1.setText(gameLogic.getShipAndCrew().getCrewList().get(0).toString());
-		} catch (java.lang.IndexOutOfBoundsException e) {
 
-        }
-	 */
 	private JFrame window;
 	private JTextField shipNameInput;
-	private JButton selectedMember1;
 	private JTextField selectedNameInput1;
 	private JTextField selectedNameInput2;
 	private JTextField selectedNameInput3;
@@ -49,14 +36,9 @@ public class SetupScreen {
 	public void finishedWindow() {
 		gameLogic.closeSetupScreen(this);
 	}
-	public void terminate() {
-		gameLogic.closeSetupScreen(this);
-	}
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		window = new JFrame();
+		window.setTitle("Setup Screen");
 		window.setBounds(100, 100, 800, 600);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
@@ -117,17 +99,16 @@ public class SetupScreen {
 		crewType1bttn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameLogic.getDeque().size() <= 3) {
-					gameLogic.getDeque().add(gameLogic.getClassList().get(0	));
-					// ^^ adds to end of the deque
-					switch(gameLogic.getDeque().size()) {
-					case 1: selectedMember1.setText(gameLogic.getDeque().getLast().toString());
+				if (stringDeque.size() <= 3) {
+					stringDeque.add("The Medic");
+					switch(stringDeque.size()) {
+					case 1: selectedMember1.setText(stringDeque.getLast());
 						break;
-					case 2: selectedMember2.setText(gameLogic.getDeque().getLast().toString());
+					case 2: selectedMember2.setText(stringDeque.getLast());
 						break;
-					case 3: selectedMember3.setText(gameLogic.getDeque().getLast().toString());
+					case 3: selectedMember3.setText(stringDeque.getLast());
 						break;
-					case 4: selectedMember4.setText(gameLogic.getDeque().getLast().toString());
+					case 4: selectedMember4.setText(stringDeque.getLast());
 						break;
 						
 					}
@@ -136,25 +117,21 @@ public class SetupScreen {
 		});
 		crewType1bttn.setBounds(46, 217, 125, 80);
 		window.getContentPane().add(crewType1bttn);
-		// have it so everytime u click on thing it gets a deque from 
-		// gameLogic and sets all the texts from selected == to index
-		
 		JButton crewType2bttn = new JButton("The Thief");
 		crewType2bttn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameLogic.getDeque().size() <= 3) {
-					gameLogic.getDeque().add(gameLogic.getClassList().get(2));
-					//index two si the thief
+				if (stringDeque.size() <= 3) {
+					stringDeque.add("The Thief");
 					// ^^ adds to end of the deque
-					switch(gameLogic.getDeque().size()) {
-					case 1: selectedMember1.setText(gameLogic.getDeque().getLast().toString());
+					switch(stringDeque.size()) {
+					case 1: selectedMember1.setText(stringDeque.getLast());
 						break;
-					case 2: selectedMember2.setText(gameLogic.getDeque().getLast().toString());
+					case 2: selectedMember2.setText(stringDeque.getLast());
 						break;
-					case 3: selectedMember3.setText(gameLogic.getDeque().getLast().toString());
+					case 3: selectedMember3.setText(stringDeque.getLast());
 						break;
-					case 4: selectedMember4.setText(gameLogic.getDeque().getLast().toString());
+					case 4: selectedMember4.setText(stringDeque.getLast());
 						break;
 						
 					}
@@ -168,17 +145,17 @@ public class SetupScreen {
 		crewType3bttn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameLogic.getDeque().size() <= 3) {
-					gameLogic.getDeque().add(gameLogic.getClassList().get(1));
+				if (stringDeque.size() <= 3) {
+					stringDeque.add("The Haggler");
 					// ^^ adds to end of the deque
-					switch(gameLogic.getDeque().size()) {
-					case 1: selectedMember1.setText(gameLogic.getDeque().getLast().toString());
+					switch(stringDeque.size()) {
+					case 1: selectedMember1.setText(stringDeque.getLast());
 						break;
-					case 2: selectedMember2.setText(gameLogic.getDeque().getLast().toString());
+					case 2: selectedMember2.setText(stringDeque.getLast());
 						break;
-					case 3: selectedMember3.setText(gameLogic.getDeque().getLast().toString());
+					case 3: selectedMember3.setText(stringDeque.getLast());
 						break;
-					case 4: selectedMember4.setText(gameLogic.getDeque().getLast().toString());
+					case 4: selectedMember4.setText(stringDeque.getLast());
 						break;
 						
 					}
@@ -206,46 +183,51 @@ public class SetupScreen {
 		window.getContentPane().add(lblSelected);
 		
 		JButton btnDeque = new JButton("Deque");
+		btnDeque.setFont(new Font("Tahoma", Font.BOLD, 14));
 		btnDeque.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameLogic.getDeque().size() > 0 && gameLogic.getDeque().size() <= 4) {
-					switch(gameLogic.getDeque().size()) {
+				if (stringDeque.size() > 0 && stringDeque.size() <= 4) {
+					switch(stringDeque.size()) {
 					case 1: selectedMember1.setText("");
-					gameLogic.getDeque().removeLast();
+					stringDeque.removeLast();
 					break;
 					case 2: selectedMember2.setText("");
-					gameLogic.getDeque().removeLast();
+					stringDeque.removeLast();
 					break;
 					case 3: selectedMember3.setText("");
-					gameLogic.getDeque().removeLast();
+					stringDeque.removeLast();
 					break;
 					case 4: selectedMember4.setText("");
-					gameLogic.getDeque().removeLast();
+					stringDeque.removeLast();
 					break;
 					}
 				}
 			}
 		});
-		btnDeque.setBounds(683, 450, 89, 23);
+		btnDeque.setBounds(683, 450, 89, 39);
 		window.getContentPane().add(btnDeque);
 		
 		selectedNameInput1 = new JTextField();
+		selectedNameInput1.setText("Enter Name");
 		selectedNameInput1.setBounds(46, 512, 125, 20);
 		window.getContentPane().add(selectedNameInput1);
 		selectedNameInput1.setColumns(10);
 		
 		selectedNameInput2 = new JTextField();
+		selectedNameInput2.setText("Enter Name");
 		selectedNameInput2.setColumns(10);
 		selectedNameInput2.setBounds(197, 512, 125, 20);
 		window.getContentPane().add(selectedNameInput2);
 		
 		selectedNameInput3 = new JTextField();
+		selectedNameInput3.setText("Enter Name");
 		selectedNameInput3.setColumns(10);
 		selectedNameInput3.setBounds(356, 512, 125, 20);
 		window.getContentPane().add(selectedNameInput3);
 		
 		selectedNameInput4 = new JTextField();
+		selectedNameInput4.setText("Enter Name");
 		selectedNameInput4.setColumns(10);
 		selectedNameInput4.setBounds(501, 512, 125, 20);
 		window.getContentPane().add(selectedNameInput4);
@@ -254,20 +236,36 @@ public class SetupScreen {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-										
-				System.out.println(gameLogic.getShipAndCrew().getCrewList().get(0).getMemberName());
-				System.out.println(gameLogic.getShipAndCrew().getCrewList().get(1).getMemberName());
-				System.out.println(gameLogic.getShipAndCrew().getCrewList().get(2).getMemberName());
-				System.out.println(gameLogic.getShipAndCrew().getCrewList().get(3).getMemberName());
+				for (String i: stringDeque) {
+					switch(i) {
+					case"The Medic": gameLogic.getShipAndCrew().addCrewMember(new Medic("bob"));
+					break;
+					case"The Thief": gameLogic.getShipAndCrew().addCrewMember(new Thief("bill"));
+					break;
+					case"The Haggler": gameLogic.getShipAndCrew().addCrewMember(new Haggler("harry"));
+					break;
+					default:
+						break;
+					}
+				}
 				gameLogic.getShipAndCrew().setShipName(shipNameInput.getText());
 				gameLogic.setRemainingDays(daysInputSlider.getValue());
-				terminate();
+				gameLogic.setNumberOfPiecesRemaining((int) (Math.floor(gameLogic.getRemainingDays() * (float) 2/3)));
+				finishedWindow();
 					
 			}
 		});
 		btnNewButton.setFont(new Font("Arial", Font.BOLD, 16));
 		btnNewButton.setBounds(683, 500, 91, 50);
 		window.getContentPane().add(btnNewButton);
+		
+		JProgressBar IMPLEMENTLATER = new JProgressBar();
+		IMPLEMENTLATER.setBounds(638, 426, 146, 14);
+		window.getContentPane().add(IMPLEMENTLATER);
+		
+	}
+	public void refreshGui() {
+		
 		
 	}
 }

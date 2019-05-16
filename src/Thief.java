@@ -4,6 +4,6 @@ public class Thief extends CrewMembersMainClass {
 		super("Thief");
 	}
 	public Thief(String tempName) {
-		super("Thief", 100, 50, 50, " can steal one 5dollar item every day", tempName);
+		super("Thief", 100, 0, 0, " can steal one 5dollar item every day", tempName);
 	}
 }
