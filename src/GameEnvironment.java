@@ -14,9 +14,9 @@ public class GameEnvironment {
 	public GameEnvironment() {
 	}
 	public void launchShipOptionsScreen() {
-		ShipOptionsScreen shipOptionsScreen = new ShipOptionsScreen(this);
+		ShipMenuScreen shipMenuScreen = new ShipMenuScreen(this);
 	}
-	public void closeShipOptionsScreen(ShipOptionsScreen shipOptionsScreen) {
+	public void closeShipOptionsScreen(ShipMenuScreen shipOptionsScreen) {
 		shipOptionsScreen.closeWindow();
 	}
 	public void launchSetupScreen() {

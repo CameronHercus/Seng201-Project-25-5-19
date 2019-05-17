@@ -63,7 +63,7 @@ public class CrewMembersMainClass {
 		return skill;
 	}
 	public String toString() {
-		return "The " + className;
+		return memberName + " The " + className;
 	}
 	public String toStatus() {
 		return memberName + " status: " + "\n" + "Tiredness level is " + tirednessLevel + ", Health level is " + healthLevel + ",  Hunger level is " + hungerLevel;
