@@ -59,6 +59,10 @@ public class ShipOptionsScreen {
 		window.getContentPane().add(shipNamelbl);
 		
 		JButton btnVisitNearestOutpost = new JButton("Visit nearest outpost");
+		btnVisitNearestOutpost.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnVisitNearestOutpost.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

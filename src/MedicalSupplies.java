@@ -17,8 +17,5 @@ public class MedicalSupplies {
 	public String toString() {
 		return medicineName;
 	}
-    public String getDescription() {
-		return medicineName + " is medicine for a wounded crew member!";
-	}
 
 }

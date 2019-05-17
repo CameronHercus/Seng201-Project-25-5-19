@@ -10,5 +10,9 @@ public class FirstAidKit extends MedicalSupplies{
 		
 		//heals certain amount of health		
 	}
+    public String getDescription() {
+		return " is medicine for a wounded crew member!";
+	}
+
 
 }

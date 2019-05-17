@@ -4,9 +4,12 @@ import java.util.Deque;
 import java.util.LinkedList;
 public class testingqueue {
 	public static void main(String[] args) {
-		ArrayDeque<String> array = new ArrayDeque<String>();
-		array.add("bob");
-		System.out.println(0<0);
+		ArrayDeque<MedicalSupplies> array = new ArrayDeque<MedicalSupplies>();
+		array.add(new Antidote());
+		System.out.println(array.getFirst().getClass());
+		if (array.getFirst() instanceof Antidote) {
+			System.out.println("BOB");
+		}
 	}
 
 }

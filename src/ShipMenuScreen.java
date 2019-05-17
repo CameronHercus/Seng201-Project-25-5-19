@@ -17,9 +17,6 @@ public class ShipMenuScreen {
 	private GameEnvironment gameLogic;
 	private JFrame window;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 	}
 
@@ -43,9 +40,9 @@ public class ShipMenuScreen {
 		gameLogic.launchEndingScreen();
 		// rethink how it relates to all the close and launch menus
 	}
-	/**
-	 * Initialize the contents of the frame.
-	 */
+	public void refresh() {
+		
+	}
 	private void initialize() {
 		window = new JFrame();
 		window.setBounds(100, 100, 800, 600);
@@ -56,7 +53,7 @@ public class ShipMenuScreen {
 		 "Amount of Money: " + gameLogic.getShipAndCrew().getAmountMoney() + "<br>" +
 		 "Number of pieces remaining: " + gameLogic.getNumberOfPiecesRemaining() + "</html>");
 		lblShipStatus.setFont(new Font("Arial", Font.BOLD, 16));
-		lblShipStatus.setBounds(10, 10, 269, 79);
+		lblShipStatus.setBounds(14, 44, 269, 79);
 		window.getContentPane().add(lblShipStatus);
 		
 		JComboBox comboBox = new JComboBox();
@@ -78,15 +75,30 @@ public class ShipMenuScreen {
 		window.getContentPane().add(comboBox_2);
 		
 		JComboBox comboBox_3 = new JComboBox();
+		comboBox_3.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getCrewList().toArray()));
 		comboBox_3.setMaximumRowCount(4);
 		comboBox_3.setBounds(436, 377, 145, 40);
 		window.getContentPane().add(comboBox_3);
 		
 		JButton button_1 = new JButton("Have " + comboBox.getSelectedItem() + " Apply " + comboBox_2.getSelectedItem());
+		button_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println(((MedicalSupplies) comboBox_2.getSelectedItem()));
+				gameLogic.applyMedicine(((MedicalSupplies) comboBox_2.getSelectedItem()), 
+						((CrewMembersMainClass) comboBox.getSelectedItem()));
+				comboBox_2.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
+			}
+		});
 		button_1.setBounds(232, 287, 145, 80);
 		window.getContentPane().add(button_1);
 		
 		JButton button_3 = new JButton("Have " + comboBox.getSelectedItem() + " Eat " + comboBox_1.getSelectedItem());
+		button_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		button_3.setBounds(14, 287, 145, 80);
 		window.getContentPane().add(button_3);
 		
@@ -99,6 +111,11 @@ public class ShipMenuScreen {
 		window.getContentPane().add(btnSleep);
 		
 		JButton button_6 = new JButton("Repair the Ship");
+		button_6.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+			}
+		});
 		button_6.setBounds(232, 472, 145, 80);
 		window.getContentPane().add(button_6);
 		
@@ -110,7 +127,7 @@ public class ShipMenuScreen {
 				gameLogic.launchOutpostOptionScreen();
 			}
 		});
-		btnVisitNearestOutpost.setBounds(275, 24, 125, 65);
+		btnVisitNearestOutpost.setBounds(293, 58, 125, 65);
 		window.getContentPane().add(btnVisitNearestOutpost);
 		
 		JButton btnPilotShipWith = new JButton("Pilot ship with ");
@@ -122,11 +139,19 @@ public class ShipMenuScreen {
 				"Hunger " + gameLogic.getShipAndCrew().getCrewList().get(0).getHungerLevel() + "<br>" +
 				"Tiredness " + gameLogic.getShipAndCrew().getCrewList().get(0).getTirednessLevel() + "<br>" +
 				"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(0).getCrewActions() + "</html>");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setBounds(134, 169, 129, 85);
+		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 14));
+		lblNewLabel.setBounds(134, 134, 145, 120);
 		window.getContentPane().add(lblNewLabel);
 		
 		JButton button_4 = new JButton("Have " + comboBox.getSelectedItem() + " Search for parts ");
+		button_4.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				gameLogic.searchForParts(((CrewMembersMainClass) comboBox.getSelectedItem()));
+				finishedWindow();
+				gameLogic.launchShipOptionsScreen();
+			}
+		});
 		button_4.setBounds(14, 472, 145, 80);
 		window.getContentPane().add(button_4);
 		
@@ -136,7 +161,7 @@ public class ShipMenuScreen {
 				"Tiredness " + gameLogic.getShipAndCrew().getCrewList().get(0).getTirednessLevel() + "<br>" +
 				"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(0).getCrewActions() + "</html>");
 		label.setFont(new Font("Arial", Font.BOLD, 14));
-		label.setBounds(631, 4, 145, 120);
+		label.setBounds(631, 38, 145, 120);
 		window.getContentPane().add(label);
 		
 		JLabel label_1 = new JLabel("<html>" + gameLogic.getShipAndCrew().getCrewList().get(1).toString() + "<br>" +
@@ -145,7 +170,7 @@ public class ShipMenuScreen {
 				"Tiredness " + gameLogic.getShipAndCrew().getCrewList().get(1).getTirednessLevel() + "<br>" +
 				"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(1).getCrewActions() + "</html>");
 		label_1.setFont(new Font("Arial", Font.BOLD, 14));
-		label_1.setBounds(631, 134, 145, 120);
+		label_1.setBounds(631, 156, 145, 120);
 		window.getContentPane().add(label_1);
 		
 		JLabel label_2 = new JLabel("<html><dynamic><br>Health 0<br>Hunger 0<br>Tiredness 0<br>Remaining Actions 0</html>");
@@ -159,7 +184,26 @@ public class ShipMenuScreen {
 		window.getContentPane().add(label_3);
 		
 		JButton btnNewButton = new JButton("onto next day");
-		btnNewButton.setBounds(422, 22, 125, 65);
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				// maybe change to have it do set remaining days before the if statement
+				gameLogic.newDayChanges();
+				if (!gameLogic.isGameOver() && gameLogic.getRemainingDays() > 1) {
+					gameLogic.setAllCrewmembersActions();
+					gameLogic.setRemainingDays(gameLogic.getRemainingDays()-1);
+					finishedWindow();
+					gameLogic.launchShipOptionsScreen();
+				} else {
+					finishedWindowEndGame();
+				}
+				
+				//terminate() and launch it again or make new thing called relaunch
+				
+			}
+		});
+		btnNewButton.setBounds(456, 58, 125, 65);
 		window.getContentPane().add(btnNewButton);
 	}
 }

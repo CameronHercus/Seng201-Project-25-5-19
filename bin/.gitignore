@@ -1,5 +1,3 @@
-/GameInput.class
-/GreenAlien.class
 /GreenAlienTransporter.class
 /Haggler.class
 /MainScreen$1.class
@@ -31,8 +29,6 @@
 /SetupScreen$4.class
 /SetupScreen$5.class
 /SetupScreen.class
-/ShipMenuScreen$1.class
-/ShipMenuScreen.class
 /ShipOptionsScreen$1.class
 /ShipOptionsScreen$2.class
 /ShipOptionsScreen$3.class
@@ -52,4 +48,12 @@
 /maingui.class
 /pleasework.class
 /testingqueue.class
+/ShipMenuScreen$1.class
 /ShipMenuScreen$2.class
+/ShipMenuScreen.class
+/ShipMenuScreen$3.class
+/ShipMenuScreen$4.class
+/ShipOptionsScreen$9.class
+/ShipMenuScreen$5.class
+/ShipMenuScreen$6.class
+/ShipMenuScreen$7.class

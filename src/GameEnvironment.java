@@ -50,7 +50,17 @@ public class GameEnvironment {
 	
 	public void feed(FoodItems food) {
 	}
-	public void applyMedicine(MedicalSupplies medicine) {
+	public void applyMedicine(MedicalSupplies medicine, CrewMembersMainClass appliedMember) {
+		if (medicine instanceof Antidote) {
+			appliedMember.setSpacePlagueStatus(false);
+			removeMedicine(medicine);
+		} else if (medicine instanceof MedKit) {
+			appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 100));
+			removeMedicine(medicine);
+		} else if (medicine instanceof FirstAidKit){
+			appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 100));
+			removeMedicine(medicine);
+		}
 	} 
 	
 	
@@ -162,6 +172,15 @@ public class GameEnvironment {
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	
+	public void removeMedicine(MedicalSupplies removeMed)  {
+		for (int i=0; i < shipAndCrew.getMedicalList().size(); i++) {
+			if (shipAndCrew.getMedicalList().get(i) == removeMed) {
+				shipAndCrew.getMedicalList().remove(i);
+			}
 		}
 	}
 	
