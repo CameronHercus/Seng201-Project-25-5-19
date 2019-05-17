@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.ListIterator;
 
 public class GameEnvironment {
 	private int remainingDays;
 	private int numberOfPiecesRemaining;
-	private boolean partFoundOnPlanet;
+	private boolean partFoundOnPlanet = false;
 	TheShipClass shipAndCrew = new TheShipClass();
 
 	public static void main(String[] args) {
@@ -41,36 +42,18 @@ public class GameEnvironment {
 	public TheShipClass getShipAndCrew() {
 		return shipAndCrew;
 	}
-	public int getRemainingDays() {
-		return remainingDays;
+	public void setPartFoundOnPlanet(boolean booleanValue) {
+		partFoundOnPlanet = booleanValue;
 	}
-	public void setRemainingDays(int i) {
-		remainingDays = i; 
-	}
-	public void setNumberOfPiecesRemaining(int i) {
-		numberOfPiecesRemaining = i;
-	}
-	public int getNumberOfPiecesRemaining() {
-		return numberOfPiecesRemaining;
-	}
+
+	
+	
 	public void feed(FoodItems food) {
 	}
 	public void applyMedicine(MedicalSupplies medicine) {
 	} 
-	// added from shipcalss below
-	public String printAllActions() {
-		String str1 = "";
-		for (CrewMembersMainClass i: shipAndCrew.getCrewList()) {
-			str1 += i.getMemberName() + " has " + i.getCrewActions() + " actions remaining for today" + "\n";
-		}
-		return str1;
-	}
-	public boolean containsMedicine(MedicalSupplies medicine) {
-		if (shipAndCrew.getMedicalList().contains(medicine)) {
-			return true;
-		}
-		return false;
-	}
+	
+	
 	public String newDayEvent() {
 		switch((int)(Math.random() * 2 + 1)) {
 		// *3 means in range of 3, the +1 means +1 to the answer, otherwise it would be 0,1,2 instead of 1,2,3
@@ -90,7 +73,11 @@ public class GameEnvironment {
 				shipAndCrew.getCrewList().get(i).setHealthLevel(Math.max(shipAndCrew.getCrewList().get(i).getHealthLevel() - 19, 0));
 			}
 		}
+		setPartFoundOnPlanet(false);
+		removeDeadCrewMembers();
 		//iterates throught the arraylist and removes any crew members who health is 0, can only be done using listiterator
+	}
+	public void removeDeadCrewMembers() {
 		ListIterator<CrewMembersMainClass> listIterator = shipAndCrew.getCrewList().listIterator();
 		while (listIterator.hasNext()) {
 			CrewMembersMainClass member = listIterator.next();
@@ -98,6 +85,7 @@ public class GameEnvironment {
 				listIterator.remove();
 			}
 		}
+		
 	}
 	public void searchForParts(CrewMembersMainClass member) {
 		if (member.getCrewActions() > 0 ) {
@@ -107,7 +95,12 @@ public class GameEnvironment {
 			addRandomFood();
 				break;
 			case 2: System.out.println("Part");
-			numberOfPiecesRemaining -= 1;
+			if (partFoundOnPlanet) {
+				numberOfPiecesRemaining -= 1;
+				System.out.println("Part");
+			} else {
+				System.out.println("Part already found you found nothing");
+			}
 				break;
 			case 3: System.out.println("Money");
 			shipAndCrew.setAmountMoney(shipAndCrew.getAmountMoney()+10);
@@ -130,6 +123,7 @@ public class GameEnvironment {
 		case 1: shipAndCrew.getMedicalList().add(new FirstAidKit());
 			break;
 		case 2: shipAndCrew.getMedicalList().add(new Antidote());
+			break;
 		}
 	}
 	public void addRandomFood() {
@@ -169,6 +163,31 @@ public class GameEnvironment {
 		} else {
 			return false;
 		}
+	}
+	
+	
+	
+	
+	public ArrayList<CrewMembersMainClass>  getCrewMembersList() {
+		return shipAndCrew.getCrewList();
+	}
+	public ArrayList<FoodItems> getCrewFoodList() {
+		return shipAndCrew.getFoodList();
+	}
+	public ArrayList<MedicalSupplies> getCrewMedicineList() {
+		return shipAndCrew.getMedicalList();
+	}
+	public int getRemainingDays() {
+		return remainingDays;
+	}
+	public void setRemainingDays(int i) {
+		remainingDays = i; 
+	}
+	public void setNumberOfPiecesRemaining(int i) {
+		numberOfPiecesRemaining = i;
+	}
+	public int getNumberOfPiecesRemaining() {
+		return numberOfPiecesRemaining;
 	}
 
 
