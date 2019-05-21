@@ -71,6 +71,16 @@ public class OutpostOptionScreen {
 		window.getContentPane().add(selectedFood);
 		window.getContentPane().add(btnNewButton);
 		
+		JLabel medicineCost = new JLabel("Total cost");
+		medicineCost.setFont(new Font("Arial", Font.BOLD, 16));
+		medicineCost.setBounds(619, 465, 123, 14);
+		window.getContentPane().add(medicineCost);
+		
+		JLabel foodCost = new JLabel("Total cost");
+		foodCost.setFont(new Font("Tahoma", Font.BOLD, 16));
+		foodCost.setBounds(619, 263, 123, 29);
+		window.getContentPane().add(foodCost);
+		
 		JLabel lblMoneyRemaining_1 = new JLabel("Amount of Money: " + gameLogic.getShipAndCrew().getAmountMoney());
 		lblMoneyRemaining_1.setBounds(387, 157, 146, 29);
 		window.getContentPane().add(lblMoneyRemaining_1);
@@ -111,6 +121,18 @@ public class OutpostOptionScreen {
 				lblItemStats.setText("Tea");
 			}
 		});
+		
+		JComboBox medicineQuantity = new JComboBox();
+		medicineQuantity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				medicineCost.setText("Cost: $" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem());
+				
+			}
+		});
+		medicineQuantity.setModel(new DefaultComboBoxModel(comboBoxOptions.toArray()));
+		medicineQuantity.setMaximumRowCount(10);
+		medicineQuantity.setBounds(543, 529, 45, 22);
+		window.getContentPane().add(medicineQuantity);
 		btnTea.setBounds(10, 296, 125, 80);
 		window.getContentPane().add(btnTea);
 		
@@ -147,6 +169,7 @@ public class OutpostOptionScreen {
 				}
 				medicineDeque.add(new Antidote());
 				selectedMedicine.setText(medicineDeque.getLast().getMedicineName());
+				medicineCost.setText("Cost: $" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem());
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -218,6 +241,7 @@ public class OutpostOptionScreen {
 				}
 				medicineDeque.add(new MedKit());
 				selectedMedicine.setText(medicineDeque.getLast().getMedicineName());
+				medicineCost.setText("Cost: $" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem());
 			}
 		});
 
@@ -231,6 +255,7 @@ public class OutpostOptionScreen {
 				}
 				medicineDeque.add(new FirstAidKit());
 				selectedMedicine.setText(medicineDeque.getLast().getMedicineName());
+				medicineCost.setText("Cost: $" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem());
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
@@ -243,16 +268,14 @@ public class OutpostOptionScreen {
 		window.getContentPane().add(btnMedKit);
 		
 		JComboBox boxFoodQuantity_1 = new JComboBox();
+		boxFoodQuantity_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		boxFoodQuantity_1.setModel(new DefaultComboBoxModel(comboBoxOptions.toArray()));
 		boxFoodQuantity_1.setMaximumRowCount(10);
 		boxFoodQuantity_1.setBounds(543, 326, 45, 22);
 		window.getContentPane().add(boxFoodQuantity_1);
-		
-		JComboBox boxMedicineQuantity_1 = new JComboBox();
-		boxMedicineQuantity_1.setModel(new DefaultComboBoxModel(comboBoxOptions.toArray()));
-		boxMedicineQuantity_1.setMaximumRowCount(10);
-		boxMedicineQuantity_1.setBounds(543, 529, 45, 22);
-		window.getContentPane().add(boxMedicineQuantity_1);
 		
 		JLabel label_2 = new JLabel("Selected:");
 		label_2.setFont(new Font("Arial", Font.PLAIN, 18));
@@ -263,22 +286,17 @@ public class OutpostOptionScreen {
 		label.setFont(new Font("Arial", Font.PLAIN, 18));
 		label.setBounds(463, 415, 109, 29);
 		window.getContentPane().add(label);
-		
-		JLabel lblCost = new JLabel("Cost");
-		lblCost.setBounds(619, 465, 48, 14);
-		window.getContentPane().add(lblCost);
-		
-		JLabel label_3 = new JLabel("Cost");
-		label_3.setBounds(619, 263, 48, 14);
-		window.getContentPane().add(label_3);
 		JButton btnFoodPurchase = new JButton("Purchase");
 		btnFoodPurchase.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameLogic.purchaseFood(foodDeque.getLast(), (int) boxFoodQuantity_1.getSelectedItem())) {
-					selectedFood.setText("");
-				} else {
-					System.out.println("NOT ENOUGH FUNDS");
+				if (foodDeque.size() > 0) {
+					if (gameLogic.purchaseFood(foodDeque.getLast(), (int) boxFoodQuantity_1.getSelectedItem())) {
+						selectedFood.setText("");
+						foodCost.setText("");
+					} else {
+						System.out.println("NOT ENOUGH FUNDS");
+					}
 				}
 			}
 		});
@@ -294,10 +312,13 @@ public class OutpostOptionScreen {
 		btnMedicinePurchase.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (gameLogic.purchaseMedicine(medicineDeque.getLast(), (int) boxMedicineQuantity_1.getSelectedItem())) {
-					selectedMedicine.setText("");
-				} else {
-					System.out.println("NOT ENOUGH FUNDS");
+				if (medicineDeque.size() > 0) {
+					if (gameLogic.purchaseMedicine(medicineDeque.getLast(), (int) medicineQuantity.getSelectedItem())) {
+						selectedMedicine.setText("");
+						medicineCost.setText("");
+					} else {
+						System.out.println("NOT ENOUGH FUNDS");
+					}
 				}
 			}
 		});

@@ -54,12 +54,12 @@ public class SetupScreen {
 		window.getContentPane().add(numDayslbl);
 		
 		JSlider daysInputSlider = new JSlider();
+		daysInputSlider.setPaintTicks(true);
 		daysInputSlider.setPaintLabels(true);
 		daysInputSlider.setMajorTickSpacing(1);
 		daysInputSlider.setMaximum(10);
 		daysInputSlider.setMinimum(3);
 		daysInputSlider.setSnapToTicks(true);
-		daysInputSlider.setPaintTicks(true);
 		daysInputSlider.setBounds(371, 115, 296, 50);
 		window.getContentPane().add(daysInputSlider);
 		
