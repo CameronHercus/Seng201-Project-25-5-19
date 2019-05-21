@@ -48,9 +48,24 @@ public class GameEnvironment {
 
 	
 	
-	public void feed(FoodItems food) {
+	public void feed(FoodItems food, CrewMembersMainClass appliedMember) {
+		if (food instanceof Tea) {
+			removeFood(food);
+		} else if (food instanceof Nuts) {
+			removeFood(food);
+		} else if (food instanceof Apple) {
+			removeFood(food);
+		} else if (food instanceof Bread) {
+			removeFood(food);
+		} else if (food instanceof Soup) {
+			removeFood(food);
+		} else if (food instanceof CornedBeef) {
+			removeFood(food);
+		}
 	}
 	public void applyMedicine(MedicalSupplies medicine, CrewMembersMainClass appliedMember) {
+		// THE + 25/15 VALUES SHOULD BE THE GET HEALTH TREATMENT FROM ITS CLASS AND THE 100 VALUE SHOULD
+		// BE GET HEALTH OF CREW MEMBER
 		if (medicine instanceof Antidote) {
 			appliedMember.setSpacePlagueStatus(false);
 			removeMedicine(medicine);
@@ -83,7 +98,6 @@ public class GameEnvironment {
 				shipAndCrew.getCrewList().get(i).setHealthLevel(Math.max(shipAndCrew.getCrewList().get(i).getHealthLevel() - 19, 0));
 			}
 		}
-		setPartFoundOnPlanet(false);
 		removeDeadCrewMembers();
 		//iterates throught the arraylist and removes any crew members who health is 0, can only be done using listiterator
 	}
@@ -104,9 +118,10 @@ public class GameEnvironment {
 			case 1: System.out.println("Food");
 			addRandomFood();
 				break;
-			case 2: System.out.println("Part");
-			if (partFoundOnPlanet) {
+			case 2:
+			if (!partFoundOnPlanet) {
 				numberOfPiecesRemaining -= 1;
+				partFoundOnPlanet = true;
 				System.out.println("Part");
 			} else {
 				System.out.println("Part already found you found nothing");
@@ -147,6 +162,7 @@ public class GameEnvironment {
 		}
 	}
 	public boolean newPlanet() {
+		setPartFoundOnPlanet(false);
 		switch((int)(Math.random() * 3 + 1)) {
 		// 33% chance to trigger ship damage
 		case 1: //trigger ship taking % damage
@@ -174,16 +190,36 @@ public class GameEnvironment {
 			return false;
 		}
 	}
-	
-	
+	public boolean purchaseFood(FoodItems item, int quantity) {
+		if (item.getfoodCost() * quantity <= shipAndCrew.getAmountMoney()) {
+			shipAndCrew.setAmountMoney(shipAndCrew.getAmountMoney() - item.getfoodCost() * quantity);
+			for (int i = 0; i < quantity; i++) {
+				shipAndCrew.getFoodList().add(item);
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public void removeMedicine(MedicalSupplies removeMed)  {
 		for (int i=0; i < shipAndCrew.getMedicalList().size(); i++) {
 			if (shipAndCrew.getMedicalList().get(i) == removeMed) {
 				shipAndCrew.getMedicalList().remove(i);
+				break;
 			}
 		}
 	}
-	
+	public void removeFood(FoodItems removeFood)  {
+		for (int i=0; i < shipAndCrew.getFoodList().size(); i++) {
+			if (shipAndCrew.getFoodList().get(i) == removeFood) {
+				shipAndCrew.getFoodList().remove(i);
+				break;
+			}
+		}
+	}
+	public void remove1Action(CrewMembersMainClass member) {
+		member.setCrewActions(member.getCrewActions()-1);
+	}
 	
 	
 	

@@ -43,7 +43,7 @@ public class SetupScreen {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
 		
-		JLabel welcomelbl = new JLabel("Welcome to Space game idfk");
+		JLabel welcomelbl = new JLabel("Welcome to Space game ");
 		welcomelbl.setFont(new Font("Arial", Font.PLAIN, 18));
 		welcomelbl.setBounds(26, 11, 315, 39);
 		window.getContentPane().add(welcomelbl);
