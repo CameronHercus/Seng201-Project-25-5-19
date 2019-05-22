@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -6,6 +7,7 @@ import java.awt.Font;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -50,55 +52,60 @@ public class ShipMenuScreen {
 		
 	}
 	private void initialize() { 
-		
-		
-		
+		JLabel memberStatus1 = new JLabel(getText("member1"));
+		JLabel memberStatus2 = new JLabel(getText("member2"));
+		JLabel memberStatus4 = new JLabel(getText("member4"));
+		JLabel memberStatus3 = new JLabel(getText("member3"));
 		
 		window = new JFrame();
 		window.setBounds(100, 100, 800, 600);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
 		
-		JLabel memberStatus1 = new JLabel(getText("member1"));
-		memberStatus1.setFont(new Font("Arial", Font.BOLD, 16));
-		memberStatus1.setBounds(591, 18, 185, 120);
+		memberStatus1.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+		memberStatus1.setFont(new Font("Arial", Font.BOLD, 15));
+		memberStatus1.setBounds(591, 11, 185, 130);
 		window.getContentPane().add(memberStatus1);
 		
-		JLabel memberStatus2 = new JLabel(getText("member2"));
-		memberStatus2.setFont(new Font("Arial", Font.BOLD, 16));
-		memberStatus2.setBounds(591, 156, 185, 120);
+		memberStatus2.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+		memberStatus2.setFont(new Font("Arial", Font.BOLD, 15));
+		memberStatus2.setBounds(591, 149, 185, 130);
 		window.getContentPane().add(memberStatus2);
 		
-		JLabel memberStatus4 = new JLabel(getText("member4"));
-		memberStatus4.setFont(new Font("Arial", Font.BOLD, 16));
-		memberStatus4.setBounds(591, 432, 185, 120);
+		memberStatus4.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+		memberStatus4.setFont(new Font("Arial", Font.BOLD, 15));
+		memberStatus4.setBounds(591, 428, 185, 130);
 		window.getContentPane().add(memberStatus4);
 		
-		JLabel memberStatus3 = new JLabel(getText("member3"));
-		memberStatus3.setFont(new Font("Arial", Font.BOLD, 16));
-		memberStatus3.setBounds(591, 301, 185, 120);
+		memberStatus3.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
+		memberStatus3.setFont(new Font("Arial", Font.BOLD, 15));
+		memberStatus3.setBounds(591, 288, 185, 130);
 		window.getContentPane().add(memberStatus3);
 		
 		JLabel lblOnBoardMessage = new JLabel("You are on board " + gameLogic.getShipAndCrew().getShipName());
 		lblOnBoardMessage.setFont(new Font("Arial", Font.BOLD, 18));
-		lblOnBoardMessage.setBounds(149, 64, 330, 26);
+		lblOnBoardMessage.setBounds(14, 19, 330, 113);
 		window.getContentPane().add(lblOnBoardMessage);
 		
 		JLabel lblShipStatus = new JLabel(getText("shipText"));
 		lblShipStatus.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblShipStatus.setBounds(21, 115, 269, 134);
+		lblShipStatus.setBounds(45, 169, 269, 134);
 		window.getContentPane().add(lblShipStatus);
 		
-		JButton btnNewButton = new JButton("onto next day");
+		JButton btnNewButton = new JButton("Proceed to next day");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
 				// maybe change to have it do set remaining days before the if statement
+				System.out.println(gameLogic.newDayEvent());
 				gameLogic.newDayChanges();
 				if (!gameLogic.isGameOver() && gameLogic.getRemainingDays() > 1) {
-					gameLogic.setAllCrewmembersActions();
-					gameLogic.setRemainingDays(gameLogic.getRemainingDays()-1);
 					finishedWindow();
 					gameLogic.launchShipOptionsScreen();
 				} else {
@@ -109,10 +116,11 @@ public class ShipMenuScreen {
 				
 			}
 		});
-		btnNewButton.setBounds(456, 152, 125, 65);
+		btnNewButton.setBounds(352, 80, 211, 40);
 		window.getContentPane().add(btnNewButton);
 		
 		JComboBox boxSelectedMember = new JComboBox();
+		boxSelectedMember.setFont(new Font("Tahoma", Font.BOLD, 14));
 		boxSelectedMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -121,7 +129,7 @@ public class ShipMenuScreen {
 		});
 		boxSelectedMember.setMaximumRowCount(4);
 		boxSelectedMember.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getCrewList().toArray()));
-		boxSelectedMember.setBounds(298, 254, 165, 55);
+		boxSelectedMember.setBounds(330, 263, 233, 46);
 		window.getContentPane().add(boxSelectedMember);
 		
 		JComboBox boxFoodSelect = new JComboBox();
@@ -142,12 +150,14 @@ public class ShipMenuScreen {
 		window.getContentPane().add(boxMedicineSelect);
 		
 		JComboBox boxPilotWithSelect = new JComboBox();
+		boxPilotWithSelect.setFont(new Font("Tahoma", Font.BOLD, 10));
 		boxPilotWithSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getCrewList().toArray()));
 		boxPilotWithSelect.setMaximumRowCount(4);
 		boxPilotWithSelect.setBounds(416, 401, 165, 40);
 		window.getContentPane().add(boxPilotWithSelect);
 		
 		JButton applyMedicinebttn = new JButton("<html>" + "You have no" + "<br>" + "medicine to use" +  "</html>");
+		applyMedicinebttn.setFont(new Font("Tahoma", Font.BOLD, 12));
 		if (gameLogic.getShipAndCrew().getMedicalList().size() > 0) {
 			applyMedicinebttn.setText(getMemberTextUpdate("useMedicine", boxSelectedMember.getSelectedItem().toString(), boxMedicineSelect.getSelectedItem().toString())); 
 		}
@@ -181,6 +191,7 @@ public class ShipMenuScreen {
 		window.getContentPane().add(applyMedicinebttn);
 		
 		JButton eatFoodbttn = new JButton("<html>" + "You have no food" + "<br>" + "to eat" +  "</html>");
+		eatFoodbttn.setFont(new Font("Tahoma", Font.BOLD, 12));
 		if (gameLogic.getShipAndCrew().getFoodList().size() > 0) {
 			eatFoodbttn.setText("<html>" + "Have " + boxSelectedMember.getSelectedItem() + "<br>" + " Eat " + 
 					boxFoodSelect.getSelectedItem() + "</html>");
@@ -214,18 +225,39 @@ public class ShipMenuScreen {
 		window.getContentPane().add(eatFoodbttn);
 		
 		JButton btnSleep = new JButton(getMemberChangeUpdate("sleep",  boxSelectedMember.getSelectedItem().toString()));
+		btnSleep.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnSleep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (gameLogic.memberSleep((CrewMembersMainClass) boxSelectedMember.getSelectedItem())) {
+					memberStatus1.setText(getText("member1"));
+					memberStatus2.setText(getText("member2"));
+					memberStatus3.setText(getText("member3"));
+					memberStatus4.setText(getText("member4"));
+					lblShipStatus.setText(getText("shipText"));
+				}
 			}
 		});
 		btnSleep.setBounds(416, 482, 165, 70);
 		window.getContentPane().add(btnSleep);
 		
 		JButton btnRepairShip = new JButton(getMemberChangeUpdate("repair",  boxSelectedMember.getSelectedItem().toString()));
+		btnRepairShip.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnRepairShip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (gameLogic.repairShip((CrewMembersMainClass) boxSelectedMember.getSelectedItem())) {
+					memberStatus1.setText(getText("member1"));
+					memberStatus2.setText(getText("member2"));
+					memberStatus3.setText(getText("member3"));
+					memberStatus4.setText(getText("member4"));
+					lblShipStatus.setText(getText("shipText"));
+				}				
+			}
+		});
 		btnRepairShip.setBounds(211, 482, 165, 70);
 		window.getContentPane().add(btnRepairShip);
 		
 		JButton btnVisitNearestOutpost = new JButton("Visit Nearest Outpost");
+		btnVisitNearestOutpost.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnVisitNearestOutpost.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -233,10 +265,11 @@ public class ShipMenuScreen {
 				gameLogic.launchOutpostOptionScreen();
 			}
 		});
-		btnVisitNearestOutpost.setBounds(300, 152, 125, 65);
+		btnVisitNearestOutpost.setBounds(352, 29, 211, 46);
 		window.getContentPane().add(btnVisitNearestOutpost);
 		
 		JButton btnPilotShipWith = new JButton(getMemberChangeUpdate("pilot",  boxSelectedMember.getSelectedItem().toString()));
+		btnPilotShipWith.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnPilotShipWith.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (boxSelectedMember.getSelectedItem() != boxPilotWithSelect.getSelectedItem()) {
@@ -262,6 +295,7 @@ public class ShipMenuScreen {
 		window.getContentPane().add(btnPilotShipWith);
 		
 		JButton btnSearchParts = new JButton(getMemberChangeUpdate("parts",  boxSelectedMember.getSelectedItem().toString()));
+		btnSearchParts.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnSearchParts.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -290,8 +324,9 @@ public class ShipMenuScreen {
 		btnSearchParts.setBounds(14, 482, 165, 70);
 		window.getContentPane().add(btnSearchParts);
 		
-		JLabel lblNewLabel = new JLabel("Performing Actions for the following Crew Member");
-		lblNewLabel.setBounds(86, 246, 165, 70);
+		JLabel lblNewLabel = new JLabel("<html>" + "Performing Actions for the" +"<br>" + "following Crew Member:" + "<html>");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+		lblNewLabel.setBounds(330, 186, 199, 75);
 		window.getContentPane().add(lblNewLabel);
 	
 	}
@@ -303,7 +338,8 @@ public class ShipMenuScreen {
 						"Health " + gameLogic.getShipAndCrew().getCrewList().get(0).getHealthLevel() + "%" + "<br>" +
 						"Hunger " + gameLogic.getShipAndCrew().getCrewList().get(0).getHungerLevel() + "%" +  "<br>" +
 						"Tiredness " + gameLogic.getShipAndCrew().getCrewList().get(0).getTirednessLevel() + "%" + "<br>" +
-						"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(0).getCrewActions() + "</html>";
+						"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(0).getCrewActions() + "<br>" + 
+						"Space Plague Status: " + gameLogic.spacePlagueYesNo(gameLogic.getShipAndCrew().getCrewList().get(0)) + "</html>";
 			}
 		case "member2":
 			if (gameLogic.getShipAndCrew().getCrewList().size() >= 2) {
@@ -311,7 +347,8 @@ public class ShipMenuScreen {
 						"Health " + gameLogic.getShipAndCrew().getCrewList().get(1).getHealthLevel() + "%" + "<br>" +
 						"Hunger " + gameLogic.getShipAndCrew().getCrewList().get(1).getHungerLevel() + "%" + "<br>" +
 						"Tiredness " + gameLogic.getShipAndCrew().getCrewList().get(1).getTirednessLevel() + "%" +  "<br>" +
-						"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(1).getCrewActions() + "</html>";
+						"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(1).getCrewActions() + "<br>" + 
+						"Space Plague Status: " + gameLogic.spacePlagueYesNo(gameLogic.getShipAndCrew().getCrewList().get(1)) + "</html>";
 			}
 		case "member3":
 			if (gameLogic.getShipAndCrew().getCrewList().size() >= 3) {
@@ -319,7 +356,8 @@ public class ShipMenuScreen {
 						"Health " + gameLogic.getShipAndCrew().getCrewList().get(2).getHealthLevel() + "%" + "<br>" +
 						"Hunger " + gameLogic.getShipAndCrew().getCrewList().get(2).getHungerLevel() + "%" + "<br>" +
 						"Tiredness " + gameLogic.getShipAndCrew().getCrewList().get(2).getTirednessLevel() + "%" + "<br>" +
-						"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(2).getCrewActions() + "</html>";
+						"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(2).getCrewActions() + "<br>" + 
+						"Space Plague Status: " + gameLogic.spacePlagueYesNo(gameLogic.getShipAndCrew().getCrewList().get(2)) + "</html>";
 			} else {
 				return "";
 			}
@@ -329,8 +367,10 @@ public class ShipMenuScreen {
 						"Health " + gameLogic.getShipAndCrew().getCrewList().get(3).getHealthLevel() + "%" + "<br>" +
 						"Hunger " + gameLogic.getShipAndCrew().getCrewList().get(3).getHungerLevel() + "%" + "<br>" +
 						"Tiredness " + gameLogic.getShipAndCrew().getCrewList().get(3).getTirednessLevel() + "%" + "<br>" +
-						"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(3).getCrewActions() + "</html>";
+						"Remaining Actions " + gameLogic.getShipAndCrew().getCrewList().get(3).getCrewActions() + "<br>" + 
+						"Space Plague Status: " + gameLogic.spacePlagueYesNo(gameLogic.getShipAndCrew().getCrewList().get(3)) + "</html>";
 			} else {
+				
 				return "";
 			}
 		case "noFood": return "<html>" + "You have no food" + "<br>" + "to eat" +  "</html>";

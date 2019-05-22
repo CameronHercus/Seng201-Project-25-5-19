@@ -70,7 +70,8 @@ public class OutpostOptionScreen {
 		window.getContentPane().add(selectedFood);
 		window.getContentPane().add(btnNewButton);
 		
-		JLabel inventory = new JLabel("");
+		JLabel inventory = new JLabel(getText("inventory"));
+		inventory.setFont(new Font("Tahoma", Font.BOLD, 12));
 		inventory.setBounds(208, 11, 226, 189);
 		window.getContentPane().add(inventory);
 		
@@ -313,6 +314,7 @@ public class OutpostOptionScreen {
 						selectedFood.setText("");
 						foodCost.setText("Total Cost:");
 						lblMoneyRemaining.setText(getText("amountMoney"));
+						inventory.setText(getText("inventory"));
 					} else {
 						System.out.println("NOT ENOUGH FUNDS");
 					}
@@ -336,6 +338,7 @@ public class OutpostOptionScreen {
 						selectedMedicine.setText("");
 						medicineCost.setText("Total Cost:");
 						lblMoneyRemaining.setText(getText("amountMoney"));
+						inventory.setText(getText("inventory"));
 					} else {
 						System.out.println("NOT ENOUGH FUNDS");
 					}
@@ -349,6 +352,7 @@ public class OutpostOptionScreen {
 	public String getText(String switchStatement) {
 		switch (switchStatement) {
 		case "amountMoney": return "Amount of Money: " + gameLogic.getShipAndCrew().getAmountMoney();
+		case "inventory": return gameLogic.getFoodFrequency();
 		default: return null;
 		}
 	}
