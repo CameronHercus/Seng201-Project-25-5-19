@@ -26,9 +26,6 @@ public class OutpostOptionScreen {
 	ArrayDeque<MedicalSupplies> medicineDeque = new ArrayDeque<MedicalSupplies>();
 	ArrayList<Integer> comboBoxOptions = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
 	private JFrame window;
-	public static void main(String[] args) {
-	}
-
 	/**
 	 * Create the application.
 	 * @wbp.parser.entryPoint
@@ -53,7 +50,7 @@ public class OutpostOptionScreen {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JButton btnNewButton = new JButton("Return to Ship");
-		btnNewButton.setBounds(387, 11, 125, 95);
+		btnNewButton.setBounds(649, 11, 125, 51);
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -63,78 +60,63 @@ public class OutpostOptionScreen {
 		window.getContentPane().setLayout(null);
 		
 		JButton selectedMedicine = new JButton("");
-		selectedMedicine.setBounds(463, 455, 125, 65);
+		selectedMedicine.setFont(new Font("Tahoma", Font.BOLD, 14));
+		selectedMedicine.setBounds(463, 486, 125, 65);
 		window.getContentPane().add(selectedMedicine);
 		
 		JButton selectedFood = new JButton("");
-		selectedFood.setBounds(463, 250, 125, 65);
+		selectedFood.setFont(new Font("Tahoma", Font.BOLD, 14));
+		selectedFood.setBounds(463, 342, 125, 65);
 		window.getContentPane().add(selectedFood);
 		window.getContentPane().add(btnNewButton);
 		
-		JLabel medicineCost = new JLabel("Total cost");
+		JLabel inventory = new JLabel("");
+		inventory.setBounds(208, 11, 226, 189);
+		window.getContentPane().add(inventory);
+		
+		JLabel medicineCost = new JLabel("Total Cost:");
 		medicineCost.setFont(new Font("Arial", Font.BOLD, 16));
-		medicineCost.setBounds(619, 465, 123, 14);
+		medicineCost.setBounds(608, 429, 176, 60);
 		window.getContentPane().add(medicineCost);
 		
-		JLabel foodCost = new JLabel("Total cost");
+		JLabel foodCost = new JLabel("Total Cost:");
 		foodCost.setFont(new Font("Tahoma", Font.BOLD, 16));
-		foodCost.setBounds(619, 263, 123, 29);
+		foodCost.setBounds(598, 286, 176, 60);
 		window.getContentPane().add(foodCost);
 		
-		JLabel lblMoneyRemaining_1 = new JLabel("Amount of Money: " + gameLogic.getShipAndCrew().getAmountMoney());
-		lblMoneyRemaining_1.setBounds(387, 157, 146, 29);
-		window.getContentPane().add(lblMoneyRemaining_1);
+		JLabel lblMoneyRemaining = new JLabel(getText("amountMoney"));
+		lblMoneyRemaining.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblMoneyRemaining.setBounds(208, 214, 226, 51);
+		window.getContentPane().add(lblMoneyRemaining);
 		
 		JLabel lblItemStats = new JLabel("Item Stats");
+		lblItemStats.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblItemStats.setVerticalAlignment(SwingConstants.TOP);
-		lblItemStats.setBounds(532, 11, 242, 187);
+		lblItemStats.setBounds(463, 158, 309, 133);
 		window.getContentPane().add(lblItemStats);
-		
-		JButton btnBread = new JButton("Bread");
-		btnBread.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (foodDeque.size() == 1) {
-					foodDeque.removeLast();
-				}
-				foodDeque.add(new Bread());
-				selectedFood.setText(foodDeque.getLast().getFoodName());
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblItemStats.setText("Bread");
-			}
-		});
-		
-		JButton btnTea = new JButton("Tea");
-		btnTea.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (foodDeque.size() == 1) {
-					foodDeque.removeLast();
-				}
-				foodDeque.add(new Tea());
-				selectedFood.setText(foodDeque.getLast().getFoodName());
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblItemStats.setText("Tea");
-			}
-		});
 		
 		JComboBox medicineQuantity = new JComboBox();
 		medicineQuantity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				medicineCost.setText("Cost: $" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem());
+				medicineCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem() + "</html>");
 				
 			}
 		});
+		
+		JComboBox foodQuantity = new JComboBox();
+		foodQuantity.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				foodCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + foodDeque.getLast().getfoodCost() * (int) foodQuantity.getSelectedItem() + "</html>");
+			}
+		});
+		foodQuantity.setModel(new DefaultComboBoxModel(comboBoxOptions.toArray()));
+		foodQuantity.setMaximumRowCount(10);
+		foodQuantity.setBounds(598, 357, 45, 50);
+		window.getContentPane().add(foodQuantity);
 		medicineQuantity.setModel(new DefaultComboBoxModel(comboBoxOptions.toArray()));
 		medicineQuantity.setMaximumRowCount(10);
-		medicineQuantity.setBounds(543, 529, 45, 22);
+		medicineQuantity.setBounds(594, 500, 45, 51);
 		window.getContentPane().add(medicineQuantity);
-		btnTea.setBounds(10, 296, 125, 80);
-		window.getContentPane().add(btnTea);
 		
 		JButton btnNuts = new JButton("Nuts");
 		btnNuts.addMouseListener(new MouseAdapter() {
@@ -145,16 +127,15 @@ public class OutpostOptionScreen {
 				}
 				foodDeque.add(new Nuts());
 				selectedFood.setText(foodDeque.getLast().getFoodName());
+				foodCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + foodDeque.getLast().getfoodCost() * (int) foodQuantity.getSelectedItem() + "</html>");
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblItemStats.setText("Nuts");
+				lblItemStats.setText(getFoodDescription("nuts"));
 			}
 		});
-		btnNuts.setBounds(10, 197, 125, 80);
+		btnNuts.setBounds(10, 276, 125, 60);
 		window.getContentPane().add(btnNuts);
-		btnBread.setBounds(158, 296, 125, 80);
-		window.getContentPane().add(btnBread);
 		
 		JButton btnAntidote = new JButton("Antidote");
 		btnAntidote.addActionListener(new ActionListener() {
@@ -169,31 +150,13 @@ public class OutpostOptionScreen {
 				}
 				medicineDeque.add(new Antidote());
 				selectedMedicine.setText(medicineDeque.getLast().getMedicineName());
-				medicineCost.setText("Cost: $" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem());
+				medicineCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem() + "</html>");
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lblItemStats.setText("Antidote");
 			}
 		});
-		
-		JButton btnApples = new JButton("Apples");
-		btnApples.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (foodDeque.size() == 1) {
-					foodDeque.removeLast();
-				}
-				foodDeque.add(new Apple());
-				selectedFood.setText(foodDeque.getLast().getFoodName());
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				lblItemStats.setText("Apples");
-			}
-		});
-		btnApples.setBounds(158, 197, 125, 80);
-		window.getContentPane().add(btnApples);
 		
 		JButton btnSoup = new JButton("Soup");
 		btnSoup.addMouseListener(new MouseAdapter() {
@@ -204,13 +167,14 @@ public class OutpostOptionScreen {
 				}
 				foodDeque.add(new Soup());
 				selectedFood.setText(foodDeque.getLast().getFoodName());
+				foodCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + foodDeque.getLast().getfoodCost() * (int) foodQuantity.getSelectedItem() + "</html>");
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblItemStats.setText("Soup");
+				lblItemStats.setText(getFoodDescription("soup"));
 			}
 		});
-		btnSoup.setBounds(309, 296, 125, 80);
+		btnSoup.setBounds(309, 347, 125, 60);
 		window.getContentPane().add(btnSoup);
 		
 		JButton btnCornedBeef = new JButton("Corned Beef");
@@ -222,18 +186,82 @@ public class OutpostOptionScreen {
 				}
 				foodDeque.add(new CornedBeef());
 				selectedFood.setText(foodDeque.getLast().getFoodName());
+				foodCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + foodDeque.getLast().getfoodCost() * (int) foodQuantity.getSelectedItem() + "</html>");
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblItemStats.setText("Corned Beef");
+				lblItemStats.setText(getFoodDescription("cornedBeef"));
 			}
 		});
-		btnCornedBeef.setBounds(309, 197, 125, 80);
+		
+		JButton btnTea = new JButton("Tea");
+		btnTea.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (foodDeque.size() == 1) {
+					foodDeque.removeLast();
+				}
+				foodDeque.add(new Tea());
+				selectedFood.setText(foodDeque.getLast().getFoodName());
+				foodCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + foodDeque.getLast().getfoodCost() * (int) foodQuantity.getSelectedItem() + "</html>");
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblItemStats.setText(getFoodDescription("tea"));
+			}
+		});
+		btnTea.setBounds(10, 347, 125, 60);
+		window.getContentPane().add(btnTea);
+		
+		JButton btnBread = new JButton("Bread");
+		btnBread.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (foodDeque.size() == 1) {
+					foodDeque.removeLast();
+				}
+				foodDeque.add(new Bread());
+				selectedFood.setText(foodDeque.getLast().getFoodName());
+				foodCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + foodDeque.getLast().getfoodCost() * (int) foodQuantity.getSelectedItem() + "</html>");
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblItemStats.setText(getFoodDescription("bread"));
+			}
+		});
+		btnBread.setBounds(158, 347, 125, 60);
+		window.getContentPane().add(btnBread);
+		
+		JButton btnApples = new JButton("Apples");
+		btnApples.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (foodDeque.size() == 1) {
+					foodDeque.removeLast();
+				}
+				foodDeque.add(new Apple());
+				selectedFood.setText(foodDeque.getLast().getFoodName());
+				foodCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + foodDeque.getLast().getfoodCost() * (int) foodQuantity.getSelectedItem() + "</html>");
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblItemStats.setText(getFoodDescription("apples"));
+			}
+		});
+		btnApples.setBounds(158, 276, 125, 60);
+		window.getContentPane().add(btnApples);
+		btnCornedBeef.setBounds(309, 276, 125, 60);
 		window.getContentPane().add(btnCornedBeef);
-		btnAntidote.setBounds(10, 455, 125, 80);
+		btnAntidote.setBounds(10, 491, 125, 60);
 		window.getContentPane().add(btnAntidote);
 		
 		JButton btnMedKit = new JButton("Med Kit");
+		btnMedKit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				lblItemStats.setText("Med Kit");
+			}
+		});
 		btnMedKit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (medicineDeque.size() == 1) {
@@ -241,7 +269,7 @@ public class OutpostOptionScreen {
 				}
 				medicineDeque.add(new MedKit());
 				selectedMedicine.setText(medicineDeque.getLast().getMedicineName());
-				medicineCost.setText("Cost: $" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem());
+				medicineCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem() + "</html>");
 			}
 		});
 
@@ -255,45 +283,36 @@ public class OutpostOptionScreen {
 				}
 				medicineDeque.add(new FirstAidKit());
 				selectedMedicine.setText(medicineDeque.getLast().getMedicineName());
-				medicineCost.setText("Cost: $" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem());
+				medicineCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem() + "</html>");
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				lblItemStats.setText("First-Aid Kit");
 			}
 		});
-		btnFirstAidKit.setBounds(158, 455, 125, 80);
+		btnFirstAidKit.setBounds(158, 491, 125, 60);
 		window.getContentPane().add(btnFirstAidKit);
-		btnMedKit.setBounds(309, 455, 125, 80);
+		btnMedKit.setBounds(309, 491, 125, 60);
 		window.getContentPane().add(btnMedKit);
-		
-		JComboBox boxFoodQuantity_1 = new JComboBox();
-		boxFoodQuantity_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		boxFoodQuantity_1.setModel(new DefaultComboBoxModel(comboBoxOptions.toArray()));
-		boxFoodQuantity_1.setMaximumRowCount(10);
-		boxFoodQuantity_1.setBounds(543, 326, 45, 22);
-		window.getContentPane().add(boxFoodQuantity_1);
 		
 		JLabel label_2 = new JLabel("Selected:");
 		label_2.setFont(new Font("Arial", Font.PLAIN, 18));
-		label_2.setBounds(454, 210, 109, 29);
+		label_2.setBounds(463, 302, 109, 29);
 		window.getContentPane().add(label_2);
 		
 		JLabel label = new JLabel("Selected:");
 		label.setFont(new Font("Arial", Font.PLAIN, 18));
-		label.setBounds(463, 415, 109, 29);
+		label.setBounds(463, 446, 109, 29);
 		window.getContentPane().add(label);
 		JButton btnFoodPurchase = new JButton("Purchase");
 		btnFoodPurchase.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (foodDeque.size() > 0) {
-					if (gameLogic.purchaseFood(foodDeque.getLast(), (int) boxFoodQuantity_1.getSelectedItem())) {
+					if (gameLogic.purchaseFood(foodDeque.getLast(), (int) foodQuantity.getSelectedItem())) {
 						selectedFood.setText("");
-						foodCost.setText("");
+						foodCost.setText("Total Cost:");
+						lblMoneyRemaining.setText(getText("amountMoney"));
 					} else {
 						System.out.println("NOT ENOUGH FUNDS");
 					}
@@ -301,7 +320,7 @@ public class OutpostOptionScreen {
 			}
 		});
 		btnFoodPurchase.setFont(new Font("Arial", Font.BOLD, 16));
-		btnFoodPurchase.setBounds(619, 296, 123, 50);
+		btnFoodPurchase.setBounds(649, 357, 123, 50);
 		window.getContentPane().add(btnFoodPurchase);
 		
 		JButton btnMedicinePurchase = new JButton("Purchase");
@@ -315,7 +334,8 @@ public class OutpostOptionScreen {
 				if (medicineDeque.size() > 0) {
 					if (gameLogic.purchaseMedicine(medicineDeque.getLast(), (int) medicineQuantity.getSelectedItem())) {
 						selectedMedicine.setText("");
-						medicineCost.setText("");
+						medicineCost.setText("Total Cost:");
+						lblMoneyRemaining.setText(getText("amountMoney"));
 					} else {
 						System.out.println("NOT ENOUGH FUNDS");
 					}
@@ -323,12 +343,25 @@ public class OutpostOptionScreen {
 			}
 		});
 		btnMedicinePurchase.setFont(new Font("Arial", Font.BOLD, 16));
-		btnMedicinePurchase.setBounds(617, 500, 125, 50);
+		btnMedicinePurchase.setBounds(649, 500, 125, 50);
 		window.getContentPane().add(btnMedicinePurchase);
 	}
-	public void refreshGui() {
-		window.revalidate();
-
-		
+	public String getText(String switchStatement) {
+		switch (switchStatement) {
+		case "amountMoney": return "Amount of Money: " + gameLogic.getShipAndCrew().getAmountMoney();
+		default: return null;
+		}
+	}
+	public String getFoodDescription(String switchStatement) {
+		switch (switchStatement) {
+		case "tea": return "<html>" + "Tea" + "<br>" + "restores 5 Hunger" + "<br>" + "costs $5" + "</html>";
+		case "nuts": return "<html>" + "Nuts" + "<br>" + "restores 10 Hunger" + "<br>" + "costs $10" + "</html>";
+		case "bread": return "<html>" + "Bread" + "<br>" + "restores 20 Hunger" + "<br>" + "costs $20" + "</html>";
+		case "cornedBeef": return "<html>" + "Corned Beef" + "<br>" + "restores 30 Hunger" + "<br>" + "costs $30" + "</html>";
+		case "soup": return "<html>" + "Soup" + "<br>" + "restores 25 Hunger" + "<br>" + "costs $25" + "</html>";
+		case "apples": return "<html>" + "Apples" + "<br>" + "restores 15 Hunger" + "<br>" + "costs $15" + "</html>";
+		default: return null;
+		}
+		// See the prices of each object. (d) See the attributes of the object, attributes will be better explained in section 3. 
 	}
 }

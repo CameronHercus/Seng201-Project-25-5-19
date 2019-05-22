@@ -10,6 +10,7 @@ public class testingqueue {
 		if (array.getFirst() instanceof Antidote) {
 			System.out.println("BOB");
 		}
+		System.out.println(array.getFirst() instanceof Antidote);
 	}
 
 }

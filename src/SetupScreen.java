@@ -59,7 +59,6 @@ public class SetupScreen {
 		daysInputSlider.setMajorTickSpacing(1);
 		daysInputSlider.setMaximum(10);
 		daysInputSlider.setMinimum(3);
-		daysInputSlider.setSnapToTicks(true);
 		daysInputSlider.setBounds(371, 115, 296, 50);
 		window.getContentPane().add(daysInputSlider);
 		
@@ -182,8 +181,8 @@ public class SetupScreen {
 		lblSelected.setBounds(46, 411, 109, 29);
 		window.getContentPane().add(lblSelected);
 		
-		JButton btnDeque = new JButton("Deque");
-		btnDeque.setFont(new Font("Tahoma", Font.BOLD, 14));
+		JButton btnDeque = new JButton("Remove Last");
+		btnDeque.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnDeque.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -205,7 +204,7 @@ public class SetupScreen {
 				}
 			}
 		});
-		btnDeque.setBounds(683, 450, 89, 39);
+		btnDeque.setBounds(648, 451, 109, 50);
 		window.getContentPane().add(btnDeque);
 		
 		selectedNameInput1 = new JTextField();
@@ -256,12 +255,8 @@ public class SetupScreen {
 			}
 		});
 		btnNewButton.setFont(new Font("Arial", Font.BOLD, 16));
-		btnNewButton.setBounds(683, 500, 91, 50);
+		btnNewButton.setBounds(648, 516, 125, 29);
 		window.getContentPane().add(btnNewButton);
-		
-		JProgressBar IMPLEMENTLATER = new JProgressBar();
-		IMPLEMENTLATER.setBounds(638, 426, 146, 14);
-		window.getContentPane().add(IMPLEMENTLATER);
 		
 	}
 	public void refreshGui() {

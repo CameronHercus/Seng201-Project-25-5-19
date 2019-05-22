@@ -1,10 +1,13 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ListIterator;
+import java.util.TreeSet;
 
 public class GameEnvironment {
 	private int remainingDays;
 	private int numberOfPiecesRemaining;
 	private boolean partFoundOnPlanet = false;
+	TreeSet<FoodItems> foodInventory = new TreeSet<FoodItems>();
 	TheShipClass shipAndCrew = new TheShipClass();
 
 	public static void main(String[] args) {
@@ -92,10 +95,10 @@ public class GameEnvironment {
 	}
 	public void newDayChanges() {
 		for (int i = 0; i < shipAndCrew.getCrewList().size(); i++) {
-			shipAndCrew.getCrewList().get(i).setHungerLevel(Math.min(shipAndCrew.getCrewList().get(i).getHungerLevel() + 15, 100));
-			shipAndCrew.getCrewList().get(i).setTiredNessLevel(Math.min(shipAndCrew.getCrewList().get(i).getTirednessLevel() + 50, 100));
+			shipAndCrew.getCrewList().get(i).setHungerLevel(Math.min(shipAndCrew.getCrewList().get(i).getHungerLevel() + 25, 100));
+			shipAndCrew.getCrewList().get(i).setTiredNessLevel(Math.min(shipAndCrew.getCrewList().get(i).getTirednessLevel() + 25, 100));
 			if (shipAndCrew.getCrewList().get(i).getHealthLevel() > 0) {
-				shipAndCrew.getCrewList().get(i).setHealthLevel(Math.max(shipAndCrew.getCrewList().get(i).getHealthLevel() - 19, 0));
+				shipAndCrew.getCrewList().get(i).setHealthLevel(Math.max(shipAndCrew.getCrewList().get(i).getHealthLevel() - 25, 0));
 			}
 		}
 		removeDeadCrewMembers();
@@ -161,7 +164,9 @@ public class GameEnvironment {
 			break;
 		}
 	}
-	public boolean newPlanet() {
+	public boolean newPlanet(CrewMembersMainClass member1, CrewMembersMainClass member2) {
+		member1.setCrewActions(member1.getCrewActions()-1);
+		member2.setCrewActions(member2.getCrewActions()-1);
 		setPartFoundOnPlanet(false);
 		switch((int)(Math.random() * 3 + 1)) {
 		// 33% chance to trigger ship damage
@@ -223,6 +228,9 @@ public class GameEnvironment {
 	
 	
 	
+	public String getFoodFrequency(FoodItems food) {
+		return food.getFoodName() + "Quantity: " + Collections.frequency(getCrewFoodList(), food);
+	}
 	public ArrayList<CrewMembersMainClass>  getCrewMembersList() {
 		return shipAndCrew.getCrewList();
 	}
@@ -244,7 +252,6 @@ public class GameEnvironment {
 	public int getNumberOfPiecesRemaining() {
 		return numberOfPiecesRemaining;
 	}
-
 
 
 
