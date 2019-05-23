@@ -213,7 +213,7 @@ public class SetupScreen {
 		crewType5bttn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				memberStats.setText("<html>" + "Member Stats: The Archeologist" + "<br>" + "<br>" +"Health: 100%" + "<br>" + "Tiredness: 0%" + "<br>" + "Hunger: 0%" + "<br>" + "Skill: Good at finding Ship Parts" + "</html>");
+				memberStats.setText("<html>" + "Member Stats: The Archeologist" + "<br>" + "<br>" +"Health: 100%" + "<br>" + "Tiredness: 0%" + "<br>" + "Hunger: 0%" + "<br>" + "Skill: Chance of finding a large amount of money when searching" + "</html>");
 			}
 		});
 		crewType5bttn.addActionListener(new ActionListener() {

@@ -149,7 +149,7 @@ public class ShipMenuScreen {
 			public void mouseClicked(MouseEvent e) {
 				if (((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).getCrewActions() >= 1 && gameLogic.getShipAndCrew().getMedicalList().size() >= 1) {
 					// called once here!!!!
-					JOptionPane.showMessageDialog(null, gameLogic.applyMedicine(((MedicalSupplies) boxMedicineSelect.getSelectedItem()), ((CrewMembersMainClass) boxPilotWithSelect.getSelectedItem())));
+					JOptionPane.showMessageDialog(null, gameLogic.applyMedicine(((MedicalSupplies) boxMedicineSelect.getSelectedItem()), ((CrewMembersMainClass) boxSelectedMember.getSelectedItem())));
 					boxMedicineSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
 					memberStatus1.setText(getText("member1"));
 					memberStatus2.setText(getText("member2"));
@@ -183,7 +183,7 @@ public class ShipMenuScreen {
 			public void mouseClicked(MouseEvent e) {
 				if (((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).getCrewActions() >= 1 && gameLogic.getShipAndCrew().getFoodList().size() >= 1) {
 					if ((boolean) gameLogic.feed(((FoodItems) boxFoodSelect.getSelectedItem()), ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()))) {
-						// if thise true otherwise member is at full tiredness
+						JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + " is now less hungry");
 						gameLogic.remove1Action((CrewMembersMainClass) boxSelectedMember.getSelectedItem());
 						boxFoodSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
 						memberStatus1.setText(getText("member1"));

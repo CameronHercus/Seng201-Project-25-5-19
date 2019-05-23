@@ -88,46 +88,36 @@ public class GameEnvironment {
 				return "Antidote applied to " + appliedMember.toString();
 			}
 		} else if (medicine instanceof MedKit) {
-			if (appliedMember.getHealthLevel() < 100 || appliedMember.getHealthLevel() != 125) {
-				if (appliedMember instanceof Juggernaut) {
-					appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 125));
-					removeMedicine(medicine);
-					appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
-					return "MedKit applied to " + appliedMember.toString();
-				} else {
-					appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 100));
-					removeMedicine(medicine);
-					appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
-					return "MedKit applied to " + appliedMember.toString();
-				}
+			if (appliedMember instanceof Juggernaut && appliedMember.getHealthLevel() < 125) {
+				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 125));
+				removeMedicine(medicine);
+				appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
+				return "MedKit applied to " + appliedMember.toString();
+			} else if (((!(appliedMember instanceof Juggernaut)) && appliedMember.getHealthLevel() < 100)) {
+				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 100));
+				removeMedicine(medicine);
+				appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
+				return "MedKit applied to " + appliedMember.toString();
 			} else {
 				return "Cannot apply MedKit to a Member that is full health";
-			}	
+			}		
 		} else if (medicine instanceof FirstAidKit){
-			if (appliedMember.getHealthLevel() < 100 || appliedMember.getHealthLevel() != 125) {
-				if (appliedMember instanceof Juggernaut) {
-					appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 125));
-					removeMedicine(medicine);
-					appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
-					return "First-Aid Kit applied to " + appliedMember.toString();
-				} else {
-					appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 100));
-					removeMedicine(medicine);
-					appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
-					return "First-Aid Kit applied to " + appliedMember.toString();
-				}
+			if (appliedMember instanceof Juggernaut && appliedMember.getHealthLevel() < 125) {
+				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 125));
+				removeMedicine(medicine);
+				appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
+				return "First-Aid Kit applied to " + appliedMember.toString();
+			} else if (((!(appliedMember instanceof Juggernaut)) && appliedMember.getHealthLevel() < 100)) {
+				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 100));
+				removeMedicine(medicine);
+				appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
+				return "First-Aid Kit applied to " + appliedMember.toString();
 			} else {
 				return "Cannot apply First-Aid Kit to a Member that is full health";
-			}
+			}	
 		}
 		return null;
 	} 
-	
-	
-	
-	
-	
-	
 	public String newDayEvent() {
 		switch((int)(Math.random() * 2 + 1)) {
 		// *3 means in range of 3, the +1 means +1 to the answer, otherwise it would be 0,1,2 instead of 1,2,3
@@ -207,7 +197,13 @@ public class GameEnvironment {
 			}
 			case 3:	shipAndCrew.setAmountMoney(shipAndCrew.getAmountMoney()+10);
 			return " found $10";
-			case 4: return " found nothing";
+			case 4:
+				if (member instanceof Archeologist) {
+					shipAndCrew.setAmountMoney(shipAndCrew.getAmountMoney()+100);
+					return " The Archeologist used his skills to find $100";
+				} else {
+					return " found nothing";
+				}
 			case 5:	return addRandomMedicine();
 			}
 		}
