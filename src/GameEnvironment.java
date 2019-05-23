@@ -5,6 +5,7 @@ import java.util.TreeSet;
 
 public class GameEnvironment {
 	private int remainingDays;
+	private int currentDay = 1;
 	private int numberOfPiecesRemaining;
 	private boolean partFoundOnPlanet = false;
 	TreeSet<FoodItems> foodInventory = new TreeSet<FoodItems>();
@@ -49,6 +50,7 @@ public class GameEnvironment {
 		partFoundOnPlanet = booleanValue;
 	}
 	public void feed(FoodItems food, CrewMembersMainClass appliedMember) {
+		// DOESNT CHANGE THE VALUES ATM
 		if (food instanceof Tea) {
 			removeFood(food);
 		} else if (food instanceof Nuts) {
@@ -70,36 +72,44 @@ public class GameEnvironment {
 			appliedMember.setSpacePlagueStatus(false);
 			removeMedicine(medicine);
 		} else if (medicine instanceof MedKit) {
-			appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 100));
-			removeMedicine(medicine);
+			if (appliedMember instanceof Juggernaut) {
+				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 125));
+				removeMedicine(medicine);
+			} else {
+				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 100));
+				removeMedicine(medicine);
+			}
 		} else if (medicine instanceof FirstAidKit){
-			appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 100));
-			removeMedicine(medicine);
+			if (appliedMember instanceof Juggernaut) {
+				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 125));
+				removeMedicine(medicine);
+			} else {
+				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 100));
+				removeMedicine(medicine);
+			}
 		}
 	} 
 	public String newDayEvent() {
 		switch((int)(Math.random() * 2 + 1)) {
 		// *3 means in range of 3, the +1 means +1 to the answer, otherwise it would be 0,1,2 instead of 1,2,3
-		case 1: //"Alien Pirates steal an item"
+		case 1:
 			if (shipAndCrew.getFoodList().size() == 0 && shipAndCrew.getMedicalList().size() == 0) {
-				return "Alien pirates arrives but you had nothing for them to steal!";
+				return "Alien pirates arrives but you had nothing for them to steal";
 			} else {
 				if (shipAndCrew.getFoodList().size() != 0) {
-					shipAndCrew.getFoodList().remove((int)(Math.random() * shipAndCrew.getFoodList().size()));
+					return "Alien Pirates have arrived on your ship and have stolen " + shipAndCrew.getFoodList().remove((int)(Math.random() * shipAndCrew.getFoodList().size()));
 				} else {
-					shipAndCrew.getMedicalList().remove((int)(Math.random() * shipAndCrew.getMedicalList().size()));
+					return "Alien Pirates have arrived on your ship and have stolen a " + shipAndCrew.getMedicalList().remove((int)(Math.random() * shipAndCrew.getMedicalList().size()));
 				}
-				return "Alien Pirates";
 			}
-		case 2: //"Space plague affects one of the crew members"
+		case 2:
 			for (CrewMembersMainClass i: shipAndCrew.getCrewList()) {
 				if(!i.getSpacePlagueStatus()) {
 					i.setSpacePlagueStatus(true);
-					break;
-					//havent tested
+					return i.toString() + " has been infected with space plague";
 				}
 			}
-			return "Space Plague";
+			return "Space Plague has spread to your ship but all your crew members already have been infected";
 		}
 		return null;
 	}
@@ -114,8 +124,8 @@ public class GameEnvironment {
 				}
 			}
 		}
-		removeDeadCrewMembers();
 		setAllCrewmembersActions();
+		currentDay += 1;
 		remainingDays -= 1;
 		//iterates throught the arraylist and removes any crew members who health is 0, can only be done using listiterator
 		for (CrewMembersMainClass i: shipAndCrew.getCrewList()) {
@@ -128,63 +138,65 @@ public class GameEnvironment {
 			}
 		}
 	}
-	public void removeDeadCrewMembers() {
+	public String removeDeadCrewMembers() {
+		String str1 = "";
 		ListIterator<CrewMembersMainClass> listIterator = shipAndCrew.getCrewList().listIterator();
 		while (listIterator.hasNext()) {
 			CrewMembersMainClass member = listIterator.next();
 			if (member.getHealthLevel() == 0) {
+				str1 += member.toString() + ", ";
 				listIterator.remove();
 			}
 		}
+		if (str1 != "") {
+			str1 += " Have been removed from the Crew";
+		}
+		return str1;
 	}
-	public void searchForParts(CrewMembersMainClass member) {
+	public String searchForParts(CrewMembersMainClass member) {
 		if (member.getCrewActions() > 0 ) {
 			member.setCrewActions(member.getCrewActions()-1);
 			switch((int)(Math.random() * 5 + 1)) {
-			case 1: System.out.println("Food");
-			addRandomFood();
-				break;
+			case 1: return addRandomFood();
 			case 2:
 			if (!partFoundOnPlanet) {
 				numberOfPiecesRemaining -= 1;
 				partFoundOnPlanet = true;
-				System.out.println("Part");
+				return " found a Spaceship Part";
 			} else {
-				System.out.println("Part already found you found nothing");
+				return " found nothing";
 			}
-				break;
-			case 3: System.out.println("Money");
-			shipAndCrew.setAmountMoney(shipAndCrew.getAmountMoney()+10);
-				break;
-			case 4: System.out.println("None");
-				break;
-			case 5: System.out.println("Medicine");
-			addRandomMedicine();
-				break;
+			case 3:	shipAndCrew.setAmountMoney(shipAndCrew.getAmountMoney()+10);
+			return " found $10";
+			case 4: return " found nothing";
+			case 5:	return addRandomMedicine();
 			}
+		}
+		return " has no actions remaining";
+	}
+	public String addRandomMedicine() {
+		switch((int)(Math.random() * 2 + 1)) {
+		case 1: shipAndCrew.getMedicalList().add(new FirstAidKit());
+		return " found a First-Aid Kit";
+		case 2: shipAndCrew.getMedicalList().add(new Antidote());
+		return " found an Antidote";
+		default: return null;
+		}
+	}
+	public String addRandomFood() {
+		switch((int)(Math.random() * 3 + 1)) {
+		case 1: shipAndCrew.getFoodList().add(new Tea());
+			return " found Tea";
+		case 2: shipAndCrew.getFoodList().add(new Nuts()); 
+			return " found Nuts";
+		case 3: shipAndCrew.getFoodList().add(new Apple());
+			return " found an Apple";
+		default: return null;
 		}
 	}
 	public void setAllCrewmembersActions() {
 		for (CrewMembersMainClass i: shipAndCrew.getCrewList()) {
 			i.setCrewActions(2);
-		}
-	}
-	public void addRandomMedicine() {
-		switch((int)(Math.random() * 2 + 1)) {
-		case 1: shipAndCrew.getMedicalList().add(new FirstAidKit());
-			break;
-		case 2: shipAndCrew.getMedicalList().add(new Antidote());
-			break;
-		}
-	}
-	public void addRandomFood() {
-		switch((int)(Math.random() * 3 + 1)) {
-		case 1: shipAndCrew.getFoodList().add(new Tea());
-			break;
-		case 2: shipAndCrew.getFoodList().add(new Nuts()); 
-			break;
-		case 3: shipAndCrew.getFoodList().add(new Apple());
-			break;
 		}
 	}
 	public boolean newPlanet(CrewMembersMainClass member1, CrewMembersMainClass member2) {
@@ -323,6 +335,9 @@ public class GameEnvironment {
 	public int getRemainingDays() {
 		return remainingDays;
 	}
+	public int getCurrentDay() {
+		return currentDay;
+	}
 	public void setRemainingDays(int i) {
 		remainingDays = i; 
 	}
@@ -332,6 +347,14 @@ public class GameEnvironment {
 	public int getNumberOfPiecesRemaining() {
 		return numberOfPiecesRemaining;
 	}
+	public String foundPartOnCurrentPlanet() {
+		if (partFoundOnPlanet) {
+			return "Yes";
+		} else {
+			return "No";
+		}
+	}
+
 
 
 

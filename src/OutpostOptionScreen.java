@@ -71,8 +71,8 @@ public class OutpostOptionScreen {
 		window.getContentPane().add(btnNewButton);
 		
 		JLabel inventory = new JLabel(getText("inventory"));
-		inventory.setFont(new Font("Tahoma", Font.BOLD, 12));
-		inventory.setBounds(208, 11, 226, 189);
+		inventory.setFont(new Font("Tahoma", Font.BOLD, 14));
+		inventory.setBounds(109, 11, 344, 199);
 		window.getContentPane().add(inventory);
 		
 		JLabel medicineCost = new JLabel("Total Cost:");
@@ -87,7 +87,7 @@ public class OutpostOptionScreen {
 		
 		JLabel lblMoneyRemaining = new JLabel(getText("amountMoney"));
 		lblMoneyRemaining.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblMoneyRemaining.setBounds(208, 214, 226, 51);
+		lblMoneyRemaining.setBounds(83, 214, 226, 51);
 		window.getContentPane().add(lblMoneyRemaining);
 		
 		JLabel lblItemStats = new JLabel("Item Stats");
@@ -155,7 +155,7 @@ public class OutpostOptionScreen {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblItemStats.setText("Antidote");
+				lblItemStats.setText(getFoodDescription("antidote"));
 			}
 		});
 		
@@ -260,7 +260,7 @@ public class OutpostOptionScreen {
 		btnMedKit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblItemStats.setText("Med Kit");
+				lblItemStats.setText(getFoodDescription("medKit"));
 			}
 		});
 		btnMedKit.addActionListener(new ActionListener() {
@@ -288,7 +288,7 @@ public class OutpostOptionScreen {
 			}
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				lblItemStats.setText("First-Aid Kit");
+				lblItemStats.setText(getFoodDescription("first-AidKit"));
 			}
 		});
 		btnFirstAidKit.setBounds(158, 491, 125, 60);
@@ -364,6 +364,9 @@ public class OutpostOptionScreen {
 		case "cornedBeef": return "<html>" + "Corned Beef" + "<br>" + "restores 30 Hunger" + "<br>" + "costs $30" + "</html>";
 		case "soup": return "<html>" + "Soup" + "<br>" + "restores 25 Hunger" + "<br>" + "costs $25" + "</html>";
 		case "apples": return "<html>" + "Apples" + "<br>" + "restores 15 Hunger" + "<br>" + "costs $15" + "</html>";
+		case "antidote": return "<html>" + "Antidote" + "<br>" + "Cures Space Plague" + "<br>" + "costs $15" + "</html>";
+		case "medKit": return "<html>" + "Med Kit" + "<br>" + "restores 25 health" + "<br>" + "costs $20" + "</html>";
+		case "first-AidKit": return "<html>" + "First-Aid Kit" + "<br>" + "restores 15 health" + "<br>" + "costs $15" + "</html>";
 		default: return null;
 		}
 		// See the prices of each object. (d) See the attributes of the object, attributes will be better explained in section 3. 
