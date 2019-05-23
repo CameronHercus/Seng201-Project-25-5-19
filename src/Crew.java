@@ -1,14 +1,12 @@
-
 import java.util.ArrayList;
-
-public class TheShipClass {
+public class Crew {
 	private String shipName;
 	private int shipHealth = 100;
 	private int amountMoney = 100;
-	ArrayList<CrewMembersMainClass> crewList = new ArrayList<CrewMembersMainClass>();
-	ArrayList<MedicalSupplies> medicalList = new ArrayList<MedicalSupplies>();
+	ArrayList<CrewMembers> crewList = new ArrayList<CrewMembers>();
+	ArrayList<MedicalItems> medicalList = new ArrayList<MedicalItems>();
 	ArrayList<FoodItems> foodList = new ArrayList<FoodItems>();
-	public TheShipClass() {
+	public Crew() {
 	}
 	public String getShipName() {
 		return shipName;
@@ -28,10 +26,10 @@ public class TheShipClass {
 	public void setAmountMoney(int i) {
 		amountMoney = i;
 	}
-	public ArrayList<CrewMembersMainClass> getMembersList() {
+	public ArrayList<CrewMembers> getMembersList() {
 		return crewList;
 	}
-	public ArrayList<MedicalSupplies> getMedicalList() {
+	public ArrayList<MedicalItems> getMedicineList() {
 		return medicalList;
 	}
 	public ArrayList<FoodItems> getFoodList() {

@@ -15,7 +15,6 @@ import java.awt.event.MouseEvent;
 public class ShipMenuScreen {
 	private GameEnvironment gameLogic;
 	private JFrame window;
-	private JButton btnSearchParts;
 	/**
 	 * Create the application.
 	 * @wbp.parser.entryPoint
@@ -110,7 +109,7 @@ public class ShipMenuScreen {
 			}
 		});
 		selectedMedicine.setMaximumRowCount(6);
-		selectedMedicine.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
+		selectedMedicine.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicineList().toArray()));
 		selectedMedicine.setBounds(211, 401, 166, 40);
 		window.getContentPane().add(selectedMedicine);
 		
@@ -123,30 +122,30 @@ public class ShipMenuScreen {
 		
 		JButton applyMedicineButton = new JButton("<html>" + "You have no" + "<br>" + "medicine to use" +  "</html>");
 		applyMedicineButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		if (gameLogic.getShipAndCrew().getMedicalList().size() > 0) {
+		if (gameLogic.getShipAndCrew().getMedicineList().size() > 0) {
 			applyMedicineButton.setText(getMemberTextUpdate("useMedicine", selectedMember.getSelectedItem().toString(), selectedMedicine.getSelectedItem().toString())); 
 		}
 		applyMedicineButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (((CrewMembersMainClass) selectedMember.getSelectedItem()).getRemainingActions() >= 1 && gameLogic.getShipAndCrew().getMedicalList().size() >= 1) {
+				if (((CrewMembers) selectedMember.getSelectedItem()).getRemainingActions() >= 1 && gameLogic.getShipAndCrew().getMedicineList().size() >= 1) {
 					// called once here!!!!
-					JOptionPane.showMessageDialog(null, gameLogic.applyMedicine(((MedicalSupplies) selectedMedicine.getSelectedItem()), ((CrewMembersMainClass) selectedMember.getSelectedItem())));
-					selectedMedicine.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
+					JOptionPane.showMessageDialog(null, gameLogic.applyMedicine(((MedicalItems) selectedMedicine.getSelectedItem()), ((CrewMembers) selectedMember.getSelectedItem())));
+					selectedMedicine.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicineList().toArray()));
 					memberStatus1Label.setText(getText("member1"));
 					memberStatus2Label.setText(getText("member2"));
 					memberStatus3Label.setText(getText("member3"));
 					memberStatus4Label.setText(getText("member4"));
 					shipStatusLabel.setText(getText("shipText"));
-					if (gameLogic.getShipAndCrew().getMedicalList().size() > 0) {
+					if (gameLogic.getShipAndCrew().getMedicineList().size() > 0) {
 						applyMedicineButton.setText("<html>" + "Apply Medical Item:");
 					} else {
 						applyMedicineButton.setText("<html>" + "You have no" + "<br>" + "medicine to use" +  "</html>");
 					}
 				} else {
-					if (gameLogic.getShipAndCrew().getMedicalList().size() == 0) {
+					if (gameLogic.getShipAndCrew().getMedicineList().size() == 0) {
 						JOptionPane.showMessageDialog(null, "Your have no medicine to apply in your inventory");
 					} else {
-						JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) selectedMember.getSelectedItem()).toString() + " has no actions remaining");
+						JOptionPane.showMessageDialog(null, ((CrewMembers) selectedMember.getSelectedItem()).toString() + " has no actions remaining");
 					}
 				}
 			}
@@ -157,10 +156,10 @@ public class ShipMenuScreen {
 		JButton eatFoodButton = new JButton("<html>" + "You have no food" + "<br>" + "to eat" +  "</html>");
 		eatFoodButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (((CrewMembersMainClass) selectedMember.getSelectedItem()).getRemainingActions() >= 1 && gameLogic.getShipAndCrew().getFoodList().size() >= 1) {
-					if ((boolean) gameLogic.feed(((FoodItems) selectedFood.getSelectedItem()), ((CrewMembersMainClass) selectedMember.getSelectedItem()))) {
-						JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) selectedMember.getSelectedItem()).toString() + " is now less hungry");
-						((CrewMembersMainClass) selectedMember.getSelectedItem()).setRemainingActions(((CrewMembersMainClass) selectedMember.getSelectedItem()).getRemainingActions()-1);
+				if (((CrewMembers) selectedMember.getSelectedItem()).getRemainingActions() >= 1 && gameLogic.getShipAndCrew().getFoodList().size() >= 1) {
+					if ((boolean) gameLogic.feed(((FoodItems) selectedFood.getSelectedItem()), ((CrewMembers) selectedMember.getSelectedItem()))) {
+						JOptionPane.showMessageDialog(null, ((CrewMembers) selectedMember.getSelectedItem()).toString() + " is now less hungry");
+						((CrewMembers) selectedMember.getSelectedItem()).setRemainingActions(((CrewMembers) selectedMember.getSelectedItem()).getRemainingActions()-1);
 						selectedFood.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
 						memberStatus1Label.setText(getText("member1"));
 						memberStatus2Label.setText(getText("member2"));
@@ -173,13 +172,13 @@ public class ShipMenuScreen {
 							eatFoodButton.setText(getText("noFood"));
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) selectedMember.getSelectedItem()).toString() + " is not hungry enough to eat");
+						JOptionPane.showMessageDialog(null, ((CrewMembers) selectedMember.getSelectedItem()).toString() + " is not hungry enough to eat");
 					}
 				} else {
 					if (gameLogic.getShipAndCrew().getFoodList().size() == 0) {
 						JOptionPane.showMessageDialog(null, "Your have no food to eat in your inventory");
 					} else {
-						JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) selectedMember.getSelectedItem()).toString() + " has no actions remaining");
+						JOptionPane.showMessageDialog(null, ((CrewMembers) selectedMember.getSelectedItem()).toString() + " has no actions remaining");
 					}
 				}
 			}
@@ -195,7 +194,7 @@ public class ShipMenuScreen {
 		sleepButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		sleepButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null, gameLogic.memberSleep(((CrewMembersMainClass) selectedMember.getSelectedItem())));
+				JOptionPane.showMessageDialog(null, gameLogic.memberSleep(((CrewMembers) selectedMember.getSelectedItem())));
 					memberStatus1Label.setText(getText("member1"));
 					memberStatus2Label.setText(getText("member2"));
 					memberStatus3Label.setText(getText("member3"));
@@ -210,7 +209,7 @@ public class ShipMenuScreen {
 		repairShipButton.setFont(new Font("Tahoma", Font.BOLD, 12));
 		repairShipButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,gameLogic.repairShip((CrewMembersMainClass) selectedMember.getSelectedItem())); 
+				JOptionPane.showMessageDialog(null,gameLogic.repairShip((CrewMembers) selectedMember.getSelectedItem())); 
 					memberStatus1Label.setText(getText("member1"));
 					memberStatus2Label.setText(getText("member2"));
 					memberStatus3Label.setText(getText("member3"));
@@ -242,8 +241,8 @@ public class ShipMenuScreen {
 		pilotShipWithButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedMember.getSelectedItem() != selectedPilot.getSelectedItem()) {
-					if (((CrewMembersMainClass) selectedMember.getSelectedItem()).getRemainingActions() >= 1 && ((CrewMembersMainClass) selectedPilot.getSelectedItem()).getRemainingActions() >= 1) {
-						if (gameLogic.newPlanet((CrewMembersMainClass) selectedMember.getSelectedItem(), (CrewMembersMainClass) selectedPilot.getSelectedItem())) {
+					if (((CrewMembers) selectedMember.getSelectedItem()).getRemainingActions() >= 1 && ((CrewMembers) selectedPilot.getSelectedItem()).getRemainingActions() >= 1) {
+						if (gameLogic.newPlanet((CrewMembers) selectedMember.getSelectedItem(), (CrewMembers) selectedPilot.getSelectedItem())) {
 							if (gameLogic.getShipAndCrew().getShipHealth() <= 0) {
 								finishedWindowEndGame();
 							}
@@ -278,7 +277,7 @@ public class ShipMenuScreen {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// search for parts is true;
-				JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) selectedMember.getSelectedItem()).toString() + gameLogic.searchForParts(((CrewMembersMainClass) selectedMember.getSelectedItem())));
+				JOptionPane.showMessageDialog(null, ((CrewMembers) selectedMember.getSelectedItem()).toString() + gameLogic.searchForParts(((CrewMembers) selectedMember.getSelectedItem())));
 				if (gameLogic.getNumberOfPiecesRemaining() <= 0) {
 					if (gameLogic.isGameOver()) {
 						finishedWindowEndGame();
@@ -290,13 +289,13 @@ public class ShipMenuScreen {
 				memberStatus4Label.setText(getText("member4"));
 				shipStatusLabel.setText(getText("shipText"));
 				selectedFood.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
-				selectedMedicine.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
+				selectedMedicine.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicineList().toArray()));
 				if (gameLogic.getShipAndCrew().getFoodList().size() > 0) {
 					eatFoodButton.setText("<html>" + "Eat the following Food" + "</html>");
 				} else {
 					eatFoodButton.setText(getText("noFood"));
 				}
-				if (gameLogic.getShipAndCrew().getMedicalList().size() > 0) {
+				if (gameLogic.getShipAndCrew().getMedicineList().size() > 0) {
 					applyMedicineButton.setText("<html>" + "Apply Medical Item:");
 				} else {
 					applyMedicineButton.setText("<html>" + "You have no" + "<br>" + "medicine to use" +  "</html>");
@@ -325,7 +324,7 @@ public class ShipMenuScreen {
 				gameLogic.removeActionsTired() + "<br>" + gameLogic.removeActionsSleepy() + "</html>");
 				if (!gameLogic.isGameOver()) {
 					selectedFood.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
-					selectedMedicine.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
+					selectedMedicine.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicineList().toArray()));
 					memberStatus1Label.setText(getText("member1"));
 					memberStatus2Label.setText(getText("member2"));
 					memberStatus3Label.setText(getText("member3"));
@@ -336,7 +335,7 @@ public class ShipMenuScreen {
 					} else {
 						eatFoodButton.setText(getText("noFood"));
 					}
-					if (gameLogic.getShipAndCrew().getMedicalList().size() > 0) {
+					if (gameLogic.getShipAndCrew().getMedicineList().size() > 0) {
 						applyMedicineButton.setText("<html>" + "Apply Medical Item:");
 					} else {
 						applyMedicineButton.setText("<html>" + "You have no" + "<br>" + "medicine to use" +  "</html>");
@@ -425,7 +424,7 @@ public class ShipMenuScreen {
 				return "<html>" + "You have no food" + "<br>" + "to eat" +  "</html>";
 			}
 		case "useMedicine": 
-			if (gameLogic.getShipAndCrew().getMedicalList().size() > 0) {
+			if (gameLogic.getShipAndCrew().getMedicineList().size() > 0) {
 				return "<html>"+ "Apply Medical Item:" + "</html>";
 			} else {
 				return "<html>" + "You have no" + "<br>" + "medicine to use" +  "</html>";

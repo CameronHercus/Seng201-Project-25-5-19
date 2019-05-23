@@ -1,5 +1,5 @@
 
-public class MedKit extends MedicalSupplies{
+public class MedKit extends MedicalItems {
     public MedKit() {
     	super("MedKit", 20);
 	}

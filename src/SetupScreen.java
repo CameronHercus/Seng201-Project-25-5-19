@@ -360,11 +360,11 @@ public class SetupScreen {
 						break;
 						}
 					}
-					for (CrewMembersMainClass l: gameLogic.getShipAndCrew().getMembersList()) {
+					for (CrewMembers l: gameLogic.getShipAndCrew().getMembersList()) {
 						if (l instanceof Haggler) {
 							gameLogic.getShipAndCrew().setAmountMoney(gameLogic.getShipAndCrew().getAmountMoney()+20);
 						} else if (l instanceof Medic) {
-							gameLogic.getShipAndCrew().getMedicalList().add(new MedKit());
+							gameLogic.getShipAndCrew().getMedicineList().add(new MedKit());
 						} else if(l instanceof Thief) {
 							gameLogic.getShipAndCrew().getFoodList().add(new CornedBeef());
 						}

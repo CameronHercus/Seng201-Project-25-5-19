@@ -1,5 +1,3 @@
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
@@ -7,25 +5,19 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
 import java.awt.Font;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
-import javax.swing.JProgressBar;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
-import javax.swing.AbstractButton;
 import javax.swing.DefaultComboBoxModel;
 
 public class OutpostOptionScreen {
 	private GameEnvironment gameLogic;
 	ArrayDeque<FoodItems> foodDeque = new ArrayDeque<FoodItems>();
-	ArrayDeque<MedicalSupplies> medicineDeque = new ArrayDeque<MedicalSupplies>();
+	ArrayDeque<MedicalItems> medicineDeque = new ArrayDeque<MedicalItems>();
 	ArrayList<Integer> comboBoxOptions = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
 	private JFrame window;
 	/**

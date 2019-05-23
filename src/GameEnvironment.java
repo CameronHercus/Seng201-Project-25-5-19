@@ -1,15 +1,11 @@
-import java.util.ArrayList;
 import java.util.ListIterator;
-import java.util.TreeSet;
-
 public class GameEnvironment {
 	private int remainingDays;
 	private int currentDay = 1;
 	private int numberOfPiecesRemaining;
 	private int initialNumberOfPieces;
 	private boolean partFoundOnPlanet = false;
-	TreeSet<FoodItems> foodInventory = new TreeSet<FoodItems>();
-	TheShipClass shipAndCrew = new TheShipClass();
+	Crew shipAndCrew = new Crew();
 	public static void main(String[] args) {
 		GameEnvironment gameLogic = new GameEnvironment();
 		gameLogic.launchSetupScreen();
@@ -42,20 +38,14 @@ public class GameEnvironment {
 	public void launchEndingScreen() {
 		EndingScreen endingScreen = new EndingScreen(this);
 	}
-	public TheShipClass getShipAndCrew() {
+	public Crew getShipAndCrew() {
 		return shipAndCrew;
-	}
-	public void setPartFoundOnPlanet(boolean booleanValue) {
-		partFoundOnPlanet = booleanValue;
-	}
-	public void setInitialNumberOfPieces(int i) {
-		initialNumberOfPieces = i;
-	}
-	public int getRemainingDays() {
-		return remainingDays;
 	}
 	public int getCurrentDay() {
 		return currentDay;
+	}
+	public int getRemainingDays() {
+		return remainingDays;
 	}
 	public void setRemainingDays(int i) {
 		remainingDays = i; 
@@ -65,6 +55,12 @@ public class GameEnvironment {
 	}
 	public int getNumberOfPiecesRemaining() {
 		return numberOfPiecesRemaining;
+	}
+	public void setPartFoundOnPlanet(boolean booleanValue) {
+		partFoundOnPlanet = booleanValue;
+	}
+	public void setInitialNumberOfPieces(int i) {
+		initialNumberOfPieces = i;
 	}
 	public boolean purchaseFood(FoodItems item, int quantity) {
 		if (item.getfoodCost() * quantity <= shipAndCrew.getAmountMoney()) {
@@ -77,7 +73,7 @@ public class GameEnvironment {
 			return false;
 		}
 	}
-	public boolean feed(FoodItems food, CrewMembersMainClass appliedMember) {
+	public boolean feed(FoodItems food, CrewMembers appliedMember) {
 		if (appliedMember.getHungerLevel() != 0) {
 			if (food instanceof Tea) {
 				appliedMember.setHungerLevel(Math.max(appliedMember.getHungerLevel() - 5, 0));
@@ -111,18 +107,18 @@ public class GameEnvironment {
 			}
 		}
 	}
-	public boolean purchaseMedicine(MedicalSupplies item, int quantity) {
+	public boolean purchaseMedicine(MedicalItems item, int quantity) {
 		if (item.getMedicineCost() * quantity <= shipAndCrew.getAmountMoney()) {
 			shipAndCrew.setAmountMoney(shipAndCrew.getAmountMoney() - item.getMedicineCost() * quantity);
 			for (int i = 0; i < quantity; i++) {
-				shipAndCrew.getMedicalList().add(item);
+				shipAndCrew.getMedicineList().add(item);
 			}
 			return true;
 		} else {
 			return false;
 		}
 	}
-	public String applyMedicine(MedicalSupplies medicine, CrewMembersMainClass appliedMember) {
+	public String applyMedicine(MedicalItems medicine, CrewMembers appliedMember) {
 
 		if (medicine instanceof Antidote) {
 			if (!appliedMember.getSpacePlagueStatus()) {
@@ -164,15 +160,15 @@ public class GameEnvironment {
 		}
 		return null;
 	} 
-	public void removeMedicine(MedicalSupplies removeMed)  {
-		for (int i=0; i < shipAndCrew.getMedicalList().size(); i++) {
-			if (shipAndCrew.getMedicalList().get(i) == removeMed) {
-				shipAndCrew.getMedicalList().remove(i);
+	public void removeMedicine(MedicalItems removeMed)  {
+		for (int i=0; i < shipAndCrew.getMedicineList().size(); i++) {
+			if (shipAndCrew.getMedicineList().get(i) == removeMed) {
+				shipAndCrew.getMedicineList().remove(i);
 				break;
 			}
 		}
 	}
-	public String searchForParts(CrewMembersMainClass member) {
+	public String searchForParts(CrewMembers member) {
 		if (member.getRemainingActions() >= 1 ) {
 			member.setRemainingActions(member.getRemainingActions()-1);
 			switch((int)(Math.random() * 5 + 1)) {
@@ -201,9 +197,9 @@ public class GameEnvironment {
 	}
 	public String addRandomMedicine() {
 		switch((int)(Math.random() * 2 + 1)) {
-		case 1: shipAndCrew.getMedicalList().add(new FirstAidKit());
+		case 1: shipAndCrew.getMedicineList().add(new FirstAidKit());
 		return " found a First-Aid Kit";
-		case 2: shipAndCrew.getMedicalList().add(new Antidote());
+		case 2: shipAndCrew.getMedicineList().add(new Antidote());
 		return " found an Antidote";
 		default: return null;
 		}
@@ -223,17 +219,17 @@ public class GameEnvironment {
 		switch((int)(Math.random() * 2 + 1)) {
 		// *3 means in range of 3, the +1 means +1 to the answer, otherwise it would be 0,1,2 instead of 1,2,3
 		case 1:
-			if (shipAndCrew.getFoodList().size() == 0 && shipAndCrew.getMedicalList().size() == 0) {
+			if (shipAndCrew.getFoodList().size() == 0 && shipAndCrew.getMedicineList().size() == 0) {
 				return "Alien pirates arrives but you had nothing for them to steal";
 			} else {
 				if (shipAndCrew.getFoodList().size() != 0) {
 					return "Alien Pirates have arrived on your ship and have stolen " + shipAndCrew.getFoodList().remove((int)(Math.random() * shipAndCrew.getFoodList().size()));
 				} else {
-					return "Alien Pirates have arrived on your ship and have stolen a " + shipAndCrew.getMedicalList().remove((int)(Math.random() * shipAndCrew.getMedicalList().size()));
+					return "Alien Pirates have arrived on your ship and have stolen a " + shipAndCrew.getMedicineList().remove((int)(Math.random() * shipAndCrew.getMedicineList().size()));
 				}
 			}
 		case 2:
-			for (CrewMembersMainClass i: shipAndCrew.getMembersList()) {
+			for (CrewMembers i: shipAndCrew.getMembersList()) {
 				if(!i.getSpacePlagueStatus()) {
 					i.setSpacePlagueStatus(true);
 					return i.toString() + " has been infected with space plague";
@@ -254,7 +250,7 @@ public class GameEnvironment {
 				}
 			}
 		}
-		for (CrewMembersMainClass i: shipAndCrew.getMembersList()) {
+		for (CrewMembers i: shipAndCrew.getMembersList()) {
 			i.setRemainingActions(2);
 		}
 		currentDay += 1;
@@ -262,7 +258,7 @@ public class GameEnvironment {
 	}
 	public String removeActionsTired() {
 		String str1 = "";
-		for (CrewMembersMainClass i: shipAndCrew.getMembersList()) {
+		for (CrewMembers i: shipAndCrew.getMembersList()) {
 			if (i.getTirednessLevel() >= 100) {
 				str1 += i.toString() + ", ";
 				i.setRemainingActions(1);
@@ -274,7 +270,7 @@ public class GameEnvironment {
 	}
 	public String removeActionsSleepy() {
 		String str1 = "";
-		for (CrewMembersMainClass i: shipAndCrew.getMembersList()) {
+		for (CrewMembers i: shipAndCrew.getMembersList()) {
 			if (i.getTirednessLevel() >= 100) {
 				str1 += i.toString() + ", ";
 				i.setRemainingActions(1);
@@ -286,9 +282,9 @@ public class GameEnvironment {
 	}
 	public String removeDeadCrewMembers() {
 		String str1 = "";
-		ListIterator<CrewMembersMainClass> listIterator = shipAndCrew.getMembersList().listIterator();
+		ListIterator<CrewMembers> listIterator = shipAndCrew.getMembersList().listIterator();
 		while (listIterator.hasNext()) {
-			CrewMembersMainClass member = listIterator.next();
+			CrewMembers member = listIterator.next();
 			if (member.getHealthLevel() == 0) {
 				str1 += member.toString() + ", ";
 				listIterator.remove();
@@ -299,15 +295,13 @@ public class GameEnvironment {
 		}
 		return str1;
 	}
-	public boolean newPlanet(CrewMembersMainClass member1, CrewMembersMainClass member2) {
+	public boolean newPlanet(CrewMembers member1, CrewMembers member2) {
 		member1.setRemainingActions(member1.getRemainingActions()-1);
 		member2.setRemainingActions(member2.getRemainingActions()-1);
 		setPartFoundOnPlanet(false);
 		switch((int)(Math.random() * 3 + 1)) {
 		// 33% chance to trigger ship damage
-		case 1: //trigger ship taking % damage
-			asteroidBeltDamage();
-			// do a min max thing here
+		case 1:	asteroidBeltDamage();
 			return true;
 		default: return false;
 		}
@@ -316,7 +310,7 @@ public class GameEnvironment {
 		int calculion = (int) ((Math.floor((((float) 25 / shipAndCrew.getShipHealth())) * 4 + 20)));
 		shipAndCrew.setShipHealth(shipAndCrew.getShipHealth()- calculion);
 	}
-	public String repairShip(CrewMembersMainClass member) {
+	public String repairShip(CrewMembers member) {
 		if (shipAndCrew.getShipHealth() < 100) {
 			if (member.getRemainingActions() >= 1) {
 				member.setRemainingActions(member.getRemainingActions()-1);
@@ -334,7 +328,7 @@ public class GameEnvironment {
 			return member.toString() + " cannot repair the ship any further as it is already at full health";
 		}
 	}
-	public String memberSleep(CrewMembersMainClass member) {
+	public String memberSleep(CrewMembers member) {
 		if (member.getTirednessLevel() > 0) {
 			if (member.getRemainingActions() >= 1) {
 				member.setRemainingActions(member.getRemainingActions()-1);
@@ -353,7 +347,7 @@ public class GameEnvironment {
 			return "No";
 		}
 	}
-	public String spacePlagueYesNo(CrewMembersMainClass member) {
+	public String spacePlagueYesNo(CrewMembers member) {
 		if (member.getSpacePlagueStatus()) {
 			return "Infected";
 		} else {
@@ -370,7 +364,7 @@ public class GameEnvironment {
 		int breadQuan = 0;
 		int soupQuan = 0;
 		int cornedBeefQuan = 0;
-		for (MedicalSupplies i: shipAndCrew.getMedicalList()) {
+		for (MedicalItems i: shipAndCrew.getMedicineList()) {
 			if (i instanceof Antidote) {
 				antidoteQuan += 1;
 			} else if (i instanceof FirstAidKit) {

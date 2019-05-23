@@ -1,5 +1,5 @@
 
-public class CrewMembersMainClass {
+public class CrewMembers {
     private String className;
 	private String memberName;
 	private int healthLevel;
@@ -7,10 +7,10 @@ public class CrewMembersMainClass {
 	private int tirednessLevel;
 	private int remainingActions = 2;
 	private boolean spacePlagueStatus = false;
-	public CrewMembersMainClass(String tempName) {
+	public CrewMembers(String tempName) {
 		className = tempName;
 	}
-	public CrewMembersMainClass(String tempClassName, int tempHealthLevel, int tempHungerLevel, int tempTirednessLevel, String tempMemberName) {
+	public CrewMembers(String tempClassName, int tempHealthLevel, int tempHungerLevel, int tempTirednessLevel, String tempMemberName) {
 		className = tempClassName;
 		healthLevel = tempHealthLevel;
 		hungerLevel = tempHungerLevel;

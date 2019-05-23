@@ -1,8 +1,7 @@
-
-public class MedicalSupplies {
+public class MedicalItems {
     private String medicineName;
 	private int medicineCost;
-	public MedicalSupplies(String tempMedicineName, int tempMedicineCost) {
+	public MedicalItems(String tempMedicineName, int tempMedicineCost) {
 		medicineName = tempMedicineName;
 		medicineCost = tempMedicineCost;
 	}
