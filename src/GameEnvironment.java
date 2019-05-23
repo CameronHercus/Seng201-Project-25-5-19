@@ -158,15 +158,31 @@ public class GameEnvironment {
 		currentDay += 1;
 		remainingDays -= 1;
 		//iterates throught the arraylist and removes any crew members who health is 0, can only be done using listiterator
+
+	}
+	public String removeActionsTired() {
+		String str1 = "";
 		for (CrewMembersMainClass i: shipAndCrew.getCrewList()) {
 			if (i.getTirednessLevel() >= 100) {
-				System.out.println("has 1 action now");
-				i.setCrewActions(1);
-			} else if (i.getHungerLevel() >= 100) {
-				System.out.println("has 1 action now");
+				str1 += i.toString() + ", ";
 				i.setCrewActions(1);
 			}
+		} if (str1 != "") {
+			str1 += " now have 1 action because they are too tired";
 		}
+		return str1;
+	}
+	public String removeActionsSleepy() {
+		String str1 = "";
+		for (CrewMembersMainClass i: shipAndCrew.getCrewList()) {
+			if (i.getTirednessLevel() >= 100) {
+				str1 += i.toString() + ", ";
+				i.setCrewActions(1);
+			}
+		} if (str1 != "") {
+			str1 += " now have 1 action because they are too sleepy";
+		}
+		return str1;
 	}
 	public String removeDeadCrewMembers() {
 		String str1 = "";
@@ -179,7 +195,7 @@ public class GameEnvironment {
 			}
 		}
 		if (str1 != "") {
-			str1 += " Have been removed from the Crew";
+			str1 += " Have been removed from the Crew as their health level has reached 0";
 		}
 		return str1;
 	}

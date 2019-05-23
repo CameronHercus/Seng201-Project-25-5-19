@@ -334,12 +334,26 @@ public class ShipMenuScreen {
 				gameLogic.newDayChanges();
 				// WILL HAVE TO CHANGE
 				JOptionPane.showMessageDialog(null, "<html>" + "You are now on Day: " + gameLogic.getCurrentDay() + "<br>" + 
-				gameLogic.newDayEvent() + "<br>" + "Your Crew Members are now more hungry, tired and have less health" + "<br>" + gameLogic.removeDeadCrewMembers() + "</html>");
+				gameLogic.newDayEvent() + "<br>" + "Your Crew Members are now more hungry, tired and have less health" + "<br>" + gameLogic.removeDeadCrewMembers() + "<br" + 
+				gameLogic.removeActionsTired() + "<br>" + gameLogic.removeActionsSleepy() + "</html>");
 				if (!gameLogic.isGameOver()) {
 					boxFoodSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
 					boxMedicineSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
-					finishedWindow();
-					gameLogic.launchShipOptionsScreen();
+					memberStatus1.setText(getText("member1"));
+					memberStatus2.setText(getText("member2"));
+					memberStatus3.setText(getText("member3"));
+					memberStatus4.setText(getText("member4"));
+					lblShipStatus.setText(getText("shipText"));
+					if (gameLogic.getShipAndCrew().getFoodList().size() > 0) {
+						eatFoodbttn.setText("<html>" + "Eat the following Food" + "</html>");
+					} else {
+						eatFoodbttn.setText(getText("noFood"));
+					}
+					if (gameLogic.getShipAndCrew().getMedicalList().size() > 0) {
+						applyMedicinebttn.setText("<html>" + "Apply Medical Item:");
+					} else {
+						applyMedicinebttn.setText("<html>" + "You have no" + "<br>" + "medicine to use" +  "</html>");
+					}
 				} else {
 					finishedWindowEndGame();
 				}
