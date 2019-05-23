@@ -7,6 +7,7 @@ public class GameEnvironment {
 	private int remainingDays;
 	private int currentDay = 1;
 	private int numberOfPiecesRemaining;
+	private int initialNumberOfPieces;
 	private boolean partFoundOnPlanet = false;
 	TreeSet<FoodItems> foodInventory = new TreeSet<FoodItems>();
 	TheShipClass shipAndCrew = new TheShipClass();
@@ -147,7 +148,7 @@ public class GameEnvironment {
 			shipAndCrew.getCrewList().get(i).setHungerLevel(Math.min(shipAndCrew.getCrewList().get(i).getHungerLevel() + 20, 100));
 			shipAndCrew.getCrewList().get(i).setTiredNessLevel(Math.min(shipAndCrew.getCrewList().get(i).getTirednessLevel() + 20, 100));
 			if (shipAndCrew.getCrewList().get(i).getHealthLevel() > 0) {
-				shipAndCrew.getCrewList().get(i).setHealthLevel(Math.max(shipAndCrew.getCrewList().get(i).getHealthLevel() - 20, 0));
+				shipAndCrew.getCrewList().get(i).setHealthLevel(Math.max(shipAndCrew.getCrewList().get(i).getHealthLevel() - 15, 0));
 				if (shipAndCrew.getCrewList().get(i).getSpacePlagueStatus()) {
 					shipAndCrew.getCrewList().get(i).setHealthLevel(Math.max(shipAndCrew.getCrewList().get(i).getHealthLevel() - 5, 0));
 				}
@@ -412,7 +413,13 @@ public class GameEnvironment {
 			return "No";
 		}
 	}
-
+	public int gameScoreCalculation() {
+		int calculation =  (int) (((initialNumberOfPieces / (numberOfPiecesRemaining + 1)) * 300 * (remainingDays * 5))+ (shipAndCrew.getAmountMoney() * 10));
+		return calculation;
+	}
+	public void setInitialNumberOfPieces(int i) {
+		initialNumberOfPieces = i;
+	}
 
 
 

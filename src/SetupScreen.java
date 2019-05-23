@@ -353,6 +353,7 @@ public class SetupScreen {
 					gameLogic.getShipAndCrew().setShipName(shipNameInput.getText());
 					gameLogic.setRemainingDays(daysInputSlider.getValue());
 					gameLogic.setNumberOfPiecesRemaining((int) (Math.floor(gameLogic.getRemainingDays() * (float) 2/3)));
+					gameLogic.setInitialNumberOfPieces((int) (Math.floor(gameLogic.getRemainingDays() * (float) 2/3)));
 					finishedWindow();
 				} else {
 					JOptionPane.showMessageDialog(null, "You must chose a ship name and select a minimum of 2 crew members with names to proceed");
@@ -367,7 +368,7 @@ public class SetupScreen {
 		
 	}
 	public void addCrewMember(String memberClass, String memberName) {
-		// PUT IN GAME LOGIC!
+		// PUT IN GAME LOGIC
 			switch(memberClass) {
 			case"The Medic": gameLogic.getShipAndCrew().addCrewMember(new Medic(memberName));
 			break;

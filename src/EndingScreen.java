@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JLabel;
 
 public class EndingScreen {
 	private GameEnvironment gameLogic;
@@ -42,5 +43,13 @@ public class EndingScreen {
 		});
 		window.getContentPane().setLayout(null);
 		window.getContentPane().add(finishbttn);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setText("<html>" + "You have found all the Ship Parts!" + "<br>" + "Congratulations on completing the game!" + "<br>" + "<br>" + 
+				"Days remaining: " + gameLogic.getRemainingDays() +  "<br>" + "<br>" + 
+				 "Remaining amount of Money: " + gameLogic.getShipAndCrew().getAmountMoney() + "<br>" + "<br>" + 
+				 "Your score for this game was: " + gameLogic.gameScoreCalculation() + "</html>");
+		lblNewLabel.setBounds(268, 91, 350, 282);
+		window.getContentPane().add(lblNewLabel);
 	}
 }
