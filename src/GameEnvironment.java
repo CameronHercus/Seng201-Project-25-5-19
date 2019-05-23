@@ -358,12 +358,16 @@ public class GameEnvironment {
 		}
 	}
 	public String memberSleep(CrewMembersMainClass member) {
-		if (member.getCrewActions() >= 1) {
-			member.setCrewActions(member.getCrewActions()-1);
-			member.setTiredNessLevel(Math.max(member.getTirednessLevel() - 50, 0));
-			return ";
+		if (member.getTirednessLevel() > 0) {
+			if (member.getCrewActions() >= 1) {
+				member.setCrewActions(member.getCrewActions()-1);
+				member.setTiredNessLevel(Math.max(member.getTirednessLevel() - 50, 0));
+				return member.toString() + " is now less tired";
+			}
+			return member.toString() + " has no actions remaining";
+		} else {
+			return member.toString() + " is not tired enough to need to sleep";
 		}
-		return false;
 	}
 	public ArrayList<CrewMembersMainClass>  getCrewMembersList() {
 		return shipAndCrew.getCrewList();

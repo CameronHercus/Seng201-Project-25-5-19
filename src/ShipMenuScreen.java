@@ -216,16 +216,12 @@ public class ShipMenuScreen {
 		btnSleep.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnSleep.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (gameLogic.memberSleep((CrewMembersMainClass) boxSelectedMember.getSelectedItem())) {
+				JOptionPane.showMessageDialog(null, gameLogic.memberSleep(((CrewMembersMainClass) boxSelectedMember.getSelectedItem())));
 					memberStatus1.setText(getText("member1"));
 					memberStatus2.setText(getText("member2"));
 					memberStatus3.setText(getText("member3"));
 					memberStatus4.setText(getText("member4"));
 					lblShipStatus.setText(getText("shipText"));
-					JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + " has rested and is now less tired");
-				} else {
-					JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + " has no actions remaining");
-				}
 			}
 		});
 		btnSleep.setBounds(416, 482, 165, 70);
