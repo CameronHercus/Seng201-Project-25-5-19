@@ -157,8 +157,6 @@ public class GameEnvironment {
 		setAllCrewmembersActions();
 		currentDay += 1;
 		remainingDays -= 1;
-		//iterates throught the arraylist and removes any crew members who health is 0, can only be done using listiterator
-
 	}
 	public String removeActionsTired() {
 		String str1 = "";

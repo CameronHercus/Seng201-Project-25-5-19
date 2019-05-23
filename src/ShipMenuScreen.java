@@ -292,6 +292,12 @@ public class ShipMenuScreen {
 			public void mouseClicked(MouseEvent e) {
 				// search for parts is true;
 				JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + gameLogic.searchForParts(((CrewMembersMainClass) boxSelectedMember.getSelectedItem())));
+				if (gameLogic.getNumberOfPiecesRemaining() <= 0) {
+					if (gameLogic.isGameOver()) {
+						finishedWindowEndGame();
+					}
+					
+				}
 				memberStatus1.setText(getText("member1"));
 				memberStatus2.setText(getText("member2"));
 				memberStatus3.setText(getText("member3"));
