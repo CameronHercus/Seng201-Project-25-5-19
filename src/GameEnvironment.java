@@ -357,11 +357,11 @@ public class GameEnvironment {
 			return false;
 		}
 	}
-	public boolean memberSleep(CrewMembersMainClass member) {
+	public String memberSleep(CrewMembersMainClass member) {
 		if (member.getCrewActions() >= 1) {
 			member.setCrewActions(member.getCrewActions()-1);
 			member.setTiredNessLevel(Math.max(member.getTirednessLevel() - 50, 0));
-			return true;
+			return ";
 		}
 		return false;
 	}
