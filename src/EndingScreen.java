@@ -35,14 +35,14 @@ public class EndingScreen {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.getContentPane().setLayout(null);
 		
-		JButton finishbttn = new JButton("finish");
+		JButton finishbttn = new JButton("Close Game");
 		finishbttn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				finishedWindow();
 			}
 		});
-		finishbttn.setBounds(21, 452, 89, 23);
+		finishbttn.setBounds(21, 452, 125, 51);
 		window.getContentPane().add(finishbttn);
 	}
 }

@@ -252,7 +252,7 @@ public class GameEnvironment {
 		shipAndCrew.setShipHealth(shipAndCrew.getShipHealth()- calculion);
 	}
 	public boolean isGameOver() {
-		if (shipAndCrew.getShipHealth() <= 0 || remainingDays == -1 || 
+		if (shipAndCrew.getShipHealth() <= 0 || remainingDays == 0 || 
 			shipAndCrew.getCrewList().size() <= 0 || numberOfPiecesRemaining <= 0) {
 			return true;
 		}
