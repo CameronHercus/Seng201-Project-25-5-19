@@ -34,32 +34,32 @@ public class EndingScreen {
 		window.setBounds(100, 100, 800, 600);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JButton finishbttn = new JButton("Close Game");
-		finishbttn.setBounds(21, 452, 125, 51);
-		finishbttn.addMouseListener(new MouseAdapter() {
+		JButton closeGameButton = new JButton("Close Game");
+		closeGameButton.setBounds(21, 452, 125, 51);
+		closeGameButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				finishedWindow();
 			}
 		});
 		window.getContentPane().setLayout(null);
-		window.getContentPane().add(finishbttn);
+		window.getContentPane().add(closeGameButton);
 		
-		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
+		JLabel resultsLabel = new JLabel("");
+		resultsLabel.setFont(new Font("Tahoma", Font.BOLD, 16));
 		if (gameLogic.getNumberOfPiecesRemaining() <= 0) {
-			lblNewLabel.setText("<html>" + "You have found all the Ship Parts for " + gameLogic.getShipAndCrew().getShipName() + "<br>" + "Congratulations on completing the game!" + "<br>" + "<br>" + 
+			resultsLabel.setText("<html>" + "You have found all the Ship Parts for " + gameLogic.getShipAndCrew().getShipName() + "<br>" + "Congratulations on completing the game!" + "<br>" + "<br>" + 
 					"Days remaining: " + gameLogic.getRemainingDays() +  "<br>" + "<br>" + 
 					 "Remaining amount of Money: " + gameLogic.getShipAndCrew().getAmountMoney() + "<br>" + "<br>" + 
-					 "Your score for this game was: " + gameLogic.gameScoreCalculation() + "</html>");
+					 "Your score for this game was: " + gameLogic.getGameScore() + "</html>");
 		} else {
-			lblNewLabel.setText("<html>" + "Unfortunately you have failed to complete the game" + "<br>" + "You didnt manage to get all the Ship Parts for " + gameLogic.getShipAndCrew().getShipName() + "<br>" + "<br>" + 
+			resultsLabel.setText("<html>" + "Unfortunately you have failed to complete the game" + "<br>" + "You didnt manage to get all the Ship Parts for " + gameLogic.getShipAndCrew().getShipName() + "<br>" + "<br>" + 
 					"Days remaining: " + gameLogic.getRemainingDays() +  "<br>" + "<br>" + 
 					 "Remaining amount of Money: " + gameLogic.getShipAndCrew().getAmountMoney() + "<br>" + "<br>" + 
-					 "Your score for this game was: " + gameLogic.gameScoreCalculation() + "</html>");
+					 "Your score for this game was: " + gameLogic.getGameScore() + "</html>");
 		}
 
-		lblNewLabel.setBounds(178, 53, 477, 450);
-		window.getContentPane().add(lblNewLabel);
+		resultsLabel.setBounds(178, 53, 477, 450);
+		window.getContentPane().add(resultsLabel);
 	}
 }

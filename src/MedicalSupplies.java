@@ -4,9 +4,7 @@ public class MedicalSupplies {
 	private int medicineCost;
 	public MedicalSupplies(String tempMedicineName, int tempMedicineCost) {
 		medicineName = tempMedicineName;
-
 		medicineCost = tempMedicineCost;
-		//continue here with ideas for the medical supplies then go onto the food
 	}
 	public String getMedicineName() {
 		return medicineName;
