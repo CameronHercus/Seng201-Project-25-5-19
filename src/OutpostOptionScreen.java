@@ -315,6 +315,7 @@ public class OutpostOptionScreen {
 			public void mouseClicked(MouseEvent e) {
 				if (foodDeque.size() > 0) {
 					if (gameLogic.purchaseFood(foodDeque.getLast(), (int) foodQuantity.getSelectedItem())) {
+						foodDeque.removeLast();
 						selectedFood.setText("");
 						foodCost.setText("Total Cost:");
 						lblMoneyRemaining.setText(getText("amountMoney"));
@@ -339,6 +340,7 @@ public class OutpostOptionScreen {
 			public void mouseClicked(MouseEvent e) {
 				if (medicineDeque.size() > 0) {
 					if (gameLogic.purchaseMedicine(medicineDeque.getLast(), (int) medicineQuantity.getSelectedItem())) {
+						medicineDeque.removeLast();
 						selectedMedicine.setText("");
 						medicineCost.setText("Total Cost:");
 						lblMoneyRemaining.setText(getText("amountMoney"));
