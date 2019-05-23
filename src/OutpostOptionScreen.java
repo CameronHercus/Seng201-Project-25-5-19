@@ -99,7 +99,9 @@ public class OutpostOptionScreen {
 		JComboBox medicineQuantity = new JComboBox();
 		medicineQuantity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				medicineCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem() + "</html>");
+				if (medicineDeque.size() >= 1) {
+					medicineCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + medicineDeque.getLast().getMedicineCost() * (int) medicineQuantity.getSelectedItem() + "</html>");
+				}
 				
 			}
 		});
@@ -107,7 +109,9 @@ public class OutpostOptionScreen {
 		JComboBox foodQuantity = new JComboBox();
 		foodQuantity.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				foodCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + foodDeque.getLast().getfoodCost() * (int) foodQuantity.getSelectedItem() + "</html>");
+				if (foodDeque.size() >= 1) {
+					foodCost.setText("<html>" + "Total Cost:" + "<br>" + "$" + foodDeque.getLast().getfoodCost() * (int) foodQuantity.getSelectedItem() + "</html>");
+				}
 			}
 		});
 		foodQuantity.setModel(new DefaultComboBoxModel(comboBoxOptions.toArray()));

@@ -154,7 +154,7 @@ public class GameEnvironment {
 		return str1;
 	}
 	public String searchForParts(CrewMembersMainClass member) {
-		if (member.getCrewActions() > 0 ) {
+		if (member.getCrewActions() >= 1 ) {
 			member.setCrewActions(member.getCrewActions()-1);
 			switch((int)(Math.random() * 5 + 1)) {
 			case 1: return addRandomFood();
