@@ -99,34 +99,6 @@ public class ShipMenuScreen {
 		lblShipStatus.setBounds(45, 149, 269, 154);
 		window.getContentPane().add(lblShipStatus);
 		
-		JButton btnNewButton = new JButton("Proceed to next day");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				// maybe change to have it do set remaining days before the if statement
-				gameLogic.newDayChanges();
-				JOptionPane.showMessageDialog(null, "<html>" + "You are now on Day: " + gameLogic.getCurrentDay() + "<br>" + " You have " + gameLogic.getRemainingDays() + " Days left" + "<br>" + 
-				gameLogic.newDayEvent() + "<br>" + "Your Crew Members are now more hungry, tired and have less health" + "<br>" + gameLogic.removeDeadCrewMembers() + "</html>");
-				if (!gameLogic.isGameOver() && gameLogic.getRemainingDays() > 1) {
-					finishedWindow();
-					gameLogic.launchShipOptionsScreen();
-				} else {
-					finishedWindowEndGame();
-				}
-				currentDay.setText("Current Day: " + gameLogic.getCurrentDay());
-				//terminate() and launch it again or make new thing called relaunch
-				
-			}
-		});
-		btnNewButton.setBounds(96, 100, 211, 46);
-		window.getContentPane().add(btnNewButton);
-		
 		JComboBox boxSelectedMember = new JComboBox();
 		boxSelectedMember.setFont(new Font("Tahoma", Font.BOLD, 14));
 		boxSelectedMember.addActionListener(new ActionListener() {
@@ -176,10 +148,9 @@ public class ShipMenuScreen {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).getCrewActions() >= 1 && gameLogic.getShipAndCrew().getMedicalList().size() >= 1) {
-					gameLogic.applyMedicine(((MedicalSupplies) boxMedicineSelect.getSelectedItem()), 
-							((CrewMembersMainClass) boxPilotWithSelect.getSelectedItem()));
+					// called once here!!!!
+					JOptionPane.showMessageDialog(null, gameLogic.applyMedicine(((MedicalSupplies) boxMedicineSelect.getSelectedItem()), ((CrewMembersMainClass) boxPilotWithSelect.getSelectedItem())));
 					boxMedicineSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
-					gameLogic.remove1Action((CrewMembersMainClass) boxSelectedMember.getSelectedItem());
 					memberStatus1.setText(getText("member1"));
 					memberStatus2.setText(getText("member2"));
 					memberStatus3.setText(getText("member3"));
@@ -205,27 +176,29 @@ public class ShipMenuScreen {
 		JButton eatFoodbttn = new JButton("<html>" + "You have no food" + "<br>" + "to eat" +  "</html>");
 		eatFoodbttn.setFont(new Font("Tahoma", Font.BOLD, 12));
 		if (gameLogic.getShipAndCrew().getFoodList().size() > 0) {
-			eatFoodbttn.setText("<html>" + "Eat the following Food" +  "</html>");
+			eatFoodbttn.setText("<html>" + "Eat the following Food:" +  "</html>");
 		}
 		eatFoodbttn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).getCrewActions() >= 1 && gameLogic.getShipAndCrew().getFoodList().size() >= 1) {
-					gameLogic.feed(((FoodItems) boxFoodSelect.getSelectedItem()), 
-							((CrewMembersMainClass) boxSelectedMember.getSelectedItem()));
-					gameLogic.remove1Action((CrewMembersMainClass) boxSelectedMember.getSelectedItem());
-					boxFoodSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
-					memberStatus1.setText(getText("member1"));
-					memberStatus2.setText(getText("member2"));
-					memberStatus3.setText(getText("member3"));
-					memberStatus4.setText(getText("member4"));
-					lblShipStatus.setText(getText("shipText"));
-					if (gameLogic.getShipAndCrew().getFoodList().size() > 0) {
-						eatFoodbttn.setText("<html>" + "Eat the following Food" + "</html>");
+					if ((boolean) gameLogic.feed(((FoodItems) boxFoodSelect.getSelectedItem()), ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()))) {
+						// if thise true otherwise member is at full tiredness
+						gameLogic.remove1Action((CrewMembersMainClass) boxSelectedMember.getSelectedItem());
+						boxFoodSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
+						memberStatus1.setText(getText("member1"));
+						memberStatus2.setText(getText("member2"));
+						memberStatus3.setText(getText("member3"));
+						memberStatus4.setText(getText("member4"));
+						lblShipStatus.setText(getText("shipText"));
+						if (gameLogic.getShipAndCrew().getFoodList().size() > 0) {
+							eatFoodbttn.setText("<html>" + "Eat the following Food" + "</html>");
+						} else {
+							eatFoodbttn.setText(getText("noFood"));
+						}
 					} else {
-						eatFoodbttn.setText(getText("noFood"));
+						JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + " is not hungry enough to eat");
 					}
-					
 				} else {
 					if (gameLogic.getShipAndCrew().getFoodList().size() == 0) {
 						JOptionPane.showMessageDialog(null, "Your have no food to eat in your inventory");
@@ -268,7 +241,7 @@ public class ShipMenuScreen {
 					memberStatus3.setText(getText("member3"));
 					memberStatus4.setText(getText("member4"));
 					lblShipStatus.setText(getText("shipText"));
-					JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + " restored 15 health to the ship!");
+					JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + " has restored some of your ships shiled level");
 				} else {
 					JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + " has no actions remaining");
 				}
@@ -296,6 +269,9 @@ public class ShipMenuScreen {
 				if (boxSelectedMember.getSelectedItem() != boxPilotWithSelect.getSelectedItem()) {
 					if (((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).getCrewActions() >= 1 && ((CrewMembersMainClass) boxPilotWithSelect.getSelectedItem()).getCrewActions() >= 1) {
 						if (gameLogic.newPlanet((CrewMembersMainClass) boxSelectedMember.getSelectedItem(), (CrewMembersMainClass) boxPilotWithSelect.getSelectedItem())) {
+							if (gameLogic.getShipAndCrew().getShipHealth() <= 0) {
+								finishedWindowEndGame();
+							}
 							JOptionPane.showMessageDialog(null, "<html>" + "You have arrived on a new Planet" + "<br>" +  "However you had to pass through an asteroid belt and your ship has substained damage" + "</html>");
 						} else {
 							JOptionPane.showMessageDialog(null, "You have arrived on a new Planet and your ship has substained no damage");
@@ -351,6 +327,36 @@ public class ShipMenuScreen {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
 		lblNewLabel.setBounds(330, 186, 199, 75);
 		window.getContentPane().add(lblNewLabel);
+		
+		JButton btnNewButton = new JButton("Proceed to next day");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				// maybe change to have it do set remaining days before the if statement
+				gameLogic.newDayChanges();
+				JOptionPane.showMessageDialog(null, "<html>" + "You are now on Day: " + gameLogic.getCurrentDay() + "<br>" + " You have " + gameLogic.getRemainingDays() + " Days left" + "<br>" + 
+				gameLogic.newDayEvent() + "<br>" + "Your Crew Members are now more hungry, tired and have less health" + "<br>" + gameLogic.removeDeadCrewMembers() + "</html>");
+				if (!gameLogic.isGameOver() && gameLogic.getRemainingDays() > 1) {
+					boxFoodSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
+					boxMedicineSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
+					finishedWindow();
+					gameLogic.launchShipOptionsScreen();
+				} else {
+					finishedWindowEndGame();
+				}
+				currentDay.setText("Current Day: " + gameLogic.getCurrentDay());
+				//terminate() and launch it again or make new thing called relaunch
+				
+			}
+		});
+		btnNewButton.setBounds(96, 100, 211, 46);
+		window.getContentPane().add(btnNewButton);
 	
 	}
 	public String getText(String switchStatement) {

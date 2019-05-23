@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -321,7 +323,7 @@ public class OutpostOptionScreen {
 						lblMoneyRemaining.setText(getText("amountMoney"));
 						inventory.setText(getText("inventory"));
 					} else {
-						System.out.println("NOT ENOUGH FUNDS");
+						JOptionPane.showMessageDialog(null, "You have insufficient funds for this purchase");
 					}
 				}
 			}
@@ -346,7 +348,7 @@ public class OutpostOptionScreen {
 						lblMoneyRemaining.setText(getText("amountMoney"));
 						inventory.setText(getText("inventory"));
 					} else {
-						System.out.println("NOT ENOUGH FUNDS");
+						JOptionPane.showMessageDialog(null, "You have insufficient funds for this purchase");
 					}
 				}
 			}

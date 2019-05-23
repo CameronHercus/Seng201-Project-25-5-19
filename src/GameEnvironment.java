@@ -49,46 +49,85 @@ public class GameEnvironment {
 	public void setPartFoundOnPlanet(boolean booleanValue) {
 		partFoundOnPlanet = booleanValue;
 	}
-	public void feed(FoodItems food, CrewMembersMainClass appliedMember) {
+	public boolean feed(FoodItems food, CrewMembersMainClass appliedMember) {
 		// DOESNT CHANGE THE VALUES ATM
-		if (food instanceof Tea) {
-			removeFood(food);
-		} else if (food instanceof Nuts) {
-			removeFood(food);
-		} else if (food instanceof Apple) {
-			removeFood(food);
-		} else if (food instanceof Bread) {
-			removeFood(food);
-		} else if (food instanceof Soup) {
-			removeFood(food);
-		} else if (food instanceof CornedBeef) {
-			removeFood(food);
+		if (appliedMember.getHungerLevel() != 0) {
+			if (food instanceof Tea) {
+				appliedMember.setHungerLevel(Math.max(appliedMember.getHungerLevel() - 5, 0));
+				removeFood(food);
+			} else if (food instanceof Nuts) {
+				appliedMember.setHungerLevel(Math.max(appliedMember.getHungerLevel() - 10, 0));
+				removeFood(food);
+			} else if (food instanceof Apple) {
+				appliedMember.setHungerLevel(Math.max(appliedMember.getHungerLevel() - 15, 0));
+				removeFood(food);
+			} else if (food instanceof Bread) {
+				appliedMember.setHungerLevel(Math.max(appliedMember.getHungerLevel() - 20, 0));
+				removeFood(food);
+			} else if (food instanceof Soup) {
+				appliedMember.setHungerLevel(Math.max(appliedMember.getHungerLevel() - 25, 0));
+				removeFood(food);
+			} else if (food instanceof CornedBeef) {
+				appliedMember.setHungerLevel(Math.max(appliedMember.getHungerLevel() - 30, 0));
+				removeFood(food);
+			}
+			return true;
+		} else {
+			return false;
 		}
 	}
-	public void applyMedicine(MedicalSupplies medicine, CrewMembersMainClass appliedMember) {
-		// THE + 25/15 VALUES SHOULD BE THE GET HEALTH TREATMENT FROM ITS CLASS AND THE 100 VALUE SHOULD
-		// BE GET HEALTH OF CREW MEMBER
+	public String applyMedicine(MedicalSupplies medicine, CrewMembersMainClass appliedMember) {
+
 		if (medicine instanceof Antidote) {
-			appliedMember.setSpacePlagueStatus(false);
-			removeMedicine(medicine);
-		} else if (medicine instanceof MedKit) {
-			if (appliedMember instanceof Juggernaut) {
-				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 125));
-				removeMedicine(medicine);
+			if (!appliedMember.getSpacePlagueStatus()) {
+				return "Cannot apply Andtiode on a Member that is not infected by Space Plague";
 			} else {
-				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 100));
+				appliedMember.setSpacePlagueStatus(false);
+				appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
 				removeMedicine(medicine);
+				return "Antidote applied to " + appliedMember.toString();
 			}
-		} else if (medicine instanceof FirstAidKit){
-			if (appliedMember instanceof Juggernaut) {
-				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 125));
-				removeMedicine(medicine);
+		} else if (medicine instanceof MedKit) {
+			if (appliedMember.getHealthLevel() < 100 || appliedMember.getHealthLevel() != 125) {
+				if (appliedMember instanceof Juggernaut) {
+					appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 125));
+					removeMedicine(medicine);
+					appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
+					return "MedKit applied to " + appliedMember.toString();
+				} else {
+					appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 25, 100));
+					removeMedicine(medicine);
+					appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
+					return "MedKit applied to " + appliedMember.toString();
+				}
 			} else {
-				appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 100));
-				removeMedicine(medicine);
+				return "Cannot apply MedKit to a Member that is full health";
+			}	
+		} else if (medicine instanceof FirstAidKit){
+			if (appliedMember.getHealthLevel() < 100 || appliedMember.getHealthLevel() != 125) {
+				if (appliedMember instanceof Juggernaut) {
+					appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 125));
+					removeMedicine(medicine);
+					appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
+					return "First-Aid Kit applied to " + appliedMember.toString();
+				} else {
+					appliedMember.setHealthLevel(Math.min(appliedMember.getHealthLevel() + 15, 100));
+					removeMedicine(medicine);
+					appliedMember.setCrewActions(appliedMember.getCrewActions()-1);
+					return "First-Aid Kit applied to " + appliedMember.toString();
+				}
+			} else {
+				return "Cannot apply First-Aid Kit to a Member that is full health";
 			}
 		}
+		return null;
 	} 
+	
+	
+	
+	
+	
+	
 	public String newDayEvent() {
 		switch((int)(Math.random() * 2 + 1)) {
 		// *3 means in range of 3, the +1 means +1 to the answer, otherwise it would be 0,1,2 instead of 1,2,3
@@ -206,11 +245,15 @@ public class GameEnvironment {
 		switch((int)(Math.random() * 3 + 1)) {
 		// 33% chance to trigger ship damage
 		case 1: //trigger ship taking % damage
-			shipAndCrew.setShipHealth((shipAndCrew.getShipHealth()-25));
+			asteroidBeltDamage();
 			// do a min max thing here
 			return true;
 		default: return false;
 		}
+	}
+	public void asteroidBeltDamage() {
+		int calculion = (int) ((Math.floor((((float) 50 / shipAndCrew.getShipHealth())) * 2 + 15)));
+		shipAndCrew.setShipHealth(shipAndCrew.getShipHealth()- calculion);
 	}
 	public boolean isGameOver() {
 		if (shipAndCrew.getShipHealth() <= 0 || remainingDays <= 0 || 
@@ -309,6 +352,9 @@ public class GameEnvironment {
 	public boolean repairShip(CrewMembersMainClass member) {
 		if (member.getCrewActions() >= 1) {
 			member.setCrewActions(member.getCrewActions()-1);
+			if (member instanceof Engineer) {
+				shipAndCrew.setShipHealth(Math.min(shipAndCrew.getShipHealth() + 50, 100));
+			}
 			shipAndCrew.setShipHealth(Math.min(shipAndCrew.getShipHealth() + 15, 100));
 			return true;
 		} else {
