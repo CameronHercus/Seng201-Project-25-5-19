@@ -333,7 +333,7 @@ public class ShipMenuScreen {
 				// maybe change to have it do set remaining days before the if statement
 				gameLogic.newDayChanges();
 				// WILL HAVE TO CHANGE
-				JOptionPane.showMessageDialog(null, "<html>" + "You are now on Day: " + gameLogic.getCurrentDay() + "<br>" + " You have " + (gameLogic.getRemainingDays() + 2) + " Days left" + "<br>" + 
+				JOptionPane.showMessageDialog(null, "<html>" + "You are now on Day: " + gameLogic.getCurrentDay() + "<br>" + 
 				gameLogic.newDayEvent() + "<br>" + "Your Crew Members are now more hungry, tired and have less health" + "<br>" + gameLogic.removeDeadCrewMembers() + "</html>");
 				if (!gameLogic.isGameOver()) {
 					boxFoodSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
