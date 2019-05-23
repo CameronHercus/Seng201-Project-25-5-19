@@ -200,7 +200,7 @@ public class GameEnvironment {
 			case 4:
 				if (member instanceof Archeologist) {
 					shipAndCrew.setAmountMoney(shipAndCrew.getAmountMoney()+100);
-					return " The Archeologist used his skills to find $100";
+					return " used his skills to find $100";
 				} else {
 					return " found nothing";
 				}
@@ -252,7 +252,7 @@ public class GameEnvironment {
 		shipAndCrew.setShipHealth(shipAndCrew.getShipHealth()- calculion);
 	}
 	public boolean isGameOver() {
-		if (shipAndCrew.getShipHealth() <= 0 || remainingDays <= 0 || 
+		if (shipAndCrew.getShipHealth() <= 0 || remainingDays == -1 || 
 			shipAndCrew.getCrewList().size() <= 0 || numberOfPiecesRemaining <= 0) {
 			return true;
 		}
@@ -345,17 +345,29 @@ public class GameEnvironment {
 		"Apples Quantity: " + applesQuan + "<br>" + "Bread Quantity: " + breadQuan + "<br>" + "Soup Quantity: " + soupQuan + "<br>" +
 		"Corned Beef Quantity: " + cornedBeefQuan + "</html>";
 	}
-	public boolean repairShip(CrewMembersMainClass member) {
-		if (member.getCrewActions() >= 1) {
-			member.setCrewActions(member.getCrewActions()-1);
-			if (member instanceof Engineer) {
-				shipAndCrew.setShipHealth(Math.min(shipAndCrew.getShipHealth() + 50, 100));
+	public String repairShip(CrewMembersMainClass member) {
+		if (shipAndCrew.getShipHealth() < 100) {
+			if (member.getCrewActions() >= 1) {
+				member.setCrewActions(member.getCrewActions()-1);
+				if (member instanceof Engineer) {
+					shipAndCrew.setShipHealth(Math.min(shipAndCrew.getShipHealth() + 50, 100));
+					return member.toString() + " has used their skill and repaird a lot of damage to the ship";
+				} else {
+					shipAndCrew.setShipHealth(Math.min(shipAndCrew.getShipHealth() + 15, 100));
+					return member.toString() + " has made some repairs to the ship";
+				}
+			} else {
+				return member.toString() + " has no actions remaining";
 			}
-			shipAndCrew.setShipHealth(Math.min(shipAndCrew.getShipHealth() + 15, 100));
-			return true;
 		} else {
-			return false;
+			return member.toString() + " cannot repair the ship any further as it is already at full health";
 		}
+		
+		
+		
+		
+		
+		
 	}
 	public String memberSleep(CrewMembersMainClass member) {
 		if (member.getTirednessLevel() > 0) {

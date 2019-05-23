@@ -231,16 +231,12 @@ public class ShipMenuScreen {
 		btnRepairShip.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnRepairShip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (gameLogic.repairShip((CrewMembersMainClass) boxSelectedMember.getSelectedItem())) {
+				JOptionPane.showMessageDialog(null,gameLogic.repairShip((CrewMembersMainClass) boxSelectedMember.getSelectedItem())); 
 					memberStatus1.setText(getText("member1"));
 					memberStatus2.setText(getText("member2"));
 					memberStatus3.setText(getText("member3"));
 					memberStatus4.setText(getText("member4"));
 					lblShipStatus.setText(getText("shipText"));
-					JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + " has restored some of your ships shiled level");
-				} else {
-					JOptionPane.showMessageDialog(null, ((CrewMembersMainClass) boxSelectedMember.getSelectedItem()).toString() + " has no actions remaining");
-				}
 			}
 		});
 		btnRepairShip.setBounds(211, 482, 165, 70);
@@ -338,7 +334,7 @@ public class ShipMenuScreen {
 				gameLogic.newDayChanges();
 				JOptionPane.showMessageDialog(null, "<html>" + "You are now on Day: " + gameLogic.getCurrentDay() + "<br>" + " You have " + gameLogic.getRemainingDays() + " Days left" + "<br>" + 
 				gameLogic.newDayEvent() + "<br>" + "Your Crew Members are now more hungry, tired and have less health" + "<br>" + gameLogic.removeDeadCrewMembers() + "</html>");
-				if (!gameLogic.isGameOver() && gameLogic.getRemainingDays() > 1) {
+				if (!gameLogic.isGameOver()) {
 					boxFoodSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getFoodList().toArray()));
 					boxMedicineSelect.setModel(new DefaultComboBoxModel(gameLogic.getShipAndCrew().getMedicalList().toArray()));
 					finishedWindow();

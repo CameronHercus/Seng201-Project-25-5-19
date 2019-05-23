@@ -351,7 +351,7 @@ public class SetupScreen {
 						}
 					}
 					gameLogic.getShipAndCrew().setShipName(shipNameInput.getText());
-					gameLogic.setRemainingDays(daysInputSlider.getValue());
+					gameLogic.setRemainingDays(daysInputSlider.getValue()-1);
 					gameLogic.setNumberOfPiecesRemaining((int) (Math.floor(gameLogic.getRemainingDays() * (float) 2/3)));
 					finishedWindow();
 				} else {
