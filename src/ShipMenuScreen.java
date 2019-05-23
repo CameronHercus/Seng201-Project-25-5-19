@@ -296,7 +296,6 @@ public class ShipMenuScreen {
 					if (gameLogic.isGameOver()) {
 						finishedWindowEndGame();
 					}
-					
 				}
 				memberStatus1.setText(getText("member1"));
 				memberStatus2.setText(getText("member2"));

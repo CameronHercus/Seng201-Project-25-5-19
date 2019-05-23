@@ -297,25 +297,21 @@ public class SetupScreen {
 		window.getContentPane().add(btnDeque);
 		
 		selectedNameInput1 = new JTextField();
-		selectedNameInput1.setText("Enter Name");
 		selectedNameInput1.setBounds(46, 512, 130, 20);
 		window.getContentPane().add(selectedNameInput1);
 		selectedNameInput1.setColumns(10);
 		
 		selectedNameInput2 = new JTextField();
-		selectedNameInput2.setText("Enter Name");
 		selectedNameInput2.setColumns(10);
 		selectedNameInput2.setBounds(197, 512, 130, 20);
 		window.getContentPane().add(selectedNameInput2);
 		
 		selectedNameInput3 = new JTextField();
-		selectedNameInput3.setText("Enter Name");
 		selectedNameInput3.setColumns(10);
 		selectedNameInput3.setBounds(356, 512, 130, 20);
 		window.getContentPane().add(selectedNameInput3);
 		
 		selectedNameInput4 = new JTextField();
-		selectedNameInput4.setText("Enter Name");
 		selectedNameInput4.setColumns(10);
 		selectedNameInput4.setBounds(508, 512, 130, 20);
 		window.getContentPane().add(selectedNameInput4);
@@ -324,7 +320,21 @@ public class SetupScreen {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				if (stringDeque.size() == 2) {
+					if (selectedNameInput1.getText().length() <= 0 || selectedNameInput2.getText().length() <= 0) {
+						JOptionPane.showMessageDialog(null, "Please chose valid Character Names");
+					}
+				}
+				if (stringDeque.size() == 3) {
+					if (selectedNameInput1.getText().length() <= 0 || selectedNameInput2.getText().length() <= 0 || selectedNameInput3.getText().length() <= 0) {
+						JOptionPane.showMessageDialog(null, "Please chose valid Character Names");
+					}
+				}
+				if (stringDeque.size() == 4) {
+					if (selectedNameInput1.getText().length() <= 0 || selectedNameInput2.getText().length() <= 0 || selectedNameInput3.getText().length() <= 0 || selectedNameInput4.getText().length() <= 0) {
+						JOptionPane.showMessageDialog(null, "Please chose valid Character Names");
+					}
+				}
 				//CHECK ERRORS HERE LIKE CHECK ALL NAMES IN SIZZE ARRAYDEQUE ARE FILLED BY NOT ENTER NAME AND CHECK SHIP HAS NAME
 				if (stringDeque.size() >= 2 && shipNameInput.getText().length() >= 1) {
 					int i =0;

@@ -2,15 +2,26 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.LinkedList;
+import java.util.ListIterator;
 public class testingqueue {
-	public static void main(String[] args) {
-		ArrayDeque<MedicalSupplies> array = new ArrayDeque<MedicalSupplies>();
-		array.add(new Antidote());
-		System.out.println(array.getFirst().getClass());
-		if (array.getFirst() instanceof Antidote) {
-			System.out.println("BOB");
+	ArrayList<String> planetsList = new ArrayList<String>();
+	public testingqueue() {
+		planetsList.add("Hocilea");
+		planetsList.add("baallsack");
+		planetsList.add("Chur");
+	}
+	public String getPlanetName() {
+		ListIterator<String> planetIterator =  planetsList.listIterator();
+		if (planetIterator.hasNext()) {
+			String planetName = planetIterator.next();
+			planetIterator.remove();
+			return planetName;
+		} else {
+			return "There are no more Planets to visit";
 		}
-		System.out.println(array.getFirst() instanceof Antidote);
+		
+	}
+	public static void main(String[] args) {
 	}
 
 }
